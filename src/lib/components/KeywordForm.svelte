@@ -12,6 +12,8 @@
 		modalStore.close();
 	}
 
+	keywords = keywords.map(k => k.toLowerCase());
+
 	const keywordsStore = loadData();
 </script>
 
@@ -41,7 +43,7 @@
 				keywords = keywords.filter(k => k !== keyword)
 			}
 		}}>
-		<span class="chip chip-primary capitalize {keywords.includes(keyword) ? 'chip-active' : ''}">
+		<span class="chip chip-primary capitalize h-full {keywords.includes(keyword) ? 'chip-active' : ''}">
 			{#if keywords.includes(keyword)}
 			<span class="chip-check"><iconify-icon icon="material-symbols:check"></iconify-icon></span>
 			{/if}

@@ -62,7 +62,7 @@
                 if (!keywords || keywords.length === 0)
                     return
                 
-                hero.keywords = keywords;
+                hero.keywords = [ ...new Set(keywords.map(keyword => keyword.toLowerCase())) ];
                 hero = hero;
             }
         };
