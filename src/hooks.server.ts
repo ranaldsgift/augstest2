@@ -1,0 +1,33 @@
+import 'reflect-metadata';
+import '$lib/db';
+import { getSupabase } from '@supabase/auth-helpers-sveltekit';
+import { redirect, type Handle } from '@sveltejs/kit';
+import { AppDataSource } from '$lib/db/DataSource';
+import { User } from '$lib/entities/User';
+
+export const handle: Handle = async ({event, resolve}) => {
+	const { session, supabaseClient } = await getSupabase(event);
+	event.locals.session = session;
+
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
+
+ 	if (event.locals.session) {
+		event.locals.user = await User.findOneBy({ id: event.locals.session.user.id });
+	}
+
+	if (event.url.pathname.endsWith('/edit') || event.url.pathname.endsWith('/create')) {
+		if (!event.locals.session) {
+			throw redirect(303, '/errors/auth');
+		}
+		
+		if (!event.locals.user?.userName || event.locals.user.userName.length === 0) {
+			if (!event.url.pathname.startsWith('/user/'))
+				throw redirect(303, '/errors/profile');
+		}
+	}
+	
+	const response = await resolve(event);
+	return response;
+}

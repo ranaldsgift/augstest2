@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ2NQ7H0NF"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());		
+		  gtag('config', 'G-YJ2NQ7H0NF');
+		</script>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		%sveltekit.head%
+
+		<!-- Material Icons -->
+		<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		/>
+		<!-- Roboto -->
+		<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"
+		/>
+		<!-- Roboto Mono -->
+		<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Roboto+Mono"
+		/>
+		<!-- Iconify Icons -->
+		<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+	</head>
+	<body data-theme="skeleton">
+		<div class="h-full overflow-hidden">%sveltekit.body%</div>
+		<!-- Cloudflare Web Analytics -->
+		<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d5bf5bbff25246c9acc4aac50d174f9e"}'></script>
+		<!-- End Cloudflare Web Analytics -->
+	</body>
+</html>

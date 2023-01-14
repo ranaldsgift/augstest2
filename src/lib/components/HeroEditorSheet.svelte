@@ -1,0 +1,369 @@
+<script lang="ts">
+    import PositionedContainer from "./PositionedContainer.svelte";
+    import PositionedTextEditor from "./PositionedItemEditor.svelte";
+    import { modalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
+    import HeroActionDiceForm from "./ActionDiceForm.svelte";
+    import ActionDiceIcon from "./ActionDiceIcon.svelte";
+    import { DiceIconsEnum } from "$lib/enums/Enums";
+    import ModalFormEditor from "./ModalFormEditor.svelte";
+    import ComicButton from "./ComicButton.svelte";
+    import type { FormField } from "$lib/interfaces/templates/HtmlTemplates";
+    import { writable, type Writable } from "svelte/store";
+    import type { Hero } from "$lib/entities/Hero";
+    import { HeroAbility } from "$lib/entities/HeroAbility";
+    import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
+    import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
+    import PositionedImageEditor from "./PositionedImageEditor.svelte";
+    import KeywordForm from "./KeywordForm.svelte";
+
+    export let template = ThemeTemplates.TMNT.heroSheet;
+    export let hero: Hero;
+    export let scale: number = 1.0
+
+    if (hero.theme) {
+        template = ThemeTemplates[hero.theme].heroSheet;
+    }
+
+    const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
+    themeSelection.subscribe(value => { 
+        var theme = value as ThemeTemplatesEnum;
+
+        if (hero.theme != theme) {
+            hero.theme = theme;
+            template = ThemeTemplates[theme].heroSheet;
+        }
+    });
+
+    function handleActionDiceEdit(index: number) {
+        const icon = hero.actionDice.dice ? hero.actionDice.dice[index] : DiceIconsEnum.Move;
+		const c: ModalComponent = { ref: HeroActionDiceForm, props: { "theme": hero.theme, "icon": icon } };
+		const d: ModalSettings = {
+			type: 'component',
+			title: 'Select an Action Dice Icon',
+			component: c,
+			response: (actionDie: any) => {
+				if (!actionDie)
+                    return;
+                
+                hero.actionDice.dice[index] = actionDie;
+                hero = hero;
+			}
+		};
+		modalStore.trigger(d);
+    }
+
+    function handleEditKeywords() {
+
+        const c: ModalComponent = { ref: KeywordForm, props: { keywords: hero.keywords } };
+        const d: ModalSettings = {
+            type: 'component',
+            component: c,
+            response: (keywords: string[]) => {
+                if (!keywords || keywords.length === 0)
+                    return
+                
+                hero.keywords = keywords;
+                hero = hero;
+            }
+        };
+        modalStore.trigger(d);
+    }
+
+    function handleAddAbility() {
+        const formFields: FormField[] = [
+            {
+                name: 'ability_name',
+                type: 'text',
+                value: ''
+            },
+            {
+                name: 'ability_effect',
+                type: 'textarea',
+                value: ''
+            }
+        ]
+
+
+		const c: ModalComponent = { ref: ModalFormEditor, props: { fields: JSON.stringify(formFields) } };
+		const d: ModalSettings = {
+			type: 'component',
+			title: 'Add a Hero Ability',
+			component: c,
+			response: (fields: FormField[]) => {
+				if (!fields)
+                    return;
+                
+                var abilityName = fields.find(field => field.name == 'ability_name')?.value;
+                var abilityEffect = fields.find(field => field.name == 'ability_effect')?.value;
+
+                if (!abilityName || !abilityEffect) {
+                    return;
+                }
+                
+                if (!hero.abilities) {
+                    hero.abilities = [];
+                }
+
+                const ability = new HeroAbility();
+                ability.name = abilityName;
+                ability.effect = abilityEffect;
+                hero.abilities.push(ability);
+
+                hero = hero;
+			}
+		};
+		modalStore.trigger(d);
+    }
+
+    function handleEditAbility(index: number) {
+        const abilityName = hero.abilities && hero.abilities.length > index ? hero.abilities[index].name : '';
+        const abilityEffect = hero.abilities && hero.abilities.length > index  ? hero.abilities[index].effect : '';
+
+        const formFields: FormField[] = [
+            {
+                name: 'ability_name',
+                type: 'text',
+                value: abilityName
+            },
+            {
+                name: 'ability_effect',
+                type: 'textarea',
+                value: abilityEffect
+            }
+        ]
+
+        const c: ModalComponent = { ref: ModalFormEditor, props: { fields: JSON.stringify(formFields) } };
+        const d: ModalSettings = {
+            type: 'component',
+            title: 'Edit Hero Ability',
+            component: c,
+            response: (fields: FormField[]) => {
+                if (!fields || !hero.abilities) {
+                    return;
+                }
+
+                var abilityName = fields.find(field => field.name == 'ability_name')?.value;
+                var abilityEffect = fields.find(field => field.name == 'ability_effect')?.value;
+
+                if (!abilityName || !abilityEffect) {
+                    return;
+                }
+
+                hero.abilities[index].name = abilityName;
+                hero.abilities[index].effect = abilityEffect;
+
+                hero = hero;
+            }
+        };
+        modalStore.trigger(d);
+    }
+</script>
+
+<style>
+    .hero-sheet-container {
+        background-repeat: no-repeat;
+        width: calc(700px * var(--scale));
+        height: calc(566px * var(--scale));
+        box-shadow: black 0 0 3px 1px;
+        border-radius: 5px;
+        position: relative;
+        background-size: contain;
+    }
+    :global(.positioned-container:hover .add-ability-button) {
+        display: flex;
+        justify-content: center;
+    }
+    .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container button {
+        border: none !important;
+        border-radius: 0 !important;
+    }
+    .hero-action-dice-container button:hover {
+        filter: contrast(1.5);
+    }
+    .hero-sheet-container[data-theme="TMNT"] .hero-action-dice-container, .hero-sheet-container[data-theme="TMNT"] :global(.positioned-text) {
+        transform: skew(1.7deg, -1.7deg);
+    }
+    .hero-sheet-container[data-theme="TMNT"] :global(.hero-action-dice-container), .hero-sheet-container[data-theme="TMNT"] :global(.positioned-container) {
+        transform: skew(1deg, -1deg);
+    }
+    .hero-overlay-image {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        pointer-events: none;
+        z-index: 2;
+    }
+    .hero-sheet-container :global(input[name="heroImage"] + button.positioned-image) {
+        z-index: 0;
+    }
+    .hero-sheet-container[data-theme="BTAS"] :global(input[name="traitKeywords"] + button.positioned-text) {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .hero-sheet-container[data-theme="BTAS"] :global(input[name="name"] + button.positioned-text) {
+        text-shadow: 3px 3px 1px black;
+        margin-left: -2px;
+    }
+    :global(.ability-container *), :global(.hero-attribute-container *), :global(.hero-action-dice-container *) {
+        z-index: 3;
+    }
+    .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container :global(.positioned-container) {
+        border: 2px solid transparent;
+        background: linear-gradient(#777777 0%, #fff 25%, #fff 75%, #777777 100%) border-box;
+        border-radius: 4px;
+    }
+    .hero-sheet-container[data-theme="BTAS"] .ability-container p {
+        letter-spacing: 1px;
+    }
+    .hero-sheet-container[data-theme="BTAS"] .hero-attribute-container>:global(button) {
+        text-shadow: -2px -2px 0px black, 2px 2px 0px black, -2px 2px 0px black, 2px -2px 0px black;
+    }
+    .hero-sheet-container[data-theme="BTAS"] p.hero-ability-name {
+        background: linear-gradient(to right, #77777700 5%, #ffffff70 25%, #ffffff70 75%, #77777700 95%)     left     bottom  no-repeat;
+        background-size: 100% 1px;
+        margin-bottom: 4px;
+    }    
+    .hero-sheet-container[data-theme="TMNT"] :global(.hero-action-dice-container svg) {
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+        top: 4px;
+        left: 4px;
+        position: relative;
+    }    
+    .hero-sheet-container[data-theme="BTAS"] :global(.hero-action-dice-container svg) {
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        top: 2px;
+        left: 2px;
+        position: relative;
+    }
+    :global(.keywords-container *) {
+        font-size: var(--fontSize);
+        line-height: var(--fontSize);
+        color: var(--color);
+        font-family: var(--fontFamily);
+        letter-spacing: 1px;
+    }
+    .hero-sheet-container :global(input[name="name"] + button.positioned-text) {
+        align-content: end;
+        display: grid;
+    }
+    :global(.hero-icon-image) {
+        background-position: center !important;
+    }
+</style>
+
+<div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
+    {#if template.overlay_image}
+    <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
+    {/if}
+    <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
+    </PositionedImageEditor>
+    <PositionedImageEditor name="heroImage" title="Hero Image URL" template={template.image} bind:imageUrl={hero.heroImage.url} bind:imageScale={hero.heroImage.scale} bind:left={hero.heroImage.positionLeft} bind:top={hero.heroImage.positionTop}>
+    </PositionedImageEditor>
+    <PositionedTextEditor name="name" template={template.name} bind:content={hero.name} bind:fontSize={hero.fontSizeHeroName} placeholder="Hero Name" alignment="left" display="flex" verticalAlign="end">
+    </PositionedTextEditor>
+    <PositionedContainer className="keywords-container" template={template.traits}>
+        <button on:click|preventDefault={handleEditKeywords} class="">
+            <div
+                style:text-align="left" 
+                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.traits.font_size : hero.fontSizeKeywords}px" 
+                style:--fontFamily={template.traits.font} style:--color={template.traits.font_color}>
+                
+                {#if hero.keywords && hero.keywords.length > 0}
+                {#each hero.keywords as keyword, index}
+                    <span>{keyword}</span>
+                    {#if index < hero.keywords.length - 1}
+                    <span>&nbsp;•&nbsp;</span>
+                    {/if}
+                {/each}
+                {:else}
+                <span>Factions • Keywords</span>
+                {/if}                
+            </div>
+        <iconify-icon icon="material-symbols:add" class="hover" hidden></iconify-icon>
+    </button>
+    </PositionedContainer>
+    <div class="hero-attribute-container">
+        <PositionedTextEditor name="attributes.move" type="number" template={template.move_value} bind:content={hero.attributes.move}>
+        </PositionedTextEditor>
+        <PositionedTextEditor name="attributes.attack" type="number" template={template.attack_value} bind:content={hero.attributes.attack}>
+        </PositionedTextEditor>
+        <PositionedTextEditor name="attributes.defend" type="number" template={template.defend_value} bind:content={hero.attributes.defend}>
+        </PositionedTextEditor>
+        <PositionedTextEditor name="attributes.skill" type="number" template={template.skill_value} bind:content={hero.attributes.skill}>
+        </PositionedTextEditor>
+        <PositionedTextEditor name="attributes.focus" type="number" template={template.focus_value} bind:content={hero.attributes.focus}>
+        </PositionedTextEditor>
+        <PositionedTextEditor name="attributes.life" type="number" template={template.life_value} bind:content={hero.attributes.life}>
+        </PositionedTextEditor>
+        <PositionedTextEditor name="attributes.awakening" type="number" template={template.awakening_value} bind:content={hero.attributes.awakening}>
+        </PositionedTextEditor>
+    </div>
+    <PositionedContainer className="ability-container" template={template.ability_container}>
+        {#if hero.abilities && hero.abilities.length > 0}
+            {#each hero.abilities as ability, index}
+            <input type="hidden" name="abilities.name" hidden bind:value={ability.name}>
+            <input type="hidden" name="abilities.effect" hidden bind:value={ability.effect}>
+                <button style:position="relative" on:click|preventDefault={() => handleEditAbility(index) }>
+                    <p
+                        class="hero-ability-name text-center pb-1" 
+                        style:font-family={template.ability_name.font}
+                        style:font-size="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
+                        style:line-height="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
+                        style:color={template.ability_name.font_color}
+                    >{ability.name}</p>
+                    <p 
+                        style:white-space="pre-wrap"
+                        class="hero-ability-effect pb-4 text-center" 
+                        style:font-family={template.ability_effect.font}
+                        style:font-size="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
+                        style:line-height="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale + 2}px"
+                        style:color={template.ability_effect.font_color}
+                    >{ability.effect}</p>
+                    <iconify-icon icon="mdi:edit" class="hover" hidden></iconify-icon>
+                </button>
+            {/each}
+        {:else}
+            <p 
+                class="hero-ability-name text-center pb-1" 
+                style:font-family={template.ability_name.font}
+                style:font-size="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
+                style:line-height="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
+                style:color={template.ability_name.font_color}
+            >Hero Ability Name</p>
+            <p 
+                class="hero-ability-effect pb-4 text-center" 
+                style:font-family={template.ability_effect.font}
+                style:font-size="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
+                style:line-height="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
+                style:color={template.ability_effect.font_color}
+            >Hero Ability Effect</p>
+        {/if}
+        <div class="add-ability-button" hidden>
+            <ComicButton text="Add Ability" icon="material-symbols:add" callback={handleAddAbility}></ComicButton>
+        </div>            
+    </PositionedContainer>
+    <div class="hero-action-dice-container" style:--iconColor={hero.actionDice.iconColor}>
+        <input type="hidden" name="actionDice" hidden bind:value={hero.actionDice}>
+        {#if hero.actionDice}
+            {#each hero.actionDice.dice as action_die, index}
+            <input type="hidden" name="dice" hidden bind:value={action_die}>
+            <PositionedContainer template={template.action_dice[index]}>
+                <button 
+                    style:width={'100%'} 
+                    style:height={'100%'} 
+                    style:background-color={hero.actionDice.backgroundColor}
+                    style:background-repeat="none"
+                    style:background-size="contain"
+                    style:border="2px solid {hero.actionDice.iconColor}"
+                    style:border-radius="5px"
+                    on:click|preventDefault={() => { handleActionDiceEdit(index) }}
+                >
+                    <ActionDiceIcon theme={hero.theme ?? ThemeTemplatesEnum.TMNT} icon={DiceIconsEnum[action_die]} bind:color={hero.actionDice.iconColor}></ActionDiceIcon>
+                </button>
+            </PositionedContainer>
+            {/each}
+        {/if}
+    </div>
+</div>
