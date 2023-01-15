@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { page } from '$app/stores'
-    import { goto } from '$app/navigation'
     import { DiceIconsEnum } from '$lib/enums/Enums';
     import { createDataTableStore, dataTableHandler, tableInteraction, Avatar } from '@skeletonlabs/skeleton';
     import { DateHelper } from '$lib/helpers/DateHelper';
@@ -10,7 +8,6 @@
     import { ThemeTemplatesEnum } from '$lib/interfaces/templates/ThemeTemplatesEnum';
     import ActionDiceIcon from '$lib/components/ActionDiceIcon.svelte';
     import { DataHelper } from '$lib/helpers/DataHelper';
-    import { onMount } from 'svelte';
 
     export let data: PageData;
 
@@ -22,15 +19,10 @@
     $: sortAscState = 'false';
 
     const dataTableStore = createDataTableStore(
-        // Pass your source data here:
         parsedItems,
-        // Provide optional settings:
         {
-            // The current search term.
             search: '',
-            // The current sort key.
             sort: '',
-            // Paginator component settings.
             pagination: { offset: 0, limit: 10, size: 0, amounts: [1, 2, 5, 10] }
         }
     );
@@ -169,7 +161,7 @@
                         <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
                             <td style:position="relative">
                                 <div style:overflow="hidden" style:margin-top="-70px" style:height="150px">
-                                    <img src={row.heroImage.url} alt="Hero" style:min-width="180px" style:top="0px">    
+                                    <img src={row.heroImage.url} alt="Hero" style:max-width="180px" style:min-width="180px" style:top="0px">    
                                 </div>
                             </td>
                             <td>
