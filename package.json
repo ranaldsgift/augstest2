@@ -32,7 +32,8 @@
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.8.6",
 		"@supabase/supabase-js": "^2.4.0",
-		"@sveltejs/adapter-cloudflare": "^1.0.0",
+		"@sveltejs/adapter-auto": "1.0.0",
+		"@sveltejs/adapter-vercel": "1.0.0",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tanstack/svelte-query": "^4.22.2",
 		"class-transformer": "^0.5.1",

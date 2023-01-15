@@ -129,16 +129,16 @@
                     <tr>
                         <th></th>
                         <th data-sort="name">Hero name</th>
-                        <th data-sort="username">Designer</th>
+                        <th>Designer</th>
                         <th data-sort="dateModified">Updated</th>
                         <th colspan="6" align="center">Action Dice</th>
                     </tr>
                 </thead>
                 <tbody>
                     {#each $dataTableStore.filtered as row, rowIndex}
-                        <tr on:click={() => goto($page.url + '/' + row.id)}>
+                        <tr>
                             <td width="60px">
-                                <Avatar src={row.heroImage.url}></Avatar>
+                                <div style:height="60px" style:margin="-10px" style:overflow="hidden"><img src={row.heroImage.url} alt='hero image'></div>
                             </td>
                             <td>
                                 <a href={$page.url + '/' + row.id}>{row.name}</a>
