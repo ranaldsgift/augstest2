@@ -216,7 +216,7 @@
         letter-spacing: 1px;
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-attribute-container>:global(button) {
-        text-shadow: -2px -2px 0px black, 2px 2px 0px black, -2px 2px 0px black, 2px -2px 0px black;
+        text-shadow: -2px -2px 0px black, 2px 2px 0px black, -2px 2px 0px black, 2px -2px 0px black, 2px 0px 0px black, -2px 0px 0px black, 0px -2px 0px black, 0px -2px 0px black;
     }
     .hero-sheet-container[data-theme="BTAS"] p.hero-ability-name {
         background: linear-gradient(to right, #77777700 5%, #ffffff70 25%, #ffffff70 75%, #77777700 95%)     left     bottom  no-repeat;
