@@ -116,8 +116,8 @@
             <h1>Customize your Hero</h1>
         </header>
         <div>
-            <label class="flex items-center gap-5">
-                <span>Theme</span>
+            <label class="">
+                <h1>Theme</h1>
                 <RadioGroup selected={themeSelection}>
                     {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
                         <RadioItem value={theme}>{theme}</RadioItem>
@@ -132,7 +132,7 @@
         </div>
         <div class="theme-fields-container">
             <label>
-                <span>Sheet Background Color</span>
+                <h1>Sheet Background Color</h1>
                 <input type="color" name="sheetBackgroundColor" bind:value={hero.sheetBackgroundColor}>
             </label>
             <label>

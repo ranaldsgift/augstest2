@@ -124,15 +124,15 @@
                 <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
             </a>
             {/if}
-            <div class="flex justify-end mr-3 gap-5">
-                <div class="comic-label">
+            <div class="flex gap-5">
+                <div class="comic-label" style:max-width="200px">
                     <h1>Sort</h1>
                     <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
                         <option value="dateModified">Last Updated</option>
                         <option value="name">Name</option>
                     </select>
                 </div>
-                <div class="comic-label">
+                <div class="comic-label" style:max-width="150px">
                     <h1>Order</h1>
                     <select bind:value={sortAscState} on:change={(e) => { handleSort() }}>
                         <option value="true">Ascending</option>
@@ -141,7 +141,7 @@
                 </div>
                 <div class="comic-label">
                     <h1>Search</h1>
-                    <input bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
+                    <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
                 </div>
             </div>
             <table class="table table-hover" use:tableInteraction>
