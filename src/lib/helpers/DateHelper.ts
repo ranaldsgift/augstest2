@@ -29,46 +29,25 @@ export class DateHelper {
         const years = this.dateDifference(date1, date2, "years");
 
         if (years && years > 0) {
-            if (years == 1)
-                return `${years} year ago`;
-            else
-                return `${years} years ago`;
+            return `${years}yr ago`;
         }
         if (months && months > 0) {
-            if (months == 1)
-                return `${months} month ago`;
-            else
-                return `${months} months ago`;
+            return `${months}mo ago`;
         }
         if (weeks && weeks > 0) {
-            if (weeks == 1)
-                return `${weeks} week ago`;
-            else
-                return `${weeks} weeks ago`;
+            return `${weeks}wk ago`;
         }
         if (days && days > 0) {
-            if (days == 1)
-                return `${days} day ago`;
-            else
-                return `${days} days ago`;
+            return `${days}day ago`;
         }
         if (hours && hours > 0) {
-            if (hours == 1)
-                return `${hours} hour ago`;
-            else
-                return `${hours} hours ago`;
+            return `${hours}hr ago`;
         }
         if (minutes && minutes > 0) {
-            if (minutes == 1)
-                return `${minutes} minute ago`;
-            else
-                return `${minutes} minutes ago`;
+            return `${minutes}min ago`;
         }
         if (seconds && seconds > 0) {
-            if (hours == 1)
-                return `${seconds} second ago`;
-            else
-                return `${seconds} seconds ago`;
+            return `${seconds}s ago`;
         }
     }
 

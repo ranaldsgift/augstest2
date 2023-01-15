@@ -169,11 +169,8 @@
                         <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
                             <td style:position="relative">
                                 <div style:overflow="hidden" style:margin-top="-70px" style:height="150px">
-                                    <img src={row.heroImage.url} alt="Hero" style:width="180px" style:top="0px">    
+                                    <img src={row.heroImage.url} alt="Hero" style:min-width="180px" style:top="0px">    
                                 </div>
-                                
-                                <!-- <div style:height="150px" style:margin-top="-30px" style:background-size="300%" style:background-position="center top" style:background-image="url('{row.heroImage.url}')">
-                                </div> -->
                             </td>
                             <td>
                                 <a href={'/homebrew/heroes/' + row.id}>{row.name}</a>
