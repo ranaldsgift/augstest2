@@ -17,14 +17,16 @@
     let heroSheetImage: HTMLElement;
 
     onMount(() => {
-        var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
+        setTimeout(() => {
+            var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
 
-        htmlToImage.toCanvas(heroSheetContainer, { style: { borderRadius: "0px" } })
-        .then(function (canvas) {
-            heroSheetImage.appendChild(canvas); 
-            heroSheetImage.style.display = 'block';
-            heroSheet.remove();
-        });
+            htmlToImage.toCanvas(heroSheetContainer, { style: { borderRadius: "0px" } })
+            .then(function (canvas) {
+                heroSheetImage.appendChild(canvas); 
+                heroSheetImage.style.display = 'block';
+                heroSheet.remove();
+            });
+        }, 500);
     });
 </script>
 
