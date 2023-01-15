@@ -11,6 +11,8 @@
     import { FormHelper } from "$lib/helpers/FormHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
+    import { goto } from "$app/navigation";
+    import { page } from "$app/stores";
 
     export let hero: Hero;
     export let template = ThemeTemplates[hero.theme].heroSheet;
@@ -31,11 +33,16 @@
             body: FormHelper.serializeFormData(hero)
         });
 
-        /** @type {import('@sveltejs/kit').ActionResult} */
         const result = deserialize(await response.text());
 
-        console.log(result);
-        applyAction(result);
+        if (result.type === 'error') {
+            await applyAction(result);
+        }
+
+        const savedHeroId = result.data.id;
+        if (!hero.id && savedHeroId) {
+            goto(`/homebrew/heroes/${savedHeroId}`);
+        }
             
         hero = hero;
         const t: ToastSettings = {
@@ -45,7 +52,6 @@
             timeout: 1000
         };
         toastStore.trigger(t);
-
     }
 </script>
 

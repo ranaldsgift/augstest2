@@ -10,10 +10,16 @@
     import { ThemeTemplatesEnum } from '$lib/interfaces/templates/ThemeTemplatesEnum';
     import ActionDiceIcon from '$lib/components/ActionDiceIcon.svelte';
     import { DataHelper } from '$lib/helpers/DataHelper';
+    import { onMount } from 'svelte';
 
     export let data: PageData;
 
     const parsedItems: Hero[] = DataHelper.deserializeArray<Hero>(Hero, data.jsonList);
+        
+    let searchInput: HTMLInputElement;
+    let sortKey: keyof Hero = 'dateModified';
+    $: sortKeyState = sortKey;
+    $: sortAscState = 'false';
 
     const dataTableStore = createDataTableStore(
         // Pass your source data here:
@@ -28,9 +34,10 @@
             pagination: { offset: 0, limit: 10, size: 0, amounts: [1, 2, 5, 10] }
         }
     );
-    
+
+
     $dataTableStore.sort = 'dateModified';
-    $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' }
+    $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
 
     // This automatically handles search, sort, etc when the model updates.
     dataTableStore.subscribe((model) => dataTableHandler(model));
@@ -41,10 +48,10 @@
         $dataTableStore.sort = '';
     }
     function handleSort() {
+        $dataTableStore.sortState = { asc: sortAscState === 'true' ? true : false, lastKey: '' };
+        $dataTableStore.sort = sortKeyState;
         searchInput.dispatchEvent(new Event("input"));
     }
-
-    let searchInput: HTMLInputElement;
 </script>
 
 <style>
@@ -52,28 +59,40 @@
         overflow-x: visible;
     }
     .table-container table {
+        box-shadow: none;
+        background-color: transparent;
+        overflow-x: visible;
+    }
+    .table-container tbody tr:nth-child(even) {
         border: 4px solid black;
-        background-color: rgb(var(--color-surface-200) / 1);
+        box-shadow: -6px 6px 0 0 black
     }
     .table-container tbody tr {
-        border: 1px solid black;
         background-color: rgb(var(--color-surface-200) / 1);
     }
     .table-hover tbody tr:hover {
-        box-shadow: inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300));
-        cursor: pointer;
+        box-shadow: -6px 6px 0 0 black, inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300)) !important;
     }
-    .table-container .table tbody td:nth-child(n+5) {
+    .table-container .table tbody td:nth-child(n+6) {
         background-color: var(--diceBackgroundColor);
         width: 60px;
     }
-    .table-container .table tbody td:nth-child(5) {
-        border-radius: 35px 0 0 35px;
-        margin-left: 50px;
-        box-shadow: -1px 0px 2px 0 #000000;
+    .table-container .table tbody td:nth-child(6) {
+        border-radius: 30px 0 0 30px;
+    }
+    .table-container .table tbody td:nth-child(5)::after {
+        content: '';
+        border-radius: 40px 0 0 40px;
+        box-shadow: -2px 0px 2px 0 #000000;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 40px;
+        position: absolute;
+        background-color: var(--diceBackgroundColor);
     }
     .table-container .table thead tr {
-        border: 1px solid black;
+        /* border: 1px solid black; */
         background-color: rgba(var(--color-tertiary-700));
         color: white;
         text-shadow: 2px 2px rgba(var(--color-surface-800));
@@ -88,6 +107,9 @@
         padding: 10px;
         font-size: 1rem;
     }
+    tr>td:first-child {
+        padding: 0px !important;
+    }
 </style>
 
 <ol class="breadcrumb-nonresponsive">
@@ -101,42 +123,60 @@
 <div class="max-w-5xl grid gap-5">    
     <div class="comic-form">
         <header>
-            <h1>Homebrewed Heroes</h1>
+            <h1>Heroes</h1>
         </header>
     </div>
-
         <div class="table-container grid gap-2">
-            <div class="comic-label">
-                <h1>Search</h1>
-                <input bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
-            </div>
-            
-    
+            <a href="homebrew/heroes/create/" class="unstyled" style:position="absolute" style:top="60px" style:left="20px">
+                <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
+            </a>
+
             {#if data.session}
-            <div class="flex justify-end mr-3">
-                <a href={$page.url + "/create"} class="unstyled">
-                    <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
-                </a>
+            <div class="flex justify-end mr-3 gap-5">
+                <div class="comic-label">
+                    <h1>Sort</h1>
+                    <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
+                        <option value="dateModified">Last Updated</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+                <div class="comic-label">
+                    <h1>Order</h1>
+                    <select bind:value={sortAscState} on:change={(e) => { handleSort() }}>
+                        <option value="true">Ascending</option>
+                        <option selected value="false">Descending</option>
+                    </select>
+                </div>
+                <div class="comic-label">
+                    <h1>Search</h1>
+                    <input bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
+                </div>
             </div>
             {/if}
             <table class="table table-hover" use:tableInteraction>
-                <thead on:click={(e) => { dataTableStore.sort(e); handleSort(); }} on:keypress>
+                <thead style:display="none">
                     <tr>
                         <th></th>
-                        <th data-sort="name">Hero name</th>
+                        <th data-sort="name">Name</th>
                         <th>Designer</th>
-                        <th data-sort="dateModified">Updated</th>
-                        <th colspan="6" align="center">Action Dice</th>
+                        <th data-sort="dateModified">Last Updated</th>
+                        <th colspan="7" align="center">Action Dice</th>
                     </tr>
                 </thead>
                 <tbody>
                     {#each $dataTableStore.filtered as row, rowIndex}
-                        <tr>
-                            <td width="60px" style:margin="-10px 0" style:background-image={row.heroImage.url}>
-                                <Avatar src={row.heroImage.url}></Avatar>
+                        <tr style:height="80px"></tr>
+                        <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
+                            <td style:position="relative">
+                                <div style:overflow="hidden" style:margin-top="-70px" style:height="150px">
+                                    <img src={row.heroImage.url} alt="Hero" style:width="180px" style:top="0px">    
+                                </div>
+                                
+                                <!-- <div style:height="150px" style:margin-top="-30px" style:background-size="300%" style:background-position="center top" style:background-image="url('{row.heroImage.url}')">
+                                </div> -->
                             </td>
                             <td>
-                                <a href={$page.url + '/' + row.id}>{row.name}</a>
+                                <a href={'/homebrew/heroes/' + row.id}>{row.name}</a>
                             </td>
                             <td>
                                 <a href={'/user/' + row.user.id}>{row.user.userName}</a>
@@ -144,9 +184,10 @@
                             <td>
                                 {DateHelper.timeSinceString(new Date(row.dateModified), new Date())}
                             </td>
+                            <td style:width="10px" style:position="relative"></td>
                             {#if row.actionDice && row.theme}
                                 {#each row.actionDice.dice as dice}
-                                    <td style:--diceBackgroundColor={row.actionDice.backgroundColor} height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
+                                    <td height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
                                 {/each}
                             {/if}
                         </tr>
