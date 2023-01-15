@@ -63,11 +63,6 @@
         box-shadow: inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300));
         cursor: pointer;
     }
-    .table-container table :global(.avatar-image) {
-        height: 230px;
-        position: relative;
-        top: 94px;
-    }
     .table-container .table tbody td:nth-child(n+5) {
         background-color: var(--diceBackgroundColor);
         width: 60px;
@@ -137,8 +132,8 @@
                 <tbody>
                     {#each $dataTableStore.filtered as row, rowIndex}
                         <tr>
-                            <td width="60px">
-                                <div style:height="60px" style:margin="-10px" style:overflow="hidden"><img src={row.heroImage.url} alt='hero image'></div>
+                            <td width="60px" style:margin="-10px 0" style:background-image={row.heroImage.url}>
+                                <Avatar src={row.heroImage.url}></Avatar>
                             </td>
                             <td>
                                 <a href={$page.url + '/' + row.id}>{row.name}</a>
