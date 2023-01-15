@@ -119,11 +119,11 @@
         </header>
     </div>
         <div class="table-container grid gap-2">
-            <a href="homebrew/heroes/create/" class="unstyled" style:position="absolute" style:top="60px" style:left="20px">
+            {#if data.session}
+            <a href="/homebrew/heroes/create/" class="unstyled" style:position="absolute" style:top="60px" style:left="20px">
                 <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
             </a>
-
-            {#if data.session}
+            {/if}
             <div class="flex justify-end mr-3 gap-5">
                 <div class="comic-label">
                     <h1>Sort</h1>
@@ -144,7 +144,6 @@
                     <input bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
                 </div>
             </div>
-            {/if}
             <table class="table table-hover" use:tableInteraction>
                 <thead style:display="none">
                     <tr>
