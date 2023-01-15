@@ -6,40 +6,21 @@
 </script>
 
 <style>
-    .comic-button {
-        display: flex;
-        justify-content: center;
-    }
-
-    button {
-        display: flex;
-        padding: 5px 10px;
-        text-decoration: none;
-        font-family: var(--theme-font-family-heading);
-        transition: 1s;
-        box-shadow: -3px 3px 0 black;
-        transform: skewX(-15deg);
-        align-items: center;
-        gap: 0.5rem;
-        color: black;
-        background: rgba(var(--color-tertiary-600))
-
-    }
-
-    button:focus {
-        outline: none; 
-    }
-
-    button:hover {
-        transition: 0.5s;
-        box-shadow: -4px 4px 0 rgba(var(--color-tertiary-400));
-        color: rgba(var(--color-tertiary-400)) !important;
-        background: rgba(var(--color-primary-700));
-    }
-
-    span {
-        transform: skewX(15deg);
+    button.comic {
+        font-family: 'bangersregular';
         font-size: 1.5rem;
+        padding-top: 10px;
+        text-transform: uppercase;
+        background: rgba(var(--color-tertiary-500));
+        color: black;
+        border: 3px solid black;
+    }
+    button.comic-icon {
+        color: rgba(var(--color-tertiary-500));
+        display: flex;
+        padding: 10px;
+        border-radius: 50px;
+        background: black;
     }
 
     @keyframes color_anim {
@@ -57,22 +38,26 @@
 
 
     {#if callback}
-    <button class="comic-button" {disabled} on:click|preventDefault={() => { callback() }}>
+    <button class="comic btn" {disabled} on:click|preventDefault={() => { callback() }}>
         {#if text.length > 0}
         <span>{text}</span>
         {/if}
         {#if icon.length > 0}
+        <button class="comic-icon" style:margin="-10px -22px -10px 10px">
         <iconify-icon {icon}></iconify-icon>
+        </button>
         {/if}
         <slot></slot>
     </button>
     {:else}
-    <button class="comic-button" {disabled}>
+    <button class="comic btn" {disabled}>
         {#if text.length > 0}
         <span>{text}</span>
         {/if}
         {#if icon.length > 0}
+        <button class="comic-icon" style:margin="-10px -22px -10px 10px">
         <iconify-icon {icon}></iconify-icon>
+        </button>
         {/if}
         <slot></slot>
     </button>

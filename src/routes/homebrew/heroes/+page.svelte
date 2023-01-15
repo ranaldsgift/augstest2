@@ -55,15 +55,11 @@
         background-color: transparent;
         overflow-x: visible;
     }
-    .table-container tbody tr:nth-child(even) {
-        border: 4px solid black;
-        box-shadow: -6px 6px 0 0 black
-    }
     .table-container tbody tr {
         background-color: rgb(var(--color-surface-200) / 1);
     }
     .table-hover tbody tr:hover {
-        box-shadow: -6px 6px 0 0 black, inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300)) !important;
+        box-shadow: -4px 4px 0 0 black, inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300)) !important;
     }
     .table-container .table tbody td:nth-child(n+6) {
         background-color: var(--diceBackgroundColor);
@@ -104,6 +100,8 @@
     }
 </style>
 
+<svelte:head><title>Browse Heroes</title></svelte:head>
+
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
@@ -119,12 +117,7 @@
         </header>
     </div>
         <div class="table-container grid gap-2">
-            {#if data.session}
-            <a href="/homebrew/heroes/create/" class="unstyled" style:position="absolute" style:top="60px" style:left="20px">
-                <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
-            </a>
-            {/if}
-            <div class="flex gap-5">
+            <div class="flex gap-5 relative">
                 <div class="comic-label" style:max-width="200px">
                     <h1>Sort</h1>
                     <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
@@ -143,6 +136,11 @@
                     <h1>Search</h1>
                     <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
                 </div>
+                {#if data.session}
+                <a href="/homebrew/heroes/create/" class="unstyled" style:position="absolute" style:bottom="-60px" style:right="0px">
+                    <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
+                </a>
+                {/if}
             </div>
             <table class="table table-hover" use:tableInteraction>
                 <thead style:display="none">

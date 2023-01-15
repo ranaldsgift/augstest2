@@ -73,9 +73,6 @@
         gap: 1rem;
         align-items: flex-end;
     }
-    div.form>div>* {
-        flex: 1;
-    }
     form {
         max-width: 1566px;  
 		grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));

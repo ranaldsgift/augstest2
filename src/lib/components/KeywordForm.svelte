@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { modalStore } from '@skeletonlabs/skeleton';
+	import { modalStore, ProgressRadial } from '@skeletonlabs/skeleton';
     import ComicButton from './ComicButton.svelte';
 	import InputChip from '@skeletonlabs/skeleton/components/InputChip/InputChip.svelte'
     import { loadData } from '$lib/stores/KeywordsStore';
@@ -19,6 +19,12 @@
 
 <style>
 	:global(label.input-chip form) {flex: 1 100%;}
+	button {
+		order: 2;
+	}
+	button.checked {
+		order: 1;
+	}
 </style>
 
 
@@ -30,12 +36,12 @@
 		<InputChip placeholder="Add keyword..." class="h-full" bind:value={keywords} allowDuplicates={false}></InputChip>
 	</form>
 	{#await $keywordsStore}
-		<p>Loading</p>
+		<div style:height="40px" style:width="40px"><ProgressRadial></ProgressRadial></div>
 	{:then data}
 		<p>Choose from existing Keywords:</p>
-		<div class="flex gap-2 items-stretch">
+		<div class="flex flex-wrap gap-2 items-stretch">
 		{#each data as keyword, index}
-		<button on:click={() => {
+		<button class="{keywords.includes(keyword) ? 'checked' : ''}" on:click={() => {
 			if(!keywords.includes(keyword)) {
 				keywords.push(keyword)
 				keywords = keywords;
