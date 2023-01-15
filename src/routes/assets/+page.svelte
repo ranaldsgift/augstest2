@@ -20,7 +20,7 @@
     <ul>
         {#each pdfs as pdf}
         <li class="py-2">
-            <a href={pdf.replace('/static/', '')}>{pdf.substring(pdf.lastIndexOf("/") + 1).replace('.pdf','')}</a>
+            <a href={`https://github.com/ranaldsgift/augstools/raw/main${pdf}`}>{pdf.substring(pdf.lastIndexOf("/") + 1).replace('.pdf','')}</a>
         </li>
         {/each}
     </ul>
