@@ -1,6 +1,6 @@
 <script lang="ts">
     import { DiceIconsEnum } from '$lib/enums/Enums';
-    import { createDataTableStore, dataTableHandler, tableInteraction, Avatar } from '@skeletonlabs/skeleton';
+    import { createDataTableStore, dataTableHandler, tableInteraction, Avatar, Paginator } from '@skeletonlabs/skeleton';
     import { DateHelper } from '$lib/helpers/DateHelper';
     import ComicButton from '$lib/components/ComicButton.svelte';
     import type { PageData } from './$types';
@@ -23,7 +23,7 @@
         {
             search: '',
             sort: '',
-            pagination: { offset: 0, limit: 10, size: 0, amounts: [1, 2, 5, 10] }
+            pagination: { offset: 0, limit: 10, size: 0, amounts: [5, 10] }
         }
     );
 
@@ -181,4 +181,5 @@
                 </tbody>
             </table>
         </div>
+        {#if $dataTableStore.pagination}<Paginator bind:settings={$dataTableStore.pagination} />{/if}
 </div>
