@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { applyAction, deserialize, enhance } from "$app/forms";
+    import { applyAction, deserialize } from "$app/forms";
     import { RadioGroup, RadioItem, tooltip, type ToastSettings } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
@@ -12,10 +12,13 @@
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
     import { goto } from "$app/navigation";
-    import { page } from "$app/stores";
+    import { instanceToInstance } from "class-transformer";
+    import { DataHelper } from "$lib/helpers/DataHelper";
+    import { ToastHelper } from "$lib/helpers/ToastHelper";
 
     export let hero: Hero;
     export let template = ThemeTemplates[hero.theme].heroSheet;
+    let savedHero = instanceToInstance(hero);
     
     const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
     themeSelection.subscribe(value => { 
@@ -27,6 +30,10 @@
         }
     });
 
+    function isDirty() {
+        return DataHelper.serialize(hero) !== DataHelper.serialize(savedHero);
+    }
+
     async function handleSave() {
         const response = await fetch('/api/hero?/save', {
             method: 'POST',
@@ -35,23 +42,22 @@
 
         const result = deserialize(await response.text());
 
-        if (result.type === 'error') {
+        if (result.type === 'error' || result.type === 'redirect') {
             await applyAction(result);
+            return;
         }
 
-        const savedHeroId = result.data.id;
+        ToastHelper.create('Saved!');
+
+        const savedHeroId = result.data?.id;
+
         if (!hero.id && savedHeroId) {
             goto(`/homebrew/heroes/${savedHeroId}`);
+            return;
         }
             
         hero = hero;
-        const t: ToastSettings = {
-            message: 'Saved',
-            preset: 'success',
-            autohide: true,
-            timeout: 1000
-        };
-        toastStore.trigger(t);
+        savedHero = instanceToInstance(hero);
     }
 </script>
 
@@ -190,7 +196,7 @@
         </div>
         <div>
             <div class="grid gap-5 pt-2">
-                {#if hero.isValid()}
+                {#if hero.isValid() && isDirty()}
                     <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
                 {:else}
                     <div class="disabled-button">

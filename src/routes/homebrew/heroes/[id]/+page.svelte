@@ -153,7 +153,7 @@
             {#if $page.data.session && $page.data.session.user.id == hero.user.id}
             <div class="flex justify-center">
                 <a href={$page.url + "/edit"} class="unstyled">
-                    <ComicButton icon="mdi:edit" text="Edit Your Build"></ComicButton>
+                    <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
                 </a>
             </div>
             {/if}

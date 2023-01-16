@@ -44,7 +44,7 @@
         width: calc(var(--width) * var(--scale));
         height: calc(var(--height) * var(--scale));
         background: var(--image);
-        background-size: auto var(--imageScale);
+        background-size: var(--imageScale) auto;
         background-position: var(--imageLeft) var(--imageTop);
         background-repeat: no-repeat;
     }
