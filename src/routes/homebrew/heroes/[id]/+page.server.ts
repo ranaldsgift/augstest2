@@ -15,17 +15,19 @@ export const load: PageServerLoad = async ({ locals, params }) => {
         throw error(404, 'You must provide a valid Hero ID');
     }
 
-      
-    let hero = null;
-    try {
-        hero = await Hero.findOneBy({ id: id });
-    }
-    catch (err) {
-        console.log(err);
-        throw error(500, "Internal Server Error");
+    const loadData = async () => {    
+        let hero = null;
+        try {
+            hero = await Hero.findOneBy({ id: id });
+        }
+        catch (err) {
+            console.log(err);
+            throw error(500, "Internal Server Error");
+        }
+        return Promise.resolve(DataHelper.serialize(hero));
     }
   
     return {
-        heroModel: DataHelper.serialize(hero)
+        heroModel: loadData()
     };
 }
