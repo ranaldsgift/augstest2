@@ -16,6 +16,8 @@
     });
 </script>
 
+<svelte:head><title>Browse Homebrews</title></svelte:head>
+
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>

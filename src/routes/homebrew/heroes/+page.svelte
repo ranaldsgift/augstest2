@@ -138,7 +138,7 @@
                 </div>
                 {#if data.session}
                 <a href="/homebrew/heroes/create/" class="unstyled" style:position="absolute" style:bottom="-60px" style:right="0px">
-                    <ComicButton icon="mdi:edit" text="New Hero"></ComicButton>
+                    <ComicButton icon="mdi:edit" text="Create"></ComicButton>
                 </a>
                 {/if}
             </div>

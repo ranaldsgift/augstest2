@@ -67,7 +67,7 @@
 <AppShell>
     <!-- Header -->
     <svelte:fragment slot="header">
-        <AppBar background="bg-surface-600">
+        <AppBar background="bg-tertiary-600" class="text-black">
             <svelte:fragment slot="lead">
                 <button use:menu={{ menu: 'navmenu', fixed: true }} class="btn-icon">
                     <iconify-icon icon="mdi:menu"></iconify-icon>
@@ -84,7 +84,7 @@
                         <li><a href="/support">Support</a></li>
                     </ul>
                 </nav>
-                <a href="/"><span class="text-2xl tracking-wider" style:font-family="bangersregular">AUGSTOOLS</span></a>
+                <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
                 <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" target="_blank" rel="noreferrer">
@@ -105,6 +105,9 @@
     <!-- Sidebar -->
     <!-- Page Content Slot -->
     <slot />
+	<svelte:fragment slot="pageFooter">
+        <div class="max-w-4xl m-auto text-sm text-center p-4">This site is not in any way affiliated with IDW Games. The look and design of the AUGS assets are a trademark of IDW Games. The assets on this site may not be used for commercial purposes.</div>
+    </svelte:fragment>
 </AppShell>
 
 

@@ -1,8 +1,6 @@
 <script lang="ts">
     import PigeonPeteSays from "$lib/components/PigeonPeteSays.svelte";
     import { drawerStore } from "@skeletonlabs/skeleton";
-
-drawerStore
 </script>
 
 <div class="flex justify-center">

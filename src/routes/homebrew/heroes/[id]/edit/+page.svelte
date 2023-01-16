@@ -10,7 +10,7 @@
     const hero = DataHelper.deserialize<Hero>(Hero, data.heroModel);
 </script>
 
-<svelte:head><title>Edit Your Homebrew</title></svelte:head>
+<svelte:head><title>{hero ? `Edit ${hero.name}` : `For Pete's Sake!`}</title></svelte:head>
 
 
 {#if data.session}

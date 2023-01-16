@@ -16,17 +16,22 @@
     let heroSheet: HTMLElement;
     let heroSheetImage: HTMLElement;
 
-    onMount(() => {
-        setTimeout(() => {
-            var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
+    function convertToPNGCanvas() {
+        var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
 
-            htmlToImage.toCanvas(heroSheetContainer, { style: { borderRadius: "0px" } })
-            .then(function (canvas) {
-                heroSheetImage.appendChild(canvas); 
-                heroSheetImage.style.display = 'block';
-                heroSheet.remove();
-            });
-        }, 500);
+        htmlToImage.toCanvas(heroSheetContainer, { style: { borderRadius: "0px" } })
+        .then(function (canvas) {
+            heroSheetImage.appendChild(canvas); 
+            heroSheetImage.style.display = 'block';
+            heroSheet.remove();
+        });
+    }
+
+    onMount(() => {
+        // TODO - Create PNG image of hero sheet and make it available for download
+        if (false) {
+            setTimeout(() => { convertToPNGCanvas(); }, 500);
+        }
     });
 </script>
 
@@ -66,14 +71,6 @@
   border-radius: 15px;
   background: var(--backgroundColor);
 }
-
-.base {
-  width: 100%;
-  height: 100%;
-  transform: translateY(73px) rotateX(90deg);
-    border: 0;
-    background: blue;
-}
 .one {
     transform: translateZ(50px);
 }
@@ -104,7 +101,7 @@
 
 </style>
 
-<svelte:head><title>Create Your Homebrew</title></svelte:head>
+<svelte:head><title>{hero ? `${hero.name} by ${hero.user.userName}` : `For Pete's Sake!`}</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
