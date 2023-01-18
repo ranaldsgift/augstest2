@@ -69,7 +69,7 @@
     <svelte:fragment slot="header">
         <AppBar background="bg-tertiary-600" class="text-black">
             <svelte:fragment slot="lead">
-                <button use:menu={{ menu: 'navmenu', fixed: true }} class="btn-icon">
+                <button name="Menu" use:menu={{ menu: 'navmenu', fixed: true }} class="btn-icon">
                     <iconify-icon icon="mdi:menu"></iconify-icon>
                 </button>
                 <nav class="menu-tl card p-4 w-48 shadow-xl top-16 left-2 list-nav" data-menu="navmenu">
@@ -87,15 +87,15 @@
                 <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
-                <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" target="_blank" rel="noreferrer">
+                <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
                     <iconify-icon icon="mdi:github"></iconify-icon>
                 </a>
                 {#if $page.data.session}
-                    <a href="/user/{$page.data.session.user.id}" class="material-icons">                    
+                    <a href="/user/{$page.data.session.user.id}" aria-label="User Account" class="material-icons">                    
                         <iconify-icon icon="mdi:user"></iconify-icon>
                     </a>
                 {:else}
-                <button class="btn-icon" on:click={drawerOpen}>
+                <button class="btn-icon" aria-label="Login/Register"  on:click={drawerOpen}>
                     <iconify-icon icon="mdi:user"></iconify-icon>
                 </button>
                 {/if}
