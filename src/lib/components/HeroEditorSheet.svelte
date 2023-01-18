@@ -15,6 +15,7 @@
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import PositionedImageEditor from "./PositionedImageEditor.svelte";
     import KeywordForm from "./KeywordForm.svelte";
+    import { draggable } from '@neodrag/svelte';
 
     export let template = ThemeTemplates.TMNT.heroSheet;
     export let hero: Hero;
@@ -157,6 +158,16 @@
         };
         modalStore.trigger(d);
     }
+
+    function handleScaleImage(event: WheelEvent) {
+        if (event.deltaY > 0) {
+            hero.heroImage.scale -= (1 * scaleMultiplier);
+        } else {
+            hero.heroImage.scale += (1 * scaleMultiplier);
+        }
+    }
+
+    let scaleMultiplier = 1;
 </script>
 
 <style>
@@ -266,8 +277,19 @@
         mix-blend-mode: difference;
         mix-blend-mode: exclusion;
         mix-blend-mode: multiply;
+        opacity: 0.7;
     }
 </style>
+
+<svelte:window
+on:keydown={(e) => {
+    if (e.key === 'Shift') {
+        scaleMultiplier = 10; 
+    }
+}} 
+on:keyup={(e) => { 
+    scaleMultiplier = 1;
+}}/>
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
     {#if hero.theme === ThemeTemplatesEnum.BTAS}
@@ -278,8 +300,13 @@
     {/if}
     <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
     </PositionedImageEditor>
-    <PositionedImageEditor name="heroImage" title="Hero Image URL" template={template.image} bind:imageUrl={hero.heroImage.url} bind:imageScale={hero.heroImage.scale} bind:left={hero.heroImage.positionLeft} bind:top={hero.heroImage.positionTop}>
-    </PositionedImageEditor>
+    <img on:wheel={handleScaleImage} use:draggable={{
+        position: { x:hero.heroImage.positionLeft, y:hero.heroImage.positionTop },
+        onDrag: ({ offsetX, offsetY }) => {
+            hero.heroImage.positionLeft = offsetX;
+            hero.heroImage.positionTop = offsetY;
+        },
+      }} src={hero.heroImage.url} alt="Hero" style:height={`${100 * (hero.heroImage.scale/100)}%`} style:width="auto">
     <PositionedTextEditor name="name" template={template.name} bind:content={hero.name} bind:fontSize={hero.fontSizeHeroName} placeholder="Hero Name" alignment="left" display="flex" verticalAlign="end">
     </PositionedTextEditor>
     <PositionedContainer className="keywords-container" template={template.traits}>

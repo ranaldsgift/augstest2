@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@neodrag/svelte": "^2.0.3",
 		"@supabase/auth-helpers-sveltekit": "^0.8.6",
 		"@supabase/supabase-js": "^2.4.0",
 		"@sveltejs/adapter-auto": "1.0.0",
