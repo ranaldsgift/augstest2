@@ -19,7 +19,7 @@
 
     export let template = ThemeTemplates.TMNT.heroSheet;
     export let hero: Hero;
-    export let scale: number = 1.0
+    export let scale: number = 1.0;
 
     if (hero.theme) {
         template = ThemeTemplates[hero.theme].heroSheet;
@@ -321,7 +321,7 @@ on:keyup={(e) => {
     </PositionedImageEditor>
     {#if hero.heroImage.url}
     <img class="absolute" on:wheel={handleScaleImage} use:draggable={{
-        position: { x:hero.heroImage.positionLeft, y:hero.heroImage.positionTop },
+        position: { x: hero.heroImage.positionLeft * scale, y:hero.heroImage.positionTop * scale },
         onDrag: ({ offsetX, offsetY }) => {
             hero.heroImage.positionLeft = offsetX;
             hero.heroImage.positionTop = offsetY;
