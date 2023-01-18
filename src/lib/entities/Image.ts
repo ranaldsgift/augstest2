@@ -2,6 +2,13 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm"
 
 @Entity()
 export class Image extends BaseEntity {
+    constructor() {
+        super();
+        this.scale = 100;
+        this.positionLeft = 0;
+        this.positionTop = 0;
+    }
+
     @PrimaryGeneratedColumn("increment")
     id: number
 

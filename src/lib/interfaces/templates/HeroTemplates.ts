@@ -61,9 +61,9 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         image: { size: { width: '388px', height: '485px' }, position: { left: '0px', top: '81px' } },
         name: { size: { width: '240px', height: '72px' }, position: { left: '100px', top: '0px' }, font: 'BebasNeueBold', font_size: 68, font_color: 'white' },
         traits:  {size: { width: '240px', height: '40px' }, position: { left: '100px', top: '76px' }, font: 'BebasNeueLight', font_size: 20, font_color: 'white' },
-        ability_container: { size: { width: '296px', height: '284px' }, position: { left: '364px', top: '162px' } },
+        ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
         ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', font_size: 32, font_color: 'white' },
-        ability_effect: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'DINCondensedLightRegular', font_size: 20, font_color: 'white' },
+        ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', font_size: 16, font_color: 'white' },
         action_dice: [
             { size: { width: '50px', height: '50px' }, position: { left: '342px', top: '490px' } },
             { size: { width: '50px', height: '50px' }, position: { left: '400px', top: '490px' } },

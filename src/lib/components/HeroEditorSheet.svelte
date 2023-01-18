@@ -167,6 +167,22 @@
         }
     }
 
+    function handleEditHeroImage() {
+
+        const prompt: ModalSettings = {
+            type: 'prompt',
+            title: 'Hero Image',
+            body: 'Provide an image URL. The image host will affect if the image is rendered correctly when the Hero sheet PNG is generated. Approved hosts: https://imgur.com',
+            // Populates the initial input value
+            value: hero.heroImage.url || hero.heroImage.url.length > 0 ? hero.heroImage.url : '',
+            // Returns the updated response value
+            response: (heroImage: string) => {
+                hero.heroImage.url = heroImage;
+            }
+        };
+        modalStore.trigger(prompt);
+    }
+
     let scaleMultiplier = 1;
 </script>
 
@@ -263,6 +279,9 @@
     :global(.hero-icon-image) {
         background-position: center !important;
     }
+    .hero-sheet-container[data-theme="BTAS"] .ability-container .hero-ability-effect {
+        text-align: left;
+    }       
     .hero-sheet-container[data-theme="BTAS"] .noise-overlay {            
         background: #000;
         filter: url(#noiseFilter);
@@ -300,13 +319,24 @@ on:keyup={(e) => {
     {/if}
     <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
     </PositionedImageEditor>
-    <img on:wheel={handleScaleImage} use:draggable={{
+    {#if hero.heroImage.url}
+    <img class="absolute" on:wheel={handleScaleImage} use:draggable={{
         position: { x:hero.heroImage.positionLeft, y:hero.heroImage.positionTop },
         onDrag: ({ offsetX, offsetY }) => {
             hero.heroImage.positionLeft = offsetX;
             hero.heroImage.positionTop = offsetY;
         },
       }} src={hero.heroImage.url} alt="Hero" style:height={`${100 * (hero.heroImage.scale/100)}%`} style:width="auto">
+    {:else}
+    <button class="absolute" on:click={handleEditHeroImage}
+        style:top={template.image.position.top}
+        style:left={template.image.position.left}
+        style:width={template.image.size.width}
+        style:height={template.image.size.height}
+    >
+        <iconify-icon icon="mdi:edit" class="hover center" hidden></iconify-icon>
+    </button>
+    {/if}
     <PositionedTextEditor name="name" template={template.name} bind:content={hero.name} bind:fontSize={hero.fontSizeHeroName} placeholder="Hero Name" alignment="left" display="flex" verticalAlign="end">
     </PositionedTextEditor>
     <PositionedContainer className="keywords-container" template={template.traits}>

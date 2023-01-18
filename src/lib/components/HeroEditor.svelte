@@ -79,7 +79,7 @@
         gap: 1rem;
         align-items: flex-end;
     }
-    form {
+    .hero-editor {
         max-width: 1566px;  
 		grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
         gap: 30px;
@@ -101,16 +101,7 @@
     }
 </style>
 
-<form class="m-auto grid gap-5" on:submit|preventDefault={handleSave}>
-    <input type="hidden" name="id" bind:value={hero.id}>
-    <input type="hidden" name="user.id" bind:value={hero.user.id}>
-    {#if hero.token}
-    <input type="hidden"name="token.id" bind:value={hero.token.id}>
-    {/if}    
-    <input type="hidden" name="augsLicense" bind:value={hero.augsLicense}>
-    <input type="hidden" name="dateCreated" bind:value={hero.dateCreated}>
-    <input type="hidden" name="dateModified" bind:value={hero.dateModified}>
-
+<div class="hero-editor m-auto grid gap-5">
     <div class="grid gap-5">
         <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
         {#if !hero.isValid()}
@@ -168,6 +159,16 @@
                 <textarea name="description" rows="4" bind:value={hero.description} placeholder="Enter a description of your Hero here. Include details about any special mechanics related to your Hero. Feel free to leave details about the evolution of your Hero after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
             </label>
         </div>
+        <div>
+            <label>
+                <span>Hero Image</span>
+                <input type="text" name="heroImage.url" bind:value={hero.heroImage.url}>
+            </label>
+            <label>
+                <span>Icon Image</span>
+                <input type="text" name="heroIcon.url" bind:value={hero.iconImage.url}>
+            </label>
+        </div>
         <div class="image-fields-container">
             <label>
                 <span>Hero Image Scale</span>
@@ -203,7 +204,7 @@
         <div>
             <div class="grid gap-5 pt-2">
                 {#if hero.isValid() && isDirty()}
-                    <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
+                    <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
                 {:else}
                     <div class="disabled-button">
                         <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
@@ -212,4 +213,4 @@
             </div>
         </div>
     </div>
-</form>
+</div>
