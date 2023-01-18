@@ -17,36 +17,43 @@ a:visited {
 @font-face {
     font-family: 'BebasNeueBold';
     src: url('/fonts/BebasNeue-Bold.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'BebasNeueBook';
     src: url('/fonts/BebasNeue-Book.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'BebasNeueRegular';
     src: url('/fonts/BebasNeue-Regular.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'BebasNeueLight';
     src: url('/fonts/BebasNeue-Light.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'BebasNeueThin';
     src: url('/fonts/BebasNeue-Thin.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'DINCondensedBold';
     src: url('/fonts/DINCond-Bold.woff') format('woff');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'DINCondensedLightRegular';
     src: url('/fonts/DINCond-LightRegular.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
@@ -55,6 +62,7 @@ a:visited {
          url('/fonts/bangers-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -63,6 +71,7 @@ a:visited {
          url('/fonts/smackattackbb_reg-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -70,6 +79,7 @@ a:visited {
     src: url('/fonts/comic.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -77,4 +87,5 @@ a:visited {
     src: url('/fonts/BadaboomBB_Reg.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
