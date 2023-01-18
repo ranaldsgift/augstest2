@@ -28,7 +28,7 @@
     }
 
     onMount(() => {
-        // TODO - Create PNG image of hero sheet and make it available for download
+        // TODO - Create PNG image of hero sheet and make it available for download instead of replacing the hero sheet with the image.
         if (false) {
             setTimeout(() => { convertToPNGCanvas(); }, 500);
         }

@@ -168,6 +168,7 @@
         border-radius: 5px;
         position: relative;
         background-size: contain;
+        overflow: hidden;
     }
     :global(.positioned-container:hover .add-ability-button) {
         display: flex;
@@ -251,9 +252,27 @@
     :global(.hero-icon-image) {
         background-position: center !important;
     }
+    .hero-sheet-container[data-theme="BTAS"] .noise-overlay {            
+        background: #000;
+        filter: url(#noiseFilter);
+        position: absolute;
+        content: '';
+        left: -205px;
+        top: -72px;
+        width: calc(100% + 205px);
+        height: calc(100% + 72px);
+        z-index: 0;
+        mix-blend-mode: darken;
+        mix-blend-mode: difference;
+        mix-blend-mode: exclusion;
+        mix-blend-mode: multiply;
+    }
 </style>
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
+    {#if hero.theme === ThemeTemplatesEnum.BTAS}
+    <div class="noise-overlay"></div>
+    {/if}
     {#if template.overlay_image}
     <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
     {/if}
@@ -366,4 +385,13 @@
             {/each}
         {/if}
     </div>
+    <svg>
+        <filter id='noiseFilter'>
+            <feTurbulence 
+            type='fractalNoise' 
+            baseFrequency='0.98' 
+            numOctaves='6' 
+            stitchTiles='stitch'/>
+        </filter>
+    </svg>
 </div>

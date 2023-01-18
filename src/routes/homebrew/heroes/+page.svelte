@@ -107,7 +107,7 @@
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb"><a href="/homebrew">Homebrew</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-	<li class="crumb">Heroes</li>
+	<li class="crumb">Heroes</li>   
 </ol>
 
 <div class="max-w-5xl grid gap-5">    
@@ -157,7 +157,7 @@
                         <tr style:height="80px"></tr>
                         <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
                             <td style:position="relative">
-                                <div style:overflow="hidden" style:margin-top="-70px" style:height="150px">
+                                <div style:overflow="hidden" style:margin-top="-64px" style:height="135px">
                                     <img src={row.heroImage.url} alt="Hero" style:max-width="180px" style:min-width="180px" style:top="0px">    
                                 </div>
                             </td>

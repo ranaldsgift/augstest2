@@ -93,6 +93,12 @@
     .theme-fields-container input {
         pointer-events: all;
     }
+    .grid.gap-5.pt-2 {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 100;
+    }
 </style>
 
 <form class="m-auto grid gap-5" on:submit|preventDefault={handleSave}>
