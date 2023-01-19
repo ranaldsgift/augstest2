@@ -17,7 +17,7 @@ export const handle: Handle = async ({event, resolve}) => {
 		event.locals.user = await User.findOneBy({ id: event.locals.session.user.id });
 	}
 
-	if (event.url.pathname.endsWith('/edit') || event.url.pathname.endsWith('/create')) {
+	if (event.url.pathname.endsWith('/edit')) {
 		if (!event.locals.session) {
 			throw redirect(303, '/errors/auth');
 		}

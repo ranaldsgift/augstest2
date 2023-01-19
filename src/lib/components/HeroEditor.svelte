@@ -15,6 +15,7 @@
     import { instanceToInstance } from "class-transformer";
     import { DataHelper } from "$lib/helpers/DataHelper";
     import { ToastHelper } from "$lib/helpers/ToastHelper";
+    import { page } from "$app/stores";
 
     export let hero: Hero;
     export let template = ThemeTemplates[hero.theme].heroSheet;
@@ -104,7 +105,11 @@
 <div class="hero-editor m-auto grid gap-5">
     <div class="grid gap-5">
         <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
-        {#if !hero.isValid()}
+        {#if !$page.data.session}
+            <PigeonPeteSays>
+                <p>You must be logged in to create a Hero!</p>
+            </PigeonPeteSays>
+        {:else if !hero.isValid()}
             <PigeonPeteSays>
                 <p>To save your Hero, please complete the following fields:</p>
                 <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
@@ -209,7 +214,7 @@
         </div>
         <div>
             <div class="grid gap-5 pt-2">
-                {#if hero.isValid() && isDirty()}
+                {#if hero.isValid() && isDirty() && $page.data.session}
                     <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
                 {:else}
                     <div class="disabled-button">
