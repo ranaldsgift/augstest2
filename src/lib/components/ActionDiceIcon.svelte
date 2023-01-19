@@ -5,7 +5,7 @@
 
     export let theme: ThemeTemplatesEnum;
     export let icon: DiceIconsEnum
-    export let color: string = "#000";
+    export let color: string = "#000000";
 </script>
 
 <style>

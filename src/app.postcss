@@ -22,17 +22,17 @@ a:visited {
 #page-content {
     position: relative;
 }
-#page-content>ol.breadcrumb-nonresponsive {
+#page-content ol.breadcrumb-nonresponsive {
     padding: 0.5rem 2rem;
     background: rgba(var(--color-secondary-800));
     color: rgba(var(--color-surface-100));
     font-family: system-ui;
 }
-#page-content>ol.breadcrumb-nonresponsive a {
-    color: rgba(var(--color-surface-900));
+#page-content ol.breadcrumb-nonresponsive a {
+    color: rgba(var(--color-secondary-400));
     text-decoration: none;
 }
-#page-content>ol.breadcrumb-nonresponsive a:hover {
+#page-content ol.breadcrumb-nonresponsive a:hover {
     color: rgba(var(--color-surface-100));
 }
 #page-content>*:not(nav) {
@@ -73,7 +73,7 @@ iconify-icon.context-button {
     display: inline-block;
     padding: 2px;
     background: #eab308;
-    color: #000;
+    color: #000000;
     border-radius: 4px;
     width: 20px;
     height: 20px;
@@ -85,7 +85,7 @@ iconify-icon.context-button {
     display: inline-block;
     padding: 2px;
     background: #eab308;
-    color: #000;
+    color: #000000;
     border-radius: 4px;
     position: absolute;
     right: 0px;
@@ -277,4 +277,7 @@ span.chip.chip-primary span:first-child {
 .text-stroke {
     -webkit-text-stroke: var(--strokeWidth, 2px);
     -webkit-text-stroke-color: black;
+}
+li.crumb-separator {
+    color: white;
 }

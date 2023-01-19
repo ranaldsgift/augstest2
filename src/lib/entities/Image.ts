@@ -7,6 +7,7 @@ export class Image extends BaseEntity {
         this.scale = 100;
         this.positionLeft = 0;
         this.positionTop = 0;
+        this.url = '';
     }
 
     @PrimaryGeneratedColumn("increment")

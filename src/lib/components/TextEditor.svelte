@@ -4,7 +4,7 @@
     import ModalFormEditor from "./ModalFormEditor.svelte";
 
     export let font: string = "Comic Sans MS"
-    export let fontColor: string = "#000";
+    export let fontColor: string = "#000000";
     export let content: string | number | undefined;
     export let alignment: string = "center";
     export let type: string = 'text';

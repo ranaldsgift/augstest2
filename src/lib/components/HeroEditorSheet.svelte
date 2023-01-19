@@ -168,13 +168,12 @@
     }
 
     function handleEditHeroImage() {
-
         const prompt: ModalSettings = {
             type: 'prompt',
             title: 'Hero Image',
             body: 'Provide an image URL. The image host will affect if the image is rendered correctly when the Hero sheet PNG is generated. Approved hosts: https://imgur.com',
             // Populates the initial input value
-            value: hero.heroImage.url || hero.heroImage.url.length > 0 ? hero.heroImage.url : '',
+            value: hero.heroImage.url && hero.heroImage.url.length > 0 ? hero.heroImage.url : '',
             // Returns the updated response value
             response: (heroImage: string) => {
                 hero.heroImage.url = heroImage;
@@ -228,7 +227,7 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    .hero-sheet-container[data-theme="BTAS"] :global(input[name="name"] + button.positioned-text) {
+    .hero-sheet-container[data-theme="BTAS"] .hero-name {
         text-shadow: 3px 3px 1px black;
         margin-left: -2px;
     }
@@ -283,7 +282,7 @@
         text-align: left;
     }       
     .hero-sheet-container[data-theme="BTAS"] .noise-overlay {            
-        background: #000;
+        background: #000000;
         filter: url(#noiseFilter);
         position: absolute;
         content: '';
@@ -298,6 +297,10 @@
         mix-blend-mode: multiply;
         opacity: 0.7;
     }
+    :global([contentEditable=true]:empty:before) {
+    content: attr(placeholder);
+    opacity: 0.6;
+  }
 </style>
 
 <svelte:window
@@ -317,8 +320,6 @@ on:keyup={(e) => {
     {#if template.overlay_image}
     <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
     {/if}
-    <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
-    </PositionedImageEditor>
     {#if hero.heroImage.url}
     <img class="absolute" on:wheel={handleScaleImage} use:draggable={{
         position: { x: hero.heroImage.positionLeft * scale, y:hero.heroImage.positionTop * scale },
@@ -337,8 +338,19 @@ on:keyup={(e) => {
         <iconify-icon icon="mdi:edit" class="hover center" hidden></iconify-icon>
     </button>
     {/if}
-    <PositionedTextEditor name="name" template={template.name} bind:content={hero.name} bind:fontSize={hero.fontSizeHeroName} placeholder="Hero Name" alignment="left" display="flex" verticalAlign="end">
-    </PositionedTextEditor>
+    <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
+    </PositionedImageEditor>
+    <div class="absolute flex" style:width={template.name.size.width} style:height={template.name.size.height} style:top={template.name.position.top} style:left={template.name.position.left}>
+        <span class="unstyled hero-name" style:position="relative" style:bottom="0px" style:align-self="flex-end" contenteditable="true"
+        style:font-size="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size : hero.fontSizeHeroName}px"
+        style:line-height="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size * 0.7 : hero.fontSizeHeroName * 0.7}px"
+        style:font-family={template.name.font}
+        style:color={template.name.font_color}
+        placeholder="Hero Name"
+        spellcheck="false"
+        bind:innerHTML={hero.name}>
+        </span>
+    </div>
     <PositionedContainer className="keywords-container" template={template.traits}>
         <button on:click|preventDefault={handleEditKeywords} class="">
             <div

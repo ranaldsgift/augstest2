@@ -105,11 +105,17 @@
     <div class="grid gap-5">
         <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
         {#if !hero.isValid()}
-                    <PigeonPeteSays>
-                        <p>To save your Hero, please complete the following fields:</p>
-                        <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
-                    </PigeonPeteSays>
-        {/if}     
+            <PigeonPeteSays>
+                <p>To save your Hero, please complete the following fields:</p>
+                <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
+            </PigeonPeteSays>
+        {:else if hero.id && isDirty()}        
+            <PigeonPeteSays>
+                <p>You have unsaved changes! Don't forget to save!</p>
+                <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
+            </PigeonPeteSays>
+        {/if}
+
     </div>
     <div class="form comic-form">
         <header>
@@ -170,15 +176,15 @@
             </label>
         </div>
         <div class="image-fields-container">
-            <label>
+            <label use:tooltip={{ content: 'Use scrollwheel up/down while hovering to scale your Hero image. Hold shift for larger scaling.' }}>
                 <span>Hero Image Scale</span>
                 <input type="number" name="heroImage.scale" bind:value={hero.heroImage.scale}>
             </label>
-            <label>
+            <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
                 <span>Hero Image Position Left</span>
                 <input type="number" name="heroImage.positionLeft" bind:value={hero.heroImage.positionLeft}>
             </label>
-            <label>
+            <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
                 <span>Hero Image Position Top</span>
                 <input type="number" name="heroImage.positionTop" bind:value={hero.heroImage.positionTop}>
             </label>
