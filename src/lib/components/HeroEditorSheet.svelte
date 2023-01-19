@@ -207,10 +207,11 @@
     .hero-action-dice-container button:hover {
         filter: contrast(1.5);
     }
-    .hero-sheet-container[data-theme="TMNT"] .hero-action-dice-container, .hero-sheet-container[data-theme="TMNT"] :global(.positioned-text) {
+    .hero-sheet-container[data-theme="TMNT"] .hero-action-dice-container, .hero-sheet-container[data-theme="TMNT"] :global(.positioned-text),
+    .hero-sheet-container[data-theme="TMNT"] .hero-name, .hero-sheet-container[data-theme="TMNT"] :global(.keywords-container) {
         transform: skew(1.7deg, -1.7deg);
     }
-    .hero-sheet-container[data-theme="TMNT"] :global(.hero-action-dice-container), .hero-sheet-container[data-theme="TMNT"] :global(.positioned-container) {
+    .hero-sheet-container[data-theme="TMNT"] .ability-container p {
         transform: skew(1deg, -1deg);
     }
     .hero-overlay-image {
