@@ -69,7 +69,7 @@
     <svelte:fragment slot="header">
         <AppBar background="bg-tertiary-600" class="text-black">
             <svelte:fragment slot="lead">
-                <button name="Menu" use:menu={{ menu: 'navmenu', fixed: true }} class="btn-icon">
+                <button aria-label="Menu" use:menu={{ menu: 'navmenu', fixed: true }} class="btn-icon">
                     <iconify-icon icon="mdi:menu"></iconify-icon>
                 </button>
                 <nav class="menu-tl card p-4 w-48 shadow-xl top-16 left-2 list-nav" data-menu="navmenu">
