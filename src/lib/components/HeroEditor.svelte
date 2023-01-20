@@ -132,11 +132,6 @@
 <div class="hero-editor m-auto grid gap-5">
     <div class="grid gap-5">
         <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
-        {#if !$page.data.session}
-            <PigeonPeteSays>
-                <p>You must be logged in to create a Hero!</p>
-            </PigeonPeteSays>
-        {/if}
     </div>
     <div class="form comic-form">
         <div class="tab-buttons flex gap-4">
@@ -252,7 +247,11 @@
             </div>
         </div>
         {/if}
-        {#if !hero.isValid()}
+        {#if !$page.data.session}
+            <PigeonPeteSays>
+                <p>You must be logged in to create a Hero!</p>
+            </PigeonPeteSays>
+        {:else if !hero.isValid()}
             <PigeonPeteSays>
                 <p>To save your Hero, please complete the following fields:</p>
                 <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
