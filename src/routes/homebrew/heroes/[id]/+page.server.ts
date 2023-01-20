@@ -5,13 +5,13 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 
-    if (isNaN(parseInt(params.id))) {
+    const id = Number(params.id);
+
+    if (isNaN(id)) {
         throw error(404, 'You must provide a Hero ID');
     }
 
-    let id = parseInt(params.id) ?? 0;
-
-    if (!id) {
+    if (id === 0) {
         throw error(404, 'You must provide a valid Hero ID');
     }
 

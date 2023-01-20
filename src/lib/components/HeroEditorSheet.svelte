@@ -363,7 +363,7 @@ on:keyup={(e) => {
                 {#each hero.keywords as keyword, index}
                     <span>{keyword}</span>
                     {#if index < hero.keywords.length - 1}
-                    <span>&nbsp;•&nbsp;</span>
+                    <span>&nbsp;•&nbsp;&nbsp;</span>
                     {/if}
                 {/each}
                 {:else}
