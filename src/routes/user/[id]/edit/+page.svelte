@@ -10,8 +10,6 @@
 
     const userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
 
-    console.log(userModel);
-
     async function handleSave() {
         const response = await fetch('/api/user?/save', {
             method: 'POST',
@@ -21,8 +19,6 @@
         if (response.ok) {
             ToastHelper.create('Saved!');
         }
-
-        console.log(response);
     }
 </script>
 

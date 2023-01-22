@@ -1,12 +1,11 @@
 <script lang="ts">
     import { applyAction, deserialize } from "$app/forms";
-    import { RadioGroup, RadioItem, tooltip, type ToastSettings } from '@skeletonlabs/skeleton';
+    import { RadioGroup, RadioItem, tooltip } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
     import { writable, type Writable } from "svelte/store";
     import PigeonPeteSays from "./PigeonPeteSays.svelte";
     import HeroEditorSheet from "./HeroEditorSheet.svelte";
-    import { toastStore } from '@skeletonlabs/skeleton';
     import type { Hero } from "$lib/entities/Hero";
     import { FormHelper } from "$lib/helpers/FormHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
@@ -111,9 +110,9 @@
     .theme-fields-container input {
         pointer-events: all;
     }
-    .grid.gap-5.pt-2 {
+    .page-button-container {
         position: fixed;
-        top: 80px;
+        top: 90px;
         right: 20px;
         z-index: 100;
     }
@@ -263,7 +262,7 @@
             </PigeonPeteSays>
         {/if}
         <div>
-            <div class="grid gap-5 pt-2">
+            <div class="grid gap-5 page-button-container">
                 {#if hero.isValid() && isDirty() && $page.data.session}
                     <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
                 {:else}

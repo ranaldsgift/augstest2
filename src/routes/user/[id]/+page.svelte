@@ -9,7 +9,6 @@
     export let data: PageData;
 
     const userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
-    console.log(userModel);
 </script>
 
 {#if !userModel}

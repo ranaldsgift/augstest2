@@ -24,7 +24,6 @@
         const {
             data: { subscription },
         } = supabaseClient.auth.onAuthStateChange((event, session) => {
-            console.log('AUTH STATE CHANGE');
             invalidate('supabase:auth')
         })
 

@@ -12,11 +12,8 @@
     export let type: string = 'text';
     export let placeholder: string = '';
     export let fontSize: number | undefined = undefined;
-    export let scale: number = 1.0;
     export let display: string = 'block';
     export let verticalAlign: string = '';
-
-    scale = 0.8;
 
     function handleEdit() {
         const formFields: FormField[] = [{

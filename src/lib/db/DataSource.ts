@@ -11,23 +11,16 @@ import { DataSource } from 'typeorm';
 import { env } from '$env/dynamic/private'
 import { AuthoredEntitySubscriber } from '$lib/entities/subscribers/AuthoredEntitySubscriber';
 import { EntitySubscriber } from '$lib/entities/subscribers/EntitySubscriber';
-
-let PRIVATE_SUPABASE_HOST = env.PRIVATE_SUPABASE_HOST;
-let PRIVATE_SUPABASE_PASSWORD = env.PRIVATE_SUPABASE_PASSWORD;
-
-if (process.env.NODE_ENV === 'production' && process.env.PRIVATE_SUPABASE_HOST && process.env.PRIVATE_SUPABASE_PASSWORD) {
-    PRIVATE_SUPABASE_HOST = process.env.PRIVATE_SUPABASE_HOST;
-    PRIVATE_SUPABASE_PASSWORD = process.env.PRIVATE_SUPABASE_PASSWORD;
-}
+import { UserHomebrewFavorite } from '$lib/entities/UserHomebrewFavorite';
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: PRIVATE_SUPABASE_HOST,
+    host: env.PRIVATE_SUPABASE_HOST,
     port: 5432,
     username: "postgres",
-    password: PRIVATE_SUPABASE_PASSWORD,
+    password: env.PRIVATE_SUPABASE_PASSWORD,
     database: "postgres",
-    entities: [ UserRole, User, Homebrew, HeroAbility, HeroActionDice, HeroAttributes, Image, Token, Hero ],
+    entities: [ UserHomebrewFavorite, UserRole, User, Homebrew, HeroAbility, HeroActionDice, HeroAttributes, Image, Token, Hero ],
     subscribers: [ EntitySubscriber, AuthoredEntitySubscriber ],
     // For development only
     //synchronize: true,

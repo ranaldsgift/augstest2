@@ -1,6 +1,7 @@
 import { AugsLicensesEnum } from "$lib/enums/Enums";
-import { Entity, Column, PrimaryGeneratedColumn, TableInheritance } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, TableInheritance, OneToMany } from "typeorm"
 import { AuthoredEntity } from "./AuthoredEntity";
+import { UserHomebrewFavorite } from "./UserHomebrewFavorite";
 
 @Entity()
 @TableInheritance({ column: { type: "varchar", name: "type" } })
@@ -22,5 +23,8 @@ export class Homebrew extends AuthoredEntity {
         enum: AugsLicensesEnum,
         default: AugsLicensesEnum.Homebrew
     })
-    augsLicense: AugsLicensesEnum
+    augsLicense: AugsLicensesEnum    
+
+    @OneToMany(() => UserHomebrewFavorite, (save) => save.homebrew)
+    public userSaves: UserHomebrewFavorite[]
 }

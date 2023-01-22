@@ -132,7 +132,7 @@
                         <option selected value="false">Descending</option>
                     </select>
                 </div>
-                <div class="comic-label">
+                <div class="comic-label flex-1 grid">
                     <h1>Search</h1>
                     <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
                 </div>

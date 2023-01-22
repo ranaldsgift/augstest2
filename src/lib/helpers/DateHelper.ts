@@ -70,6 +70,7 @@ export class DateHelper {
             else
                 return `${seconds} secs ago`;
         }
+        return 'just now';
     }
 
     public static fromISOString(dateString: string) {{

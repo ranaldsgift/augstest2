@@ -5,13 +5,20 @@
     import { onMount } from 'svelte';
     import * as htmlToImage from 'html-to-image';
     import { Hero } from '$lib/entities/Hero';
-    import ActionDiceIcon from '$lib/components/ActionDiceIcon.svelte';
     import type { PageData } from './$types';
     import { DataHelper } from '$lib/helpers/DataHelper';
+    import InitiativeCard from '$lib/components/InitiativeCard.svelte';
+    import ActionDie from '$lib/components/ActionDie.svelte';
+    import FigureToken from '$lib/components/FigureToken.svelte';
+    import { applyAction, enhance } from '$app/forms';
+    import { User } from '$lib/entities/User';
+    import { ToastHelper } from '$lib/helpers/ToastHelper';
+    import { DateHelper } from '$lib/helpers/DateHelper';
 
     export let data: PageData;
 
     const hero = DataHelper.deserialize<Hero>(Hero, data.heroModel);
+    let authUser = DataHelper.deserialize<User>(User, data.authUser);
 
     let heroSheet: HTMLElement;
     let heroSheetImage: HTMLElement;
@@ -33,6 +40,19 @@
             setTimeout(() => { convertToPNGCanvas(); }, 500);
         }
     });
+
+    async function updateUserData(json: string) {
+        const user = DataHelper.deserialize<User>(User, json);
+        authUser = user;
+        
+        if (authUser.homebrewFavorites.some(x => x.homebrewId == hero.id)) {
+            ToastHelper.create(`Added ${hero.name} to your favorites!`);
+        } else {
+            ToastHelper.create(`Removed ${hero.name} from your favorites!`);
+        }
+
+        
+    }
 </script>
 
 <style>
@@ -45,60 +65,17 @@
     .hero-page {
         max-width: 1566px;
     }
-
-.dice {
-  position: relative;
-  width: 100px;
-  height: 100px;
- transform-style: preserve-3d;
-  transform: rotateY(0deg) rotateX(60deg) rotateZ(315deg);
-  animation: rotate 5s linear infinite;
-  animation-play-state: paused;
-}
-.dice:hover {
-  animation-play-state: running;
-}
-.side {
-  width: 100%;
-  height: 100%;
-  border: 1px solid var(--iconColor);
-  position: absolute;
-  opacity: 1.0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  border-radius: 15px;
-  background: var(--backgroundColor);
-}
-.one {
-    transform: translateZ(50px);
-}
-.two {
-    transform: translateX(-50px) rotateY(-90deg);
-}
-.three {
-    transform: translateY(50px) rotateX(90deg);
-}
-.four {
-    transform: translateY(-50px) rotateX(90deg);
-}
-.five {
-    transform: translateX(50px) rotateY(90deg);
-}
-.six {
-    transform: translateZ(-50px);
-}
-
-@keyframes rotate {
-  from {
-    transform: rotateY(0deg) rotateX(60deg) rotateZ(315deg);
-  }
-  to {
-    transform: rotateY(360deg) rotateX(60deg) rotateZ(315deg);
-  }
-}
-
+    .dice-container>:global(*:nth-child(3)) {
+        margin-left: -150px;
+        margin-top: -25px;
+        z-index: 0;
+    }
+    .edit-button {        
+        position: fixed;
+        top: 90px;
+        right: 20px;
+        z-index: 100;
+    }
 </style>
 
 <svelte:head><title>{hero ? `${hero.name} by ${hero.user.userName}` : `For Pete's Sake!`}</title></svelte:head>
@@ -113,73 +90,93 @@
 	<li class="crumb">{hero?.name}</li>
 </ol>
 
-<div class="hero-page flex justify-center gap-5 flex-wrap">    
+<div class="hero-page flex justify-center gap-5 flex-col">    
     {#if !hero}
         <p>There is no data available for this Homebrew.</p>
     {:else}
+    <div class="flex gap-5 justify-center flex-wrap">
         <div bind:this={heroSheet}>
             <HeroSheet hero={hero}></HeroSheet>
         </div>
         <div style:box-shadow="black 0 0 3px 1px" style:border-radius="5px" style:display="none" bind:this={heroSheetImage}></div>
-        <div class="comic-form grow">
-            <div class="flex grow gap-5 pb-5">                
+        <div class="comic-form">
+            <div class="flex flex-col grow gap-5 pb-5">                
                 <div class="comic-label">
                     <h1>Designer</h1>
                     <p><a href="/user/{hero.user.id}">{hero.user.userName}</a></p>
                 </div>
                 <div class="comic-label">
-                    <h1>Date Created</h1>
+                    <h1>Created</h1>
                     <p>{new Date(hero.dateCreated).toLocaleDateString()}</p>
                 </div>
                 {#if hero.dateCreated != hero.dateModified}
                 <div class="comic-label">
-                    <h1>Date Updated</h1>
-                    <p>{new Date(hero.dateModified).toLocaleDateString()}</p>
+                    <h1>Updated</h1>
+                    <p>{DateHelper.timeSinceString(new Date(hero.dateModified), new Date())}</p>
                 </div>
                 {/if}
             </div>
-            {#if hero.description}
-            <div class="flex gap-5 pb-5">   
-                <div class="comic-label">
-                    <h1>Hero Description</h1>
-                    <p>{hero.description}</p>
-                </div>
-            </div>
-            {/if}
-    
-            {#if $page.data.session && $page.data.session.user.id == hero.user.id}
-            <div class="flex justify-center">
-                <a href={$page.url + "/edit"} class="unstyled">
-                    <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
-                </a>
-            </div>
-            {/if}
-            <div class="flex gap-20 p-10 justify-center">
-                <div class="dice z-20" style:--backgroundColor={hero.actionDice.backgroundColor} style:--iconColor={hero.actionDice.iconColor}>
-                    <div class="side one"><ActionDiceIcon icon={hero.actionDice.dice[0]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                    <div class="side two"><ActionDiceIcon icon={hero.actionDice.dice[1]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                    <div class="side three"><ActionDiceIcon icon={hero.actionDice.dice[2]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                    <div class="side four"><ActionDiceIcon icon={hero.actionDice.dice[3]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                    <div class="side five"><ActionDiceIcon icon={hero.actionDice.dice[4]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                    <div class="side six"><ActionDiceIcon icon={hero.actionDice.dice[5]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                  </div>
-                  <div class="dice z-10" style:--backgroundColor={hero.actionDice.backgroundColor} style:--iconColor={hero.actionDice.iconColor}>
-                      <div class="side one"><ActionDiceIcon icon={hero.actionDice.dice[0]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                      <div class="side two"><ActionDiceIcon icon={hero.actionDice.dice[1]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                      <div class="side three"><ActionDiceIcon icon={hero.actionDice.dice[2]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                      <div class="side four"><ActionDiceIcon icon={hero.actionDice.dice[3]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                      <div class="side five"><ActionDiceIcon icon={hero.actionDice.dice[4]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                      <div class="side six"><ActionDiceIcon icon={hero.actionDice.dice[5]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                    </div>
-                    <div class="dice" style:--backgroundColor={hero.actionDice.backgroundColor} style:--iconColor={hero.actionDice.iconColor}>
-                        <div class="side one"><ActionDiceIcon icon={hero.actionDice.dice[0]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                        <div class="side two"><ActionDiceIcon icon={hero.actionDice.dice[1]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                        <div class="side three"><ActionDiceIcon icon={hero.actionDice.dice[2]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                        <div class="side four"><ActionDiceIcon icon={hero.actionDice.dice[3]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                        <div class="side five"><ActionDiceIcon icon={hero.actionDice.dice[4]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                        <div class="side six"><ActionDiceIcon icon={hero.actionDice.dice[5]} theme={hero.theme} color={hero.actionDice.iconColor}></ActionDiceIcon></div>
-                      </div>
+            <!-- <InitiativeCard theme={hero.theme} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard> -->
+        </div>
+    </div>
+        {#if hero.description}
+        <div class="flex gap-5 pb-5 justify-center">   
+            <div class="comic-label max-w-5xl">
+                <h1>Hero Description</h1>
+                <p>{hero.description}</p>
             </div>
         </div>
+        {/if}
+        <div class="flex gap-5 flex-col justify-center">
+            <header class="comic-header">
+                <h1>Initiative Card, Token & Dice</h1>
+            </header>
+            <div class="flex items-end self-center">
+                <InitiativeCard theme={hero.theme} scale={0.8} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
+                <div class="grid">
+                    <div class="-ml-16 -mb-10 z-10">
+                        <FigureToken imageUrl={hero.heroImage.url}></FigureToken>
+                    </div>
+                    <div class="flex gap-10 mb-5 pt-16 -ml-4 justify-center dice-container">
+                        <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
+                        <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
+                        <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
+                    </div>
+                </div>
+            </div>            
+            <header class="comic-header">
+                <h1>Skill Cards</h1>
+            </header>
+        </div>
+    {/if}
+    
+    {#if $page.data.session}
+    <div class="flex justify-center edit-button gap-2">
+        {#if $page.data.session.user.id == hero.user.id}
+        <a href={$page.url + "/edit"} class="unstyled">
+            <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
+        </a>
+        <!-- {:else} -->
+        <form method="POST" action="/api/user?/favoriteHomebrew&id={hero.id}" use:enhance={() => {
+            // `form` is the `<form>` element
+            // `data` is its `FormData` object
+            // `action` is the URL to which the form is posted
+            // `cancel()` will prevent the submission
+            return async ( { result } ) => {
+                if (result.type === 'error' || result.type === 'redirect') {
+                    await applyAction(result);
+                    return;
+                }
+
+                updateUserData(result.data?.user);
+            };
+          }}>
+          <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
+            <ComicButton icon="material-symbols:favorite"
+                background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }></ComicButton>
+          </div>
+        </form>
+        {/if}
+    </div>
     {/if}
 </div>

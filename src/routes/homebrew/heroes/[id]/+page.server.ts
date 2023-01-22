@@ -28,6 +28,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     }
   
     return {
+        authUser: DataHelper.serialize(locals.user),
         heroModel: loadData()
     };
 }

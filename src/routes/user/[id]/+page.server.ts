@@ -1,12 +1,11 @@
 import { User } from '$lib/entities/User';
-import { error, redirect } from '@sveltejs/kit';
-import { instanceToPlain } from 'class-transformer';
+import { DataHelper } from '$lib/helpers/DataHelper';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 
     if (!params.id) {
-        console.log('no id');
         throw error(404, "You must supply an ID for a User");
     }
 
@@ -25,6 +24,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     }
 
     return {
-        json: JSON.stringify(instanceToPlain(user))
+        json: DataHelper.serialize(user)
     };
 }

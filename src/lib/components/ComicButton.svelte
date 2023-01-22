@@ -3,24 +3,27 @@
     export let icon = '';
     export let callback: any = null;
     export let disabled: boolean = false;
+    export let background: string = 'rgba(var(--color-tertiary-500))';
 </script>
 
 <style>
     button.comic {
         font-family: 'bangersregular';
         font-size: 1.5rem;
-        padding-top: 10px;
+        padding: 0px;
         text-transform: uppercase;
-        background: rgba(var(--color-tertiary-500));
         color: black;
         border: 3px solid black;
     }
-    button.comic-icon {
-        color: rgba(var(--color-tertiary-500));
+    div.comic-icon {
         display: flex;
         padding: 10px;
         border-radius: 50px;
         background: black;
+        margin: -1px !important;
+    }
+    span {
+        padding: 2px 10px 0;
     }
 
     @keyframes color_anim {
@@ -33,31 +36,31 @@
         100% {
             fill: white;
         }
-    }
+    }   
 </style>
 
 
     {#if callback}
-    <button class="comic btn" {disabled} on:click|preventDefault={() => { callback() }}>
+    <button class="comic btn" {disabled} style:background={background} on:click|preventDefault={() => { callback() }}>
         {#if text.length > 0}
         <span>{text}</span>
         {/if}
         {#if icon.length > 0}
-        <button class="comic-icon" style:margin="-10px -22px -10px 10px">
+        <div class="comic-icon" style:color={background}>
         <iconify-icon {icon}></iconify-icon>
-        </button>
+        </div>
         {/if}
         <slot></slot>
     </button>
     {:else}
-    <button class="comic btn" {disabled}>
+    <button class="comic btn" style:background={background} {disabled}>
         {#if text.length > 0}
         <span>{text}</span>
         {/if}
         {#if icon.length > 0}
-        <button class="comic-icon" style:margin="-10px -22px -10px 10px">
+        <div class="comic-icon" style:color={background}>
         <iconify-icon {icon}></iconify-icon>
-        </button>
+        </div>
         {/if}
         <slot></slot>
     </button>
