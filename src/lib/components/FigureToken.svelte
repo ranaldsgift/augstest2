@@ -4,8 +4,10 @@
 
 <style>
     .figure-token {
-        box-shadow: 0 0 0 4px green, 0 0 7px 4px black;
+        box-shadow: 0 0 3px 1px black;
+        border: 5px solid green;
     }
 </style>
-
-<div class="figure-token w-20 h-20 ml-6 overflow-hidden bg-surface-200 rounded-full"><img src={imageUrl} alt="Hero Token"></div>
+<div class="figure-token-container">
+<div class="figure-token w-24 h-24 overflow-hidden bg-surface-200 rounded-full"><img src={imageUrl} alt="Hero Token"></div>
+</div>

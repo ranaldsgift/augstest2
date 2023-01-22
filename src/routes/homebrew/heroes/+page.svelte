@@ -8,6 +8,7 @@
     import { ThemeTemplatesEnum } from '$lib/interfaces/templates/ThemeTemplatesEnum';
     import ActionDiceIcon from '$lib/components/ActionDiceIcon.svelte';
     import { DataHelper } from '$lib/helpers/DataHelper';
+    import HeroTable from '$lib/components/HeroTable.svelte';
 
     export let data: PageData;
 
@@ -46,60 +47,6 @@
     }
 </script>
 
-<style>
-    .table-container {
-        overflow-x: visible;
-    }
-    .table-container table {
-        box-shadow: none;
-        background-color: transparent;
-        overflow-x: visible;
-    }
-    .table-container tbody tr {
-        background-color: rgb(var(--color-surface-200) / 1);
-    }
-    .table-hover tbody tr:hover {
-        box-shadow: -4px 4px 0 0 black, inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300)) !important;
-    }
-    .table-container .table tbody td:nth-child(n+6) {
-        background-color: var(--diceBackgroundColor);
-        width: 60px;
-    }
-    .table-container .table tbody td:nth-child(6) {
-        border-radius: 30px 0 0 30px;
-    }
-    .table-container .table tbody td:nth-child(5)::after {
-        content: '';
-        border-radius: 40px 0 0 40px;
-        box-shadow: -2px 0px 2px 0 #000000;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 40px;
-        position: absolute;
-        background-color: var(--diceBackgroundColor);
-    }
-    .table-container .table thead tr {
-        /* border: 1px solid black; */
-        background-color: rgba(var(--color-tertiary-700));
-        color: white;
-        text-shadow: 2px 2px rgba(var(--color-surface-800));
-        font-family: 'bangersregular';
-        font-size: 1.75rem;
-        letter-spacing: 4px;
-    }
-    .table-container .table thead tr th {
-        padding: 5px;
-    }
-    .table-container .table tr td {
-        padding: 10px;
-        font-size: 1rem;
-    }
-    tr>td:first-child {
-        padding: 0px !important;
-    }
-</style>
-
 <svelte:head><title>Browse Heroes</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
@@ -110,76 +57,13 @@
 	<li class="crumb">Heroes</li>   
 </ol>
 
-<div class="max-w-5xl grid gap-5">    
-    <div class="comic-form">
-        <header>
-            <h1>Heroes</h1>
-        </header>
+<div class="max-w-5xl grid gap-5">
+    <HeroTable heroes={parsedItems}></HeroTable>
+    {#if data.session}
+    <div class="page-button-container">
+        <a href="/homebrew/heroes/create/" class="unstyled">
+            <ComicButton icon="mdi:edit" text="Create"></ComicButton>
+        </a>
     </div>
-        <div class="table-container grid gap-2">
-            <div class="flex gap-5 relative">
-                <div class="comic-label" style:max-width="200px">
-                    <h1>Sort</h1>
-                    <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
-                        <option value="dateModified">Last Updated</option>
-                        <option value="name">Name</option>
-                    </select>
-                </div>
-                <div class="comic-label" style:max-width="150px">
-                    <h1>Order</h1>
-                    <select bind:value={sortAscState} on:change={(e) => { handleSort() }}>
-                        <option value="true">Ascending</option>
-                        <option selected value="false">Descending</option>
-                    </select>
-                </div>
-                <div class="comic-label flex-1 grid">
-                    <h1>Search</h1>
-                    <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
-                </div>
-                {#if data.session}
-                <a href="/homebrew/heroes/create/" class="unstyled" style:position="absolute" style:bottom="-60px" style:right="0px">
-                    <ComicButton icon="mdi:edit" text="Create"></ComicButton>
-                </a>
-                {/if}
-            </div>
-            <table class="table table-hover" use:tableInteraction>
-                <thead style:display="none">
-                    <tr>
-                        <th></th>
-                        <th data-sort="name">Name</th>
-                        <th>Designer</th>
-                        <th data-sort="dateModified">Last Updated</th>
-                        <th colspan="7" align="center">Action Dice</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each $dataTableStore.filtered as row, rowIndex}
-                        <tr style:height="80px"></tr>
-                        <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
-                            <td style:position="relative">
-                                <div style:overflow="hidden" style:margin-top="-64px" style:height="135px">
-                                    <img src={row.heroImage.url} alt="Hero" style:max-width="180px" style:min-width="180px" style:top="0px">    
-                                </div>
-                            </td>
-                            <td>
-                                <a href={'/homebrew/heroes/' + row.id}>{row.name}</a>
-                            </td>
-                            <td>
-                                <a href={'/user/' + row.user.id}>{row.user.userName}</a>
-                            </td>
-                            <td>
-                                {DateHelper.timeSinceString(new Date(row.dateModified), new Date())}
-                            </td>
-                            <td style:width="10px" style:position="relative"></td>
-                            {#if row.actionDice && row.theme}
-                                {#each row.actionDice.dice as dice}
-                                    <td height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
-                                {/each}
-                            {/if}
-                        </tr>
-                    {/each}
-                </tbody>
-            </table>
-        </div>
-        {#if $dataTableStore.pagination}<Paginator bind:settings={$dataTableStore.pagination} />{/if}
+    {/if}
 </div>

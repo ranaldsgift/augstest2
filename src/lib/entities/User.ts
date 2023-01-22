@@ -1,6 +1,7 @@
-import { Type } from "class-transformer"
-import { Entity, Column, PrimaryColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm"
-import { Homebrew } from "./Homebrew"
+import { plainToInstance, Type } from "class-transformer"
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany } from "typeorm"
+import { Hero } from "./Hero"
+import type { Homebrew } from "./Homebrew"
 import { TimestampedEntity } from "./TimestampedEntity"
 import { UserHomebrewFavorite } from "./UserHomebrewFavorite"
 import { UserRole } from "./UserRole"
@@ -26,13 +27,19 @@ export class User extends TimestampedEntity {
     @Column("varchar", { nullable: true })
     public boardgamegeek: string
 
-    @Column("int4", { array: true, nullable: true })
-    public savedHomebrewIds: number[]
-
-    @ManyToMany(() => Homebrew)
-    @JoinTable({ name: "user_saved_homebrews" })
-    public savedHomebrews: Homebrew[]
-
+    @Type(() => UserHomebrewFavorite)
     @OneToMany(() => UserHomebrewFavorite, (save) => save.user, { eager: true })
     public homebrewFavorites: UserHomebrewFavorite[]
+
+    @Type(() => Hero)
+    @OneToMany(() => Hero, (hero) => hero.user)
+    public heroes: Hero[]
+
+    getFavorites(): Homebrew[] {
+        return this.homebrewFavorites.map((favorite) => favorite.homebrew)
+    }
+
+    getFavoriteHeroes(): Hero[] {
+        return this.getFavorites().filter((homebrew) => homebrew.type === Hero.name) as Hero[];
+    }
 }

@@ -1,4 +1,6 @@
+import { Type } from "class-transformer"
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from "typeorm"
+import { Hero } from "./Hero"
 import { Homebrew } from "./Homebrew"
 import { User } from "./User"
 
@@ -13,9 +15,11 @@ export class UserHomebrewFavorite extends BaseEntity {
     @Column("int4")
     public homebrewId!: number
 
+    @Type(() => User)
     @ManyToOne(() => User, (user) => user.homebrewFavorites)
     public user!: User
 
-    @ManyToOne(() => Homebrew, (homebrew) => homebrew.userSaves)
+    @Type(() => Homebrew)
+    @ManyToOne(() => Homebrew, (homebrew) => homebrew.userFavorites)
     public homebrew!: Homebrew
 }

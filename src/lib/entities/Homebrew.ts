@@ -26,5 +26,8 @@ export class Homebrew extends AuthoredEntity {
     augsLicense: AugsLicensesEnum    
 
     @OneToMany(() => UserHomebrewFavorite, (save) => save.homebrew)
-    public userSaves: UserHomebrewFavorite[]
+    public userFavorites: UserHomebrewFavorite[]
+
+    @Column("varchar")
+    public type: string
 }

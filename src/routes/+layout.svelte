@@ -90,7 +90,7 @@
                     <iconify-icon icon="mdi:github"></iconify-icon>
                 </a>
                 {#if $page.data.session}
-                    <a href="/user/{$page.data.session.user.id}" aria-label="User Account" class="material-icons">                    
+                    <a href="/user/{$page.data.session.user.id}" aria-label="User Account" class="btn-icon">
                         <iconify-icon icon="mdi:user"></iconify-icon>
                     </a>
                 {:else}

@@ -23,7 +23,7 @@
         margin: -1px !important;
     }
     span {
-        padding: 2px 10px 0;
+        padding: 2px 10px 0 12px;
     }
 
     @keyframes color_anim {

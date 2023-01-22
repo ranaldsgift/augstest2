@@ -14,32 +14,41 @@
     import { User } from '$lib/entities/User';
     import { ToastHelper } from '$lib/helpers/ToastHelper';
     import { DateHelper } from '$lib/helpers/DateHelper';
+    import download from 'downloadjs'
+    import JSZip from 'jszip';
 
     export let data: PageData;
+    export let heroPage: HTMLElement;
 
     const hero = DataHelper.deserialize<Hero>(Hero, data.heroModel);
     let authUser = data.authUser ? DataHelper.deserialize<User>(User, data.authUser) : null;
 
     let heroSheet: HTMLElement;
-    let heroSheetImage: HTMLElement;
 
-    function convertToPNGCanvas() {
+    function handleDownload() {
         var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
+        var initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
+        var figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
 
-        htmlToImage.toCanvas(heroSheetContainer, { style: { borderRadius: "0px" } })
-        .then(function (canvas) {
-            heroSheetImage.appendChild(canvas); 
-            heroSheetImage.style.display = 'block';
-            heroSheet.remove();
+        htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } }).then(function (dataUrl) {
+            const heroSheetPng = dataUrl;
+            htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } }).then(function (dataUrl) {
+                const initiativeCardPng = dataUrl;
+                htmlToImage.toPng(figureToken).then(function (dataUrl) {
+                    const figureTokenPng = dataUrl;
+
+                    const zip = new JSZip();
+                    zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
+                    zip.file(`${hero.name} by ${hero.user.userName}-Initiative Card.png`, initiativeCardPng.split(',')[1], { base64: true });
+                    zip.file(`${hero.name} by ${hero.user.userName}-Figure Token.png`, figureTokenPng.split(',')[1], { base64: true });
+
+                    zip.generateAsync({type:"blob"}).then(function(content) {
+                        download(content, `${hero.name} by ${hero.user.userName}-${Date.now()}.zip`);
+                    });
+                });
+            });
         });
     }
-
-    onMount(() => {
-        // TODO - Create PNG image of hero sheet and make it available for download instead of replacing the hero sheet with the image.
-        if (false) {
-            setTimeout(() => { convertToPNGCanvas(); }, 500);
-        }
-    });
 
     async function updateUserData(json: string) {
         const user = DataHelper.deserialize<User>(User, json);
@@ -49,9 +58,7 @@
             ToastHelper.create(`Added ${hero.name} to your favorites!`);
         } else {
             ToastHelper.create(`Removed ${hero.name} from your favorites!`);
-        }
-
-        
+        }        
     }
 </script>
 
@@ -90,7 +97,7 @@
 	<li class="crumb">{hero?.name}</li>
 </ol>
 
-<div class="hero-page flex justify-center gap-5 flex-col">    
+<div bind:this={heroPage} class="hero-page flex justify-center gap-5 flex-col">    
     {#if !hero}
         <p>There is no data available for this Homebrew.</p>
     {:else}
@@ -98,7 +105,6 @@
         <div bind:this={heroSheet}>
             <HeroSheet hero={hero}></HeroSheet>
         </div>
-        <div style:box-shadow="black 0 0 3px 1px" style:border-radius="5px" style:display="none" bind:this={heroSheetImage}></div>
         <div class="comic-form">
             <div class="flex flex-col grow gap-5 pb-5">                
                 <div class="comic-label">
@@ -133,7 +139,7 @@
             <div class="flex items-end self-center">
                 <InitiativeCard theme={hero.theme} scale={0.8} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
                 <div class="grid">
-                    <div class="-ml-16 -mb-10 z-10">
+                    <div class="-mb-10 -ml-12 z-10">
                         <FigureToken imageUrl={hero.heroImage.url}></FigureToken>
                     </div>
                     <div class="flex gap-10 mb-5 pt-16 -ml-4 justify-center dice-container">
@@ -172,6 +178,9 @@
             </div>
         </form>
         {/if}
+        <div title="Download ZIP">
+            <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
+        </div>
     </div>
     {/if}
 </div>

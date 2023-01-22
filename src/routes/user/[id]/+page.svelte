@@ -1,14 +1,17 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import ComicButton from "$lib/components/ComicButton.svelte";
+    import HeroTable from "$lib/components/HeroTable.svelte";
     import { User } from "$lib/entities/User";
     import { DataHelper } from "$lib/helpers/DataHelper";
     import { UserHelper } from "$lib/helpers/UserHelper";
+    import { Avatar } from "@skeletonlabs/skeleton";
     import type { PageData } from './$types';
 
     export let data: PageData;
 
     const userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
+    const favorites = userModel?.getFavoriteHeroes();
 </script>
 
 {#if !userModel}
@@ -20,43 +23,57 @@
 	<li class="crumb">{userModel.userName}</li>
 </ol>
 
-<div class="comic-border grow max-w-5xl m-auto bg-surface-200">
+<div class="user-page grow max-w-5xl m-auto">
     {#if !userModel?.userName && data.session?.user.id == $page.params.id}
         <p class="p-8">Please create your user profile by clicking the Edit button below.</p>
     {:else if !userModel?.userName}
         <p>This user hasn't completed their user profile, or this user does not exist.</p>
     {:else if userModel}
-    <h1 class="bg-tertiary-600 px-8 py-4 text-2xl">{userModel.userName}</h1>
-    <div class="flex">
-        {#if userModel.avatar}
-            <img src={userModel.avatar} alt="Avatar" class="h-32 w-32 ml-8 mt-8 mb-8">
-        {/if}
-        <div class="p-8 grid">
-            {#if userModel.discord}
-            <p class="flex gap-2">
-                <iconify-icon icon="ic:baseline-discord"></iconify-icon>
-                {userModel.discord}
-            </p>
-            {/if}
-            {#if userModel.boardgamegeek}
-            <p class="flex gap-2">
-                <iconify-icon icon="game-icons:meeple"></iconify-icon>
-                <a href="https://boardgamegeek.com/user/{userModel.boardgamegeek}" target="_blank" rel="noreferrer">{userModel.boardgamegeek}</a>
-            </p>
-            {/if}
-            <p class="flex gap-2">Created On: {new Date(userModel.dateCreated).toLocaleDateString()}</p>
-            <p class="flex gap-2">Last Updated: {new Date(userModel.dateModified).toLocaleDateString()}</p>
+    {#if userModel.avatar}
+    <div class="mr-8 relative z-10 flex justify-end" style:margin-bottom="-70px">
+        <Avatar src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-tertiary-700 border-4"></Avatar>
+    </div>
+    {/if}
+    <div class="comic-form grid gap-10">
+        <div class="grid gap-5">
+            <header>
+                <h1>{userModel.userName}</h1>
+            </header>
+            <div class="flex gap-5">
+                <div class="comic-label" title="Date Created">
+                    <span><iconify-icon icon="material-symbols:date-range"></span>
+                    <p>{new Date(userModel.dateCreated).toLocaleDateString()}</p>
+                </div>
+                <div class="comic-label" title="Discord">
+                    <span>
+                        <iconify-icon icon="ic:baseline-discord"></iconify-icon></span>
+                    <p>{userModel.discord}</p>
+                </div>
+                <div class="comic-label" title="BGG">
+                    <span><iconify-icon icon="game-icons:meeple"></iconify-icon></span>
+                    <p><a href="https://boardgamegeek.com/user/{userModel.boardgamegeek}" target="_blank" rel="noreferrer">{userModel.boardgamegeek}</a></p>
+                </div>
+            </div>
         </div>
+        {#if data.session?.user.id == $page.params.id && favorites && favorites.length > 0}
+            <hr class="divider">
+            <HeroTable title="Favorite Heroes" heroes={favorites}></HeroTable>
+        {/if}
+
+        {#if userModel.heroes && userModel.heroes.length > 0}
+            <hr class="divider">
+            <HeroTable title="Hero Homebrews" heroes={userModel.heroes}></HeroTable>
+        {/if}
+    </div>
+    {/if}
+
+    {#if data.session?.user.id == $page.params.id}
+    <div class="page-button-container flex gap-2">
+        <a href="/user/{$page.params.id}/edit" class="unstyled">
+            <ComicButton text="Edit Profile" icon="mdi:edit"></ComicButton>
+        </a>
+        <ComicButton text="Logout" icon="mdi:logout" callback={async () => { await UserHelper.signOut(); }}></ComicButton>
     </div>
     {/if}
 </div>
-
-{#if data.session?.user.id == $page.params.id}
-<div class="flex gap-2 px-8 pt-4 justify-center">
-    <a href="/user/{$page.params.id}/edit" class="unstyled">
-        <ComicButton text="Edit Profile" icon="mdi:edit"></ComicButton>
-    </a>
-    <ComicButton text="Logout" icon="mdi:logout" callback={async () => { await UserHelper.signOut(); }}></ComicButton>
-</div>
-{/if}
 {/if}

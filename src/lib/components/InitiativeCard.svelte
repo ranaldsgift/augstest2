@@ -1,6 +1,7 @@
 <script lang="ts">
     import { InitiativeCardTemplates } from "$lib/interfaces/templates/InitiativeCardTemplate";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
+    import { onMount } from "svelte";
     
     export let theme: ThemeTemplatesEnum = ThemeTemplatesEnum.TMNT;
     export let backgroundColor: string = '#000000';
@@ -9,11 +10,26 @@
     export let ability: string = '';
     export let scale: number = 1;
 
+    let wideImage = false;
+
+    onMount (() => {    
+        const checkWideImage = async () => {
+            const img = new Image();
+            img.src = image;
+            await img.decode()
+            console.log(img.naturalHeight / img.naturalWidth);
+            if (img.naturalHeight / img.naturalWidth < 1.5) {
+                wideImage = true;
+            }
+        };
+        checkWideImage();
+    });
+
     const template = InitiativeCardTemplates[theme];
 </script>
 
 <style>
-    .inititiave-card-container {
+    .initiative-card-container {
         border-radius: 10px;
         box-shadow: black 0 0 3px 1px;
         background-size: cover;
@@ -25,21 +41,21 @@
         display: flex;
         justify-content: center;
     }
-    .inititiave-card-container p {
+    .initiative-card-container p {
         position: absolute;
         text-align: center;
     }
-    .inititiave-card-container[data-theme='TMNT'] .initiative-card-name {
+    .initiative-card-container[data-theme='TMNT'] .initiative-card-name {
         -webkit-text-stroke: 5px;
         -webkit-text-stroke-color: black;
         letter-spacing: -1px;
     }
     .initiative-card-image {
         top: 15px;
-        left: 15px;
-        width: calc(100% - 30px);
-        height: auto !important;
         position: absolute;
+        width: var(--width);
+        height: var(--height);
+        object-fit: cover;
     }
     svg {
         top: calc(var(--top) * var(--scale));
@@ -62,14 +78,10 @@
         font-size: calc(var(--fontSize) * var(--scale));
         line-height: calc(var(--lineHeight) * var(--scale));
     }
-    .inititiave-card-container[data-theme='TMNT'] .initiative-card-name p {
+    .initiative-card-container[data-theme='TMNT'] .initiative-card-name p {
         letter-spacing: 3px;
     }
     .gradient-heading {
-        background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(202, 202, 202));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
         letter-spacing: 2px;
     }
     .halftone-container {
@@ -112,11 +124,11 @@
     }
 </style>
 
-<div data-theme={theme} class="inititiave-card-container" style:background-image="url('{template.background_image}')" style:background-color={backgroundColor} style:--scale={scale}>
+<div data-theme={theme} class="initiative-card-container" style:background-image="url('{template.background_image}')" style:background-color={backgroundColor} style:--scale={scale}>
     {#if theme === ThemeTemplatesEnum.TMNT}
         <div class="halftone-container"><div class="halftone"></div></div>
     {/if}
-    <img class="initiative-card-image" src={image} alt="Initiative Card" />
+    <img class="initiative-card-image" src={image} style:--width={wideImage ? undefined : '100%'} style:--height={wideImage ? '100%' : undefined} alt="Initiative Card" />
     {#if template.overlay_image}
         <div style:background="url('{template.overlay_image}')" style:width="100%" style:height="100%" style:position="absolute" style:background-size="cover" style:opacity="0.9"></div>
     {/if}

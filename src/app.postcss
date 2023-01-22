@@ -114,13 +114,13 @@ iconify-icon.context-button {
     border: 4px solid black !important;
     box-shadow: -4px 4px 0 0 black !important;
 }
-.comic-form label:not(.radio-item-label), .comic-label {
+.comic-form label:not(.radio-item-label, .paginator-label), .comic-label {
     border: 4px solid black;
     overflow: hidden;
     background: rgba(var(--color-tertiary-600));
     box-shadow: -4px 4px 0 0 black;
 }
-.comic-form label:not(.radio-item-label), .comic-form .comic-label {
+.comic-form label:not(.radio-item-label, .paginator-label), .comic-form .comic-label {
     display: grid;
     flex: 1 100%;
 }
@@ -281,4 +281,11 @@ span.chip.chip-primary span:first-child {
 }
 li.crumb-separator {
     color: white;
+}
+
+.page-button-container {        
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 100;
 }

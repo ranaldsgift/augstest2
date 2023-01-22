@@ -1,3 +1,4 @@
+import { Hero } from '$lib/entities/Hero';
 import { User } from '$lib/entities/User';
 import { DataHelper } from '$lib/helpers/DataHelper';
 import { error } from '@sveltejs/kit';
@@ -12,7 +13,10 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     let user: User | null;
 
     try {
-        user = await User.findOneBy({ id: params.id });
+        user = await User.findOne({
+            relations: { homebrewFavorites: { homebrew: true }, heroes: true },
+            where: {id: params.id } 
+        });
     }
     catch (err) {
         console.log(err);
@@ -24,6 +28,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     }
 
     return {
-        json: DataHelper.serialize(user)
+        json: DataHelper.serialize(user),
     };
 }
