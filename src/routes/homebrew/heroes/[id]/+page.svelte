@@ -155,9 +155,8 @@
         </div>
     {/if}
     
-    {#if $page.data.session}
     <div class="flex justify-center edit-button gap-2">
-        {#if $page.data.session.user.id == hero.user.id}
+        {#if $page.data.session?.user.id == hero.user.id}
         <a href={$page.url + "/edit"} class="unstyled">
             <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
         </a>
@@ -182,5 +181,4 @@
             <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
         </div>
     </div>
-    {/if}
 </div>
