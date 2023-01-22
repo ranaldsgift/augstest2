@@ -1,3 +1,10 @@
+
+<ol class="breadcrumb-nonresponsive">
+	<li class="crumb"><a href="/">Home</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="crumb">AUGS Helper</li>
+</ol>
+
 <div class="flex h-full flex-col gap-4" style:padding-bottom="0px">
     <header class="comic-header">
         <h1>AUGS Helper</h1>
