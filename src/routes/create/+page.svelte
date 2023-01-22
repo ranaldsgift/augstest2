@@ -24,4 +24,11 @@
 	<li class="crumb">Create</li>
 </ol>
 
-<NavList listItems={navItems}></NavList>
+<div class="page create-page max-w-7xl">
+    <header class="comic-header">
+        <h1>What do you want to create?</h1>
+    </header>
+    <div class="comic-body">
+        <NavList listItems={navItems}></NavList>
+    </div>
+</div>

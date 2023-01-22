@@ -62,7 +62,7 @@
 </style>
 
 <div class="m-auto">
-    <nav class="grid m-auto gap-4 px-8 max-w-5xl comic-list-nav">
+    <nav class="grid m-auto gap-4 px-8 max-w-7xl comic-list-nav">
         {#each listItems as listItem}
         <a href="{listItem.url}/" class="grid btn" data-title={listItem.name}>
         </a>

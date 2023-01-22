@@ -23,23 +23,26 @@
 	<li class="crumb">{userModel.userName}</li>
 </ol>
 
-<div class="user-page grow max-w-5xl m-auto">
+<div class="user-page grow max-w-7xl m-auto">
     {#if !userModel?.userName && data.session?.user.id == $page.params.id}
         <p class="p-8">Please create your user profile by clicking the Edit button below.</p>
     {:else if !userModel?.userName}
         <p>This user hasn't completed their user profile, or this user does not exist.</p>
     {:else if userModel}
     {#if userModel.avatar}
-    <div class="mr-8 relative z-10 flex justify-end" style:margin-bottom="-70px">
+    <div class="mr-14 relative z-10 flex justify-end" style:margin-bottom="-70px">
         <Avatar src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-tertiary-700 border-4"></Avatar>
     </div>
     {/if}
     <div class="comic-form grid gap-10">
-        <div class="grid gap-5">
+        <div class="grid relative">
+            <div class="mr-14 z-0 absolute flex justify-end right-0" style:top="-58px" style:margin-bottom="-128px">
+                <div class="rounded-full" style:outline="5px solid black" style:width="128px" style:height="128px"></div>
+            </div>
             <header>
                 <h1>{userModel.userName}</h1>
             </header>
-            <div class="flex gap-5">
+            <div class="flex gap-5 comic-body">
                 <div class="comic-label" title="Date Created">
                     <span><iconify-icon icon="material-symbols:date-range"></span>
                     <p>{new Date(userModel.dateCreated).toLocaleDateString()}</p>

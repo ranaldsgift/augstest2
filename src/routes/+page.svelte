@@ -1,6 +1,5 @@
 <script>
     import ComicCard from '$lib/components/ComicCard.svelte';
-    import { Breadcrumb, Crumb } from '@skeletonlabs/skeleton';
 
     const homepageItems = [
         {
@@ -18,10 +17,10 @@
             "shadowColor": "#00bfffd9"
         },
         {
-            "title": "Co-Op Tool",
-            "icon": "material-symbols:group",
-            "url": "https://tmntaugs.pages.dev/",
-            "description": "Reduce your table clutter, manage the initiative deck and play with the AUGS Event Deck system.",
+            "title": "AUGS Helper",
+            "icon": "material-symbols:play-circle",
+            "url": "/helper",
+            "description": "This tool will help you run your solo/cooperative games. You can use it to play with the AUGS Event Deck system!",
             "shadowColor": "#9acd32d9"
         },
         {

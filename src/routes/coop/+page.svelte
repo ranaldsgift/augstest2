@@ -1,1 +1,0 @@
-<h1>AUGS Co-Op Tool</h1>

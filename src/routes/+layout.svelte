@@ -7,7 +7,7 @@
     import { invalidate } from '$app/navigation'
     import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
-    import { AppShell, AppBar, Divider, Modal, Toast } from '@skeletonlabs/skeleton';
+    import { AppShell, AppBar, Divider, Modal, Toast, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
     import { menu } from '@skeletonlabs/skeleton';
     import { Drawer } from '@skeletonlabs/skeleton';
     import { drawerStore } from '@skeletonlabs/skeleton';
@@ -15,6 +15,9 @@
     import {  enhance } from '$app/forms';
     import { ToastHelper } from '$lib/helpers/ToastHelper';
     import { QueryClientProvider, QueryClient } from '@tanstack/svelte-query'
+    import { writable, type Writable } from 'svelte/store';
+
+    const storeValue: Writable<string> = writable("Home");
     
     const queryClient = new QueryClient()
 
@@ -68,21 +71,6 @@
     <svelte:fragment slot="header">
         <AppBar background="bg-tertiary-600" class="text-black">
             <svelte:fragment slot="lead">
-                <button aria-label="Menu" use:menu={{ menu: 'navmenu', fixed: true }} class="btn-icon">
-                    <iconify-icon icon="mdi:menu"></iconify-icon>
-                </button>
-                <nav class="menu-tl card p-4 w-48 shadow-xl top-16 left-2 list-nav" data-menu="navmenu">
-                    <ul>
-                        <li><a href="/homebrew">Homebrew</a></li>
-                        <li><a href="/create">Create</a></li>
-                        <li><a href="https://tmntaugs.pages.dev/">Co-Op Tool</a></li>
-                        <li><a href="/assets">Assets</a></li>
-                        <Divider></Divider>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="/support">Support</a></li>
-                    </ul>
-                </nav>
                 <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
@@ -102,6 +90,32 @@
         </AppBar>
     </svelte:fragment>
     <!-- Sidebar -->
+	<svelte:fragment slot="sidebarLeft">        
+        <AppRail selected={storeValue}>
+            <svelte:fragment slot="lead">
+                <AppRailTile label="Home" title="Home" tag="a" href="/" value="Home">
+                    <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:home"></iconify-icon>
+                </AppRailTile>
+            </svelte:fragment>
+            <AppRailTile label="Browse" title="Browse Homebrews" tag="a" href="/homebrew" value="Browse">
+                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:web"></iconify-icon>
+            </AppRailTile>
+            <AppRailTile label="Create" title="Create Homebrews" tag="a" href="/create" value="Create">
+                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:edit"></iconify-icon>
+            </AppRailTile>
+            <AppRailTile label="AUGS Helper" title="AUGS Helper" tag="a" href="/helper" value="Helper">
+                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:play-circle"></iconify-icon>
+            </AppRailTile>
+            <AppRailTile label="Assets" title="Assets" tag="a" href="/assets" value="Assets">
+                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="entypo:folder-images"></iconify-icon>
+            </AppRailTile>
+            <svelte:fragment slot="trail">
+                <AppRailTile tag="a" href="/about" value="About">
+                    <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="mdi:information"></iconify-icon>
+                </AppRailTile>
+            </svelte:fragment>
+        </AppRail>  
+    </svelte:fragment>
     <!-- Page Content Slot -->
     <slot />
 	<svelte:fragment slot="pageFooter">

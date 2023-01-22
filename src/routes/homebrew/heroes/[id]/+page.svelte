@@ -83,6 +83,15 @@
         right: 20px;
         z-index: 100;
     }
+    @media (max-width: 1162px) {
+        .homebrew-details-container {
+            flex-direction: row;
+            width: 100%;
+        }
+        .homebrew-details-container div {
+            flex: 1;
+        }
+    }
 </style>
 
 <svelte:head><title>{hero ? `${hero.name} by ${hero.user.userName}` : `For Pete's Sake!`}</title></svelte:head>
@@ -105,8 +114,7 @@
         <div bind:this={heroSheet}>
             <HeroSheet hero={hero}></HeroSheet>
         </div>
-        <div class="comic-form">
-            <div class="flex flex-col grow gap-5 pb-5">                
+            <div class="homebrew-details-container flex flex-col gap-5 pb-5">                
                 <div class="comic-label">
                     <h1>Designer</h1>
                     <p><a href="/user/{hero.user.id}">{hero.user.userName}</a></p>
@@ -122,21 +130,20 @@
                 </div>
                 {/if}
             </div>
-        </div>
     </div>
         {#if hero.description}
         <div class="flex gap-5 pb-5 justify-center">   
-            <div class="comic-label max-w-5xl">
+            <div class="comic-label max-w-7xl">
                 <h1>Hero Description</h1>
                 <p>{hero.description}</p>
             </div>
         </div>
         {/if}
-        <div class="flex gap-5 flex-col justify-center">
+        <div class="flex flex-col justify-center">
             <header class="comic-header">
                 <h1>Initiative Card, Token & Dice</h1>
             </header>
-            <div class="flex items-end self-center">
+            <div class="comic-body flex items-end justify-center mb-5">
                 <InitiativeCard theme={hero.theme} scale={0.8} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
                 <div class="grid">
                     <div class="-mb-10 -ml-12 z-10">
@@ -160,7 +167,7 @@
         <a href={$page.url + "/edit"} class="unstyled">
             <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
         </a>
-        {:else if authUser}}
+        {:else if authUser}
         <form method="POST" action="/api/user?/favoriteHomebrew&id={hero.id}" use:enhance={() => {
             return async ( { result } ) => {
                 if (result.type === 'error' || result.type === 'redirect') {

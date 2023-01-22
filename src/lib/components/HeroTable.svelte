@@ -96,67 +96,69 @@
     }
 </style>
 
-<div class="table-container grid gap-5">
-        <header class="comic-header">
-            <h1>{title}</h1>
-        </header>
-            <div class="flex gap-5 relative">
-                <div class="comic-label" style:max-width="200px">
-                    <h1>Sort</h1>
-                    <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
-                        <option value="dateModified">Last Updated</option>
-                        <option value="name">Name</option>
-                    </select>
-                </div>
-                <div class="comic-label" style:max-width="150px">
-                    <h1>Order</h1>
-                    <select bind:value={sortAscState} on:change={(e) => { handleSort() }}>
-                        <option value="true">Ascending</option>
-                        <option selected value="false">Descending</option>
-                    </select>
-                </div>
-                <div class="comic-label flex-1 grid">
-                    <h1>Search</h1>
-                    <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
-                </div>
+<div class="table-container grid">
+    <header class="comic-header">
+        <h1>{title}</h1>
+    </header>
+    <div class="comic-body">
+        <div class="flex gap-5 relative">
+            <div class="comic-label" style:max-width="200px">
+                <h1>Sort</h1>
+                <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
+                    <option value="dateModified">Last Updated</option>
+                    <option value="name">Name</option>
+                </select>
             </div>
-            <table class="table table-hover" use:tableInteraction>
-                <thead style:display="none">
-                    <tr>
-                        <th></th>
-                        <th data-sort="name">Name</th>
-                        <th>Designer</th>
-                        <th data-sort="dateModified">Last Updated</th>
-                        <th colspan="7" align="center">Action Dice</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each $dataTableStore.filtered as row, rowIndex}
-                        <tr style:height="80px"></tr>
-                        <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
-                            <td style:position="relative">
-                                <div style:overflow="hidden" style:margin-top="-64px" style:height="135px">
-                                    <img src={row.heroImage.url} alt="Hero" style:max-width="180px" style:min-width="180px" style:top="0px">    
-                                </div>
-                            </td>
-                            <td>
-                                <a href={'/homebrew/heroes/' + row.id}>{row.name}</a>
-                            </td>
-                            <td>
-                                <a href={'/user/' + row.user.id}>{row.user.userName}</a>
-                            </td>
-                            <td>
-                                {DateHelper.timeSinceString(new Date(row.dateModified), new Date())}
-                            </td>
-                            <td style:width="10px" style:position="relative"></td>
-                            {#if row.actionDice && row.theme}
-                                {#each row.actionDice.dice as dice}
-                                    <td height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
-                                {/each}
-                            {/if}
-                        </tr>
-                    {/each}
-                </tbody>
-            </table>
+            <div class="comic-label" style:max-width="150px">
+                <h1>Order</h1>
+                <select bind:value={sortAscState} on:change={(e) => { handleSort() }}>
+                    <option value="true">Ascending</option>
+                    <option selected value="false">Descending</option>
+                </select>
+            </div>
+            <div class="comic-label flex-1 grid">
+                <h1>Search</h1>
+                <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
+            </div>
         </div>
-        {#if $dataTableStore.pagination}<Paginator bind:settings={$dataTableStore.pagination} />{/if}
+        <table class="table table-hover" use:tableInteraction>
+            <thead style:display="none">
+                <tr>
+                    <th></th>
+                    <th data-sort="name">Name</th>
+                    <th>Designer</th>
+                    <th data-sort="dateModified">Last Updated</th>
+                    <th colspan="7" align="center">Action Dice</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each $dataTableStore.filtered as row, rowIndex}
+                    <tr style:height="80px"></tr>
+                    <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
+                        <td style:position="relative" width="180px">
+                            <div style:overflow="hidden" style:margin-top="-64px" style:height="135px">
+                                <img src={row.heroImage.url} alt="Hero" style:top="0px">    
+                            </div>
+                        </td>
+                        <td>
+                            <a class="pl-2" href={'/homebrew/heroes/' + row.id}>{row.name}</a>
+                        </td>
+                        <td>
+                            <a href={'/user/' + row.user.id}>{row.user.userName}</a>
+                        </td>
+                        <td>
+                            {DateHelper.timeSinceString(new Date(row.dateModified), new Date())}
+                        </td>
+                        <td style:width="10px" style:position="relative"></td>
+                        {#if row.actionDice && row.theme}
+                            {#each row.actionDice.dice as dice}
+                                <td height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
+                            {/each}
+                        {/if}
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+    </div>
+</div>
+{#if $dataTableStore.pagination}<Paginator bind:settings={$dataTableStore.pagination} />{/if}

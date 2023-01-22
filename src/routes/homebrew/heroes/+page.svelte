@@ -57,7 +57,7 @@
 	<li class="crumb">Heroes</li>   
 </ol>
 
-<div class="max-w-5xl grid gap-5">
+<div class="max-w-7xl grid gap-5">
     <HeroTable heroes={parsedItems}></HeroTable>
     {#if data.session}
     <div class="page-button-container">

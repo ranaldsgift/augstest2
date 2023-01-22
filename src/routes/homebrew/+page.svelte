@@ -24,4 +24,11 @@
 	<li class="crumb">Homebrew</li>
 </ol>
 
-<NavList listItems={navItems}></NavList>
+<div class="page create-page max-w-7xl">
+    <header class="comic-header">
+        <h1>Pick Your Poison</h1>
+    </header>
+    <div class="comic-body">
+        <NavList listItems={navItems}></NavList>
+    </div>
+</div>

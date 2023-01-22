@@ -36,11 +36,11 @@
             <h1>Edit your User Profile</h1>
         </header>
         <div class="px-8 py-4 grid gap-4">
-            <label>
-                User Name
+            <label class="comic-label">
+                <span>User Name</span>
                 <input type="text" name="userName" bind:value="{userModel.userName}" placeholder="Enter your user name">
             </label>
-            <label>
+            <label class="comic-label">
                 <div class="flex gap-1">
                     <iconify-icon icon="carbon:user-avatar-filled"></iconify-icon>
                     Avatar Image URL
@@ -48,14 +48,14 @@
                 <input type="text" name="avatar" bind:value="{userModel.avatar}" placeholder="Enter an image URL for your avatar">
                 
             </label>
-            <label>
+            <label class="comic-label">
                 <div class="flex gap-1">
                     <iconify-icon icon="ic:baseline-discord"></iconify-icon>
                     Discord
                 </div>
                 <input type="text" name="discord" bind:value="{userModel.discord}" placeholder="Enter your Discord user name">
             </label>
-            <label>
+            <label class="comic-label">
                 <div class="flex gap-1">
                     <iconify-icon icon="game-icons:meeple"></iconify-icon>
                     BoardGameGeek
