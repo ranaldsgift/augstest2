@@ -18,7 +18,7 @@
     export let data: PageData;
 
     const hero = DataHelper.deserialize<Hero>(Hero, data.heroModel);
-    let authUser = DataHelper.deserialize<User>(User, data.authUser);
+    let authUser = data.authUser ? DataHelper.deserialize<User>(User, data.authUser) : null;
 
     let heroSheet: HTMLElement;
     let heroSheetImage: HTMLElement;
@@ -116,7 +116,6 @@
                 </div>
                 {/if}
             </div>
-            <!-- <InitiativeCard theme={hero.theme} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard> -->
         </div>
     </div>
         {#if hero.description}
@@ -156,12 +155,8 @@
         <a href={$page.url + "/edit"} class="unstyled">
             <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
         </a>
-        <!-- {:else} -->
+        {:else if authUser}}
         <form method="POST" action="/api/user?/favoriteHomebrew&id={hero.id}" use:enhance={() => {
-            // `form` is the `<form>` element
-            // `data` is its `FormData` object
-            // `action` is the URL to which the form is posted
-            // `cancel()` will prevent the submission
             return async ( { result } ) => {
                 if (result.type === 'error' || result.type === 'redirect') {
                     await applyAction(result);
@@ -170,11 +165,11 @@
 
                 updateUserData(result.data?.user);
             };
-          }}>
-          <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
+        }}>
+            <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
             <ComicButton icon="material-symbols:favorite"
                 background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }></ComicButton>
-          </div>
+            </div>
         </form>
         {/if}
     </div>
