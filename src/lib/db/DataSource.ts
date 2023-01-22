@@ -13,12 +13,20 @@ import { AuthoredEntitySubscriber } from '$lib/entities/subscribers/AuthoredEnti
 import { EntitySubscriber } from '$lib/entities/subscribers/EntitySubscriber';
 import { UserHomebrewFavorite } from '$lib/entities/UserHomebrewFavorite';
 
+let PRIVATE_SUPABASE_HOST = env.PRIVATE_SUPABASE_HOST;
+let PRIVATE_SUPABASE_PASSWORD = env.PRIVATE_SUPABASE_PASSWORD;
+
+if (process.env.NODE_ENV === 'production' && process.env.PRIVATE_SUPABASE_HOST && process.env.PRIVATE_SUPABASE_PASSWORD) {
+    PRIVATE_SUPABASE_HOST = process.env.PRIVATE_SUPABASE_HOST;
+    PRIVATE_SUPABASE_PASSWORD = process.env.PRIVATE_SUPABASE_PASSWORD;
+}
+
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: env.PRIVATE_SUPABASE_HOST,
+    host: PRIVATE_SUPABASE_HOST,
     port: 5432,
     username: "postgres",
-    password: env.PRIVATE_SUPABASE_PASSWORD,
+    password: PRIVATE_SUPABASE_PASSWORD,
     database: "postgres",
     entities: [ UserHomebrewFavorite, UserRole, User, Homebrew, HeroAbility, HeroActionDice, HeroAttributes, Image, Token, Hero ],
     subscribers: [ EntitySubscriber, AuthoredEntitySubscriber ],
