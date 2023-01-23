@@ -65,7 +65,7 @@
 
         {#if userModel.heroes && userModel.heroes.length > 0}
             <hr class="divider">
-            <HeroTable title="Hero Homebrews" heroes={userModel.heroes}></HeroTable>
+            <HeroTable title="{data.session?.user.id == $page.params.id ? 'My Heroes' : `${userModel.userName}'s Heroes` }" heroes={userModel.heroes}></HeroTable>
         {/if}
     </div>
     {/if}
