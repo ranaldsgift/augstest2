@@ -7,7 +7,6 @@ export function loadData() {
     
     const load = async () => {
         if (!cache.has('keywords')) {
-            console.log('Loading keywords');
             const response = await fetch('/api/keywords', { method: 'GET' });
             const keywords: string[] = await response.json();
             const uniqueCapitalizedKeywords = [ ...new Set(keywords.map(keyword => keyword.toLowerCase())) ];
