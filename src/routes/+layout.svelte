@@ -103,7 +103,7 @@
             <AppRailTile label="Create" title="Create Homebrews" tag="a" href="/create" value="Create">
                 <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:edit"></iconify-icon>
             </AppRailTile>
-            <AppRailTile label="AUGS Helper" title="AUGS Helper" tag="a" href="/helper" value="Helper">
+            <AppRailTile label="AUGS Assistant" title="AUGS Assistant" tag="a" href="/assistant" value="Assistant">
                 <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:play-circle"></iconify-icon>
             </AppRailTile>
             <AppRailTile label="Assets" title="Assets" tag="a" href="/assets" value="Assets">

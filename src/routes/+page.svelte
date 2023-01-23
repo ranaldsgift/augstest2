@@ -17,9 +17,9 @@
             "shadowColor": "#00bfffd9"
         },
         {
-            "title": "AUGS Helper",
+            "title": "AUGS Assistant",
             "icon": "material-symbols:play-circle",
-            "url": "/helper",
+            "url": "/assistant",
             "description": "This tool will help you run your solo/cooperative games. You can use it to play with the AUGS Event Deck system!",
             "shadowColor": "#9acd32d9"
         },
