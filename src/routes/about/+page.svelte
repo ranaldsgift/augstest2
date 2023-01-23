@@ -28,7 +28,7 @@
 		<h1>How It Started</h1>
 		<hr>
 		<p>
-			This project began in 2011 when I fell in love with and got addicted to TMNT AUGS. It didn't take long to stumble across the <a href="https://www.facebook.com/groups/TMNTShadowsOfThePast">AUGS Facebook group</a> created by <a href="https://boardgamegeek.com/boardgamedesigner/110862/pete-walsh">Pete Walsh</a>, and the community <a href="https://discord.gg/nU6wSXU3bn">Discord</a>.
+			This project began in 2021 when I fell in love with and got addicted to TMNT AUGS. It didn't take long to stumble across the <a href="https://www.facebook.com/groups/TMNTShadowsOfThePast">AUGS Facebook group</a> created by <a href="https://boardgamegeek.com/boardgamedesigner/110862/pete-walsh">Pete Walsh</a>, and the community <a href="https://discord.gg/nU6wSXU3bn">Discord</a>.
 		</p>
 		<p>
 			Everyone in the community was so passionate and excited about the game system -- the toys we had to play with. People were sharing their ideas for custom content. Some people were posting images of their new custom characters, others were designing elaborate scenarios to playthrough. You can find a lot of this custom content by digging through the Facebook page.
