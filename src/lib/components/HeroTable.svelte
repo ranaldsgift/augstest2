@@ -136,7 +136,7 @@
                     <tr style:height="80px"></tr>
                     <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
                         <td style:position="relative" width="180px">
-                            <div style:overflow="hidden" style:margin-top="-64px" style:height="135px">
+                            <div style:overflow="hidden" style:margin-top="-64px" style:height="135px" style:min-width="180px">
                                 <img src={row.heroImage.url} alt="Hero" style:top="0px">    
                             </div>
                         </td>
