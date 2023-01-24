@@ -1,5 +1,8 @@
-<script>
+<script lang="ts">
+    import ComicButton from '$lib/components/ComicButton.svelte';
     import ComicCard from '$lib/components/ComicCard.svelte';
+    import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 
     const homepageItems = [
         {
@@ -47,11 +50,32 @@
             "linkTarget": "_blank"
         }
     ];
+
+    let visible: boolean = false;
+    
+	function toggleVisible(): void {
+		visible = !visible;
+        localStorage.setItem("betaAlert", visible.toString());
+    }
+
+    onMount(() => {
+        visible = !localStorage.getItem("betaAlert") || localStorage.getItem("betaAlert") === "true";
+    });
 </script>
 
 <style>
     div {
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+    .alert { 
+        flex-direction: row;
+        align-items: center;
+    }
+    .alert-message {
+        margin: 0px 10px!important;
+    }
+    .alert-actions { 
+        margin: 0 !important;
     }
 </style>
 
@@ -60,6 +84,21 @@
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb">Home</li>
 </ol>
+<div class="pt-10">
+{#if visible}
+    <aside class="alert max-w-5xl m-auto mb-6" transition:fade|local={{ duration: 200 }}>
+        <!-- Icon -->
+        <iconify-icon style:font-size="4rem" icon="material-symbols:warning-outline"></iconify-icon>
+        <!-- Message -->
+        <div class="alert-message">
+            <p>This website is in BETA. It is currently undergoing major development. There is the risk of losing all your saved data at any time. Please be aware of this until we are ready for a full release!</p>
+        </div>
+        <!-- Actions -->
+        <div class="alert-actions">
+            <ComicButton icon="mdi:close" callback={toggleVisible}></ComicButton>
+        </div>
+    </aside>
+{/if}
 
 <div class="grid gap-5 max-w-5xl m-auto px-8">
     {#each homepageItems as homepageItem}
@@ -67,4 +106,5 @@
             <ComicCard title={homepageItem.title} icon={homepageItem.icon} description={homepageItem.description} shadowColor={homepageItem.shadowColor}></ComicCard>
         </a>
     {/each}
+</div>
 </div>
