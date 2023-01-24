@@ -13,6 +13,9 @@
 		text-align: center;
 		color: rgba(var(--color-tertiary-700));
 	}
+	div>h1 {
+		font-size: 1.875rem;
+	}
 </style>
 
 <svelte:head><title>About - augs.tools</title></svelte:head>
