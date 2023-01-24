@@ -336,6 +336,7 @@ on:keyup={(e) => {
         style:width={template.image.size.width}
         style:height={template.image.size.height}
     >
+        <span class="border-dashed border-2 p-2 inline-block">Hero Image URL</span>
         <iconify-icon icon="mdi:edit" class="hover center" hidden></iconify-icon>
     </button>
     {/if}
