@@ -41,7 +41,7 @@
 
 
     {#if callback}
-    <button class="comic btn" {disabled} style:background={background} on:click|preventDefault={() => { callback() }}>
+    <button class="comic btn" aria-label={text.length > 0 ? text.split(' ')[0] : icon} {disabled} style:background={background} on:click|preventDefault={() => { callback() }}>
         {#if text.length > 0}
         <span>{text}</span>
         {/if}
@@ -53,7 +53,7 @@
         <slot></slot>
     </button>
     {:else}
-    <button class="comic btn" style:background={background} {disabled}>
+    <button class="comic btn" aria-label={text.length > 0 ? text.split(' ')[0] : icon} style:background={background} {disabled}>
         {#if text.length > 0}
         <span>{text}</span>
         {/if}
