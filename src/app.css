@@ -10,10 +10,6 @@ body {
     min-height: 100%;
 }
 
-a:visited {
-    color: inherit;
-}
-
 @font-face {
     font-family: 'BebasNeueBold';
     src: url('/fonts/BebasNeue-Bold.otf') format('opentype');

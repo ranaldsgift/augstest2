@@ -85,7 +85,7 @@
                         <iconify-icon icon="mdi:user"></iconify-icon>
                     </a>
                 {:else}
-                <button class="btn-icon" aria-label="Login/Register"  on:click={drawerOpen}>
+                <button class="btn-icon" aria-label="Login/Register" on:click={drawerOpen}>
                     <iconify-icon icon="mdi:user"></iconify-icon>
                 </button>
                 {/if}
@@ -113,7 +113,7 @@
                 <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="entypo:folder-images"></iconify-icon>
             </AppRailTile>
             <svelte:fragment slot="trail">
-                <AppRailTile tag="a" href="/about" value="About">
+                <AppRailTile tag="a" href="/about" value="About" label="About">
                     <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="mdi:information"></iconify-icon>
                 </AppRailTile>
             </svelte:fragment>
