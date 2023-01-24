@@ -28,12 +28,12 @@
 		<h1>Donate</h1>
 	</header>
 	<div class="comic-body">			
-		<h1>Why Should I Donate?</h1>
+		<h1 class="unstyled">Why Should I Donate?</h1>
 		<hr>
 		<p>
 			Listen, I don't want to charge anyone to use this website. I don't want to put any ads on here. In general, all of my personal projects are ad-free, with a few curated expecptions which you will only find on this page. But the reality is that there <i>are</i> costs to building something like this. I do try to make it a point to ensure that I don't incur any significant recurring costs, because I'm just not in the position to do so, especially for a project that I'm building for free. For the most part, my only real expense is domain registration, and that isn't so expensive.
 		</p>
-		<h1>Alright so you have no real expenses?</h1>
+		<h1 class="unstyled">Alright so you have no real expenses?</h1>
 		<hr>
 		<p>
 			Spending time is like spending money, and it does take time to develop this website. Time is a premium to all of us. Time I spend developing this website is time that I can't be playing AUGS games. Ultimately, I work on this project because I love the community and I want to give back, and it's something I enjoy doing. I'll be continuing to work on this website, when my schedule allows and I am sufficiently motivated. I won't tell you that future development depends on donations because it does not.
@@ -68,6 +68,9 @@
 			</div>
 		</a>
 		</div>
+	</div>
+	<div class="page-button-container">
+		<ComicButton text="Donate" icon="mdi:donate"></ComicButton>
 	</div>
 </div>
 
