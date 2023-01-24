@@ -1,3 +1,3 @@
-<svelte:head><title>For Pete's Sake</title></svelte:head>
+<svelte:head><title>For Pete's Sake - augs.tools</title></svelte:head>
 
 <slot></slot>

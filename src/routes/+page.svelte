@@ -55,6 +55,8 @@
     }
 </style>
 
+<svelte:head><title>Home - augs.tools</title></svelte:head>
+
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb">Home</li>
 </ol>

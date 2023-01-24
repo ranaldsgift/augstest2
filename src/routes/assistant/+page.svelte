@@ -1,3 +1,4 @@
+<svelte:head><title>AUGS Assistant - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>

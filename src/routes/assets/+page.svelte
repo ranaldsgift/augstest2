@@ -2,6 +2,8 @@
     const pdfs = Object.keys(import.meta.glob("/static/assets/*.pdf"));
 </script>
 
+<svelte:head><title>Assets - augs.tools</title></svelte:head>
+
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>

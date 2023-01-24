@@ -47,7 +47,7 @@
     }
 </script>
 
-<svelte:head><title>Browse Heroes</title></svelte:head>
+<svelte:head><title>Browse Heroes - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>

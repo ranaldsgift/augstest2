@@ -42,7 +42,7 @@
 <QueryClientProvider client={queryClient}>
 </QueryClientProvider>
 
-<svelte:head><title>AUGS Tools</title></svelte:head>
+<svelte:head><title>AUGS Tools - augs.tools</title></svelte:head>
 
 <Modal/>
 
@@ -76,6 +76,9 @@
             <svelte:fragment slot="trail">
                 <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
                     <iconify-icon icon="mdi:github"></iconify-icon>
+                </a>
+                <a class="btn-icon" href="/donate" aria-label="Donate">
+                    <iconify-icon icon="mdi:donate"></iconify-icon>
                 </a>
                 {#if $page.data.session}
                     <a href="/user/{$page.data.session.user.id}" aria-label="User Account" class="btn-icon">

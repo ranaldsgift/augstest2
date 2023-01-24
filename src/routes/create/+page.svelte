@@ -16,7 +16,7 @@
     });
 </script>
 
-<svelte:head><title> Create Your Homebrew</title></svelte:head>
+<svelte:head><title>Create Your Homebrew - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>

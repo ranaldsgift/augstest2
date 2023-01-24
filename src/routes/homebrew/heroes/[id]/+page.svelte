@@ -94,7 +94,7 @@
     }
 </style>
 
-<svelte:head><title>{hero ? `${hero.name} by ${hero.user.userName}` : `For Pete's Sake!`}</title></svelte:head>
+<svelte:head><title>{hero ? `${hero.name} by ${hero.user.userName}` : `For Pete's Sake!`} - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
