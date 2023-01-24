@@ -14,6 +14,21 @@
     const favorites = userModel?.getFavoriteHeroes();
 </script>
 
+<style>
+    .user-badge-container {
+        position: absolute;
+        top: 80px;
+        right: 200px;
+        padding: 5px 25px 15px 8px;
+        background: rgba(var(--color-primary-200));
+        box-shadow: 0px 0px 3px -1px black;
+        border-radius: 10px 0px
+    }
+    .user-page {
+        margin-top: 0.5rem !important;
+    }
+</style>
+
 {#if !userModel}
 <p>The user does not exist. Either they never existed, or they existed at some point and then ceased to exist.</p>
 {:else}
@@ -23,22 +38,32 @@
 	<li class="crumb">{userModel.userName}</li>
 </ol>
 
-<div class="user-page grow max-w-7xl m-auto">
+<div class="user-page grow max-w-7xl m-auto relative">
     {#if !userModel?.userName && data.session?.user.id == $page.params.id}
         <p class="p-8">Please create your user profile by clicking the Edit button below.</p>
     {:else if !userModel?.userName}
         <p>This user hasn't completed their user profile, or this user does not exist.</p>
     {:else if userModel}
     {#if userModel.avatar}
+    <div class="user-badge-container shadow-2xl flex gap-1">
+        {#each userModel.getBadges() as badge}
+            <span class="badge badge-filled-primary z-10 flex gap-1">
+                <iconify-icon icon={badge.icon}></iconify-icon>
+                {badge.text}
+            </span>
+        {/each}
+    </div>
     <div class="mr-14 relative z-10 flex justify-end" style:margin-bottom="-70px">
         <Avatar src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-tertiary-700 border-4"></Avatar>
     </div>
     {/if}
     <div class="comic-form grid gap-10">
         <div class="grid relative">
+            {#if userModel.avatar}
             <div class="mr-14 z-0 absolute flex justify-end right-0" style:top="-58px" style:margin-bottom="-128px">
                 <div class="rounded-full" style:outline="5px solid black" style:width="128px" style:height="128px"></div>
             </div>
+            {/if}
             <header>
                 <h1>{userModel.userName}</h1>
             </header>
@@ -47,15 +72,19 @@
                     <span><iconify-icon icon="material-symbols:date-range"></span>
                     <p>{new Date(userModel.dateCreated).toLocaleDateString()}</p>
                 </div>
+                {#if userModel.discord}
                 <div class="comic-label" title="Discord">
                     <span>
                         <iconify-icon icon="ic:baseline-discord"></iconify-icon></span>
                     <p>{userModel.discord}</p>
                 </div>
+                {/if}
+                {#if userModel.boardgamegeek}
                 <div class="comic-label" title="BGG">
                     <span><iconify-icon icon="game-icons:meeple"></iconify-icon></span>
                     <p><a href="https://boardgamegeek.com/user/{userModel.boardgamegeek}" target="_blank" rel="noreferrer">{userModel.boardgamegeek}</a></p>
                 </div>
+                {/if}
             </div>
         </div>
         {#if data.session?.user.id == $page.params.id && favorites && favorites.length > 0}
