@@ -20,7 +20,7 @@
             "title": "AUGS Assistant",
             "icon": "material-symbols:play-circle",
             "url": "/assistant",
-            "description": "This tool will help you run your solo/cooperative games. You can use it to play with the AUGS Event Deck system!",
+            "description": "This tool will help you run your solo and cooperative games. You can use it to play with the AUGS Event Deck!",
             "shadowColor": "#9acd32d9"
         },
         {
