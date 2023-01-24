@@ -1,7 +1,7 @@
 import { AugsLicensesEnum } from "$lib/enums/Enums"
 import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum"
 import { Type } from "class-transformer"
-import { Column, ChildEntity, OneToOne, JoinColumn, OneToMany, ManyToMany, JoinTable, BeforeInsert, BeforeUpdate, ManyToOne } from "typeorm"
+import { Column, ChildEntity, OneToOne, JoinColumn, OneToMany } from "typeorm"
 import { HeroAbility } from "./HeroAbility"
 import { HeroActionDice } from "./HeroActionDice"
 import { HeroAttributes } from "./HeroAttributes"
