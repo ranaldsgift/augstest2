@@ -1,22 +1,10 @@
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column } from "typeorm"
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
 
 export abstract class TimestampedEntity extends BaseEntity {
-    @BeforeInsert()
-    handleInsert() {
-        const currentDate = new Date();
-        this.dateCreated = currentDate;
-        this.dateModified = currentDate;
-    }
-
-    @BeforeUpdate()
-    handleUpdate() {
-        this.dateModified = new Date();
-    }
-
-    @Column({ type: "timestamptz", default: new Date().toISOString() })
+    @CreateDateColumn({ type: "timestamptz" })
     dateCreated: Date
     
-    @Column({ type: "timestamptz", default: new Date().toISOString() })
+    @UpdateDateColumn({ type: "timestamptz" })
     dateModified: Date
     
     @Column({ type: "bool", default: false })
