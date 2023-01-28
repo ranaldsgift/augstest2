@@ -20,7 +20,7 @@
         top: 80px;
         right: 200px;
         padding: 5px 25px 15px 8px;
-        background: rgba(var(--color-primary-200));
+        background: rgba(var(--color-primary-100));
         box-shadow: 0px 0px 3px -1px black;
         border-radius: 10px 0px
     }
@@ -47,7 +47,7 @@
     {#if userModel.avatar}
     <div class="user-badge-container shadow-2xl flex gap-1">
         {#each userModel.getBadges() as badge}
-            <span class="badge badge-filled-primary z-10 flex gap-1">
+            <span class="badge bg-primary-900 text-primary-100 z-10 flex gap-1">
                 <iconify-icon icon={badge.icon}></iconify-icon>
                 {badge.text}
             </span>
