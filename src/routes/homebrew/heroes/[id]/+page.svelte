@@ -25,29 +25,21 @@
 
     let heroSheet: HTMLElement;
 
-    function handleDownload() {
+    const handleDownload = async () => {
         var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
         var initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
         var figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
 
-        htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } }).then(function (dataUrl) {
-            const heroSheetPng = dataUrl;
-            htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } }).then(function (dataUrl) {
-                const initiativeCardPng = dataUrl;
-                htmlToImage.toPng(figureToken).then(function (dataUrl) {
-                    const figureTokenPng = dataUrl;
+        const heroSheetPng = await htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } });
+        const initiativeCardPng = await htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } });
+        const figureTokenPng = await htmlToImage.toPng(figureToken);
+        const zip = new JSZip();
+        zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
+        zip.file(`${hero.name} by ${hero.user.userName}-Initiative Card.png`, initiativeCardPng.split(',')[1], { base64: true });
+        zip.file(`${hero.name} by ${hero.user.userName}-Figure Token.png`, figureTokenPng.split(',')[1], { base64: true });
 
-                    const zip = new JSZip();
-                    zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
-                    zip.file(`${hero.name} by ${hero.user.userName}-Initiative Card.png`, initiativeCardPng.split(',')[1], { base64: true });
-                    zip.file(`${hero.name} by ${hero.user.userName}-Figure Token.png`, figureTokenPng.split(',')[1], { base64: true });
-
-                    zip.generateAsync({type:"blob"}).then(function(content) {
-                        download(content, `${hero.name} by ${hero.user.userName}-${Date.now()}.zip`);
-                    });
-                });
-            });
-        });
+        const content = await zip.generateAsync({type:"blob"});
+        download(content, `${hero.name} by ${hero.user.userName}-${Date.now()}.zip`);
     }
 
     async function updateUserData(json: string) {
@@ -63,9 +55,6 @@
 </script>
 
 <style>
-    .comic-form {
-        min-width: 300px;
-    }
     .hero-page :global(.hero-sheet-container) {
         pointer-events: none;
     }
@@ -94,7 +83,7 @@
     }
 </style>
 
-<svelte:head><title>{hero ? `${hero.name} by ${hero.user.userName}` : `For Pete's Sake!`} - augs.tools</title></svelte:head>
+<svelte:head><title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
@@ -106,10 +95,7 @@
 	<li class="crumb">{hero?.name}</li>
 </ol>
 
-<div bind:this={heroPage} class="hero-page flex justify-center gap-5 flex-col">    
-    {#if !hero}
-        <p>There is no data available for this Homebrew.</p>
-    {:else}
+<div bind:this={heroPage} class="hero-page flex justify-center gap-5 flex-col">
     <div class="flex gap-5 justify-center flex-wrap">
         <div bind:this={heroSheet}>
             <HeroSheet hero={hero}></HeroSheet>
@@ -131,36 +117,35 @@
                 {/if}
             </div>
     </div>
-        {#if hero.description}
-        <div class="flex gap-5 pb-5 justify-center">   
-            <div class="comic-label max-w-7xl">
-                <h1>Hero Description</h1>
-                <p>{hero.description}</p>
-            </div>
+    {#if hero.description}
+    <div class="flex gap-5 pb-5 justify-center">   
+        <div class="comic-label max-w-7xl">
+            <h1>Hero Description</h1>
+            <p>{hero.description}</p>
         </div>
-        {/if}
-        <div class="flex flex-col justify-center">
-            <header class="comic-header">
-                <h1>Initiative Card, Token & Dice</h1>
-            </header>
-            <div class="comic-body flex items-end justify-center mb-5">
-                <InitiativeCard theme={hero.theme} scale={0.8} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
-                <div class="grid">
-                    <div class="-mb-10 -ml-12 z-10">
-                        <FigureToken imageUrl={hero.heroImage.url}></FigureToken>
-                    </div>
-                    <div class="flex gap-10 mb-5 pt-16 -ml-4 justify-center dice-container">
-                        <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
-                        <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
-                        <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
-                    </div>
-                </div>
-            </div>            
-            <header class="comic-header">
-                <h1>Skill Cards</h1>
-            </header>
-        </div>
+    </div>
     {/if}
+    <div class="flex flex-col justify-center">
+        <header class="comic-header">
+            <h1>Initiative Card, Token & Dice</h1>
+        </header>
+        <div class="comic-body flex items-end justify-center mb-5">
+            <InitiativeCard theme={hero.theme} scale={0.8} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
+            <div class="grid">
+                <div class="-mb-10 -ml-12 z-10">
+                    <FigureToken imageUrl={hero.heroImage.url}></FigureToken>
+                </div>
+                <div class="flex gap-10 mb-5 pt-16 -ml-4 justify-center dice-container">
+                    <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
+                    <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
+                    <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
+                </div>
+            </div>
+        </div>            
+        <header class="comic-header">
+            <h1>Skill Cards</h1>
+        </header>
+    </div>
     
     <div class="flex justify-center edit-button gap-2">
         {#if $page.data.session?.user.id == hero.user.id}
