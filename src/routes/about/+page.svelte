@@ -1,13 +1,49 @@
-<script>
+<script lang="ts">
     import ComicButton from "$lib/components/ComicButton.svelte";
 
+	const contributorsList: { name: string, userId?: string }[] = [
+		{
+			name: "PigeonPete",
+			userId: ""
+		},
+		{
+			name: "bobthebuilder",
+			userId: ""
+		},
+		{
+			name: "Rynohardt",
+			userId: ""
+		},
+		{
+			name: "MysticFortune",
+			userId: ""
+		},
+		{
+			name: "_-Von Krolock-_"
+		}		
+	];
+
+	const supportersList: { name: string, userId?: string }[] = [
+		{
+			name: "My Mom"
+		},
+		{
+			name: "My Dad"
+		},
+		{
+			name: "My Girlfriend"
+		},
+		{
+			name: "My Brother"
+		},
+	];
 </script>
 
 <style>
 	.comic-body p {
 		line-height: 2rem;
 		margin-bottom: 1rem;
-		font-family: monospace;
+		//font-family: monospace;
 	}
 	h1 {
 		text-align: center;
@@ -27,6 +63,36 @@
 </ol>
 
 <div class="about-page max-w-5xl grid">
+	<header class="comic-header">
+		<h1>Contributors</h1>
+	</header>
+	<div class="comic-body mb-5">
+		<p>
+			This project was initially created by myself, HighImKevin, but what you see here is the result of the work of a lot of different people. Some have contributed code, while others have shared assets for the project. Some people have just given great ideas. I want to thank the following people for helping with this project:
+		</p>
+		<div  class="logo-cloud grid-cols-1 lg:grid-cols-4 gap-1">
+		{#each contributorsList as contributor}
+			{#if contributor.userId}
+				<a class="logo-item bg-primary-900 text-primary-100" href="/user/{contributor.userId}">{contributor.name}</a>
+			{:else}
+				<span class="logo-item bg-primary-900 text-primary-100">{contributor.name}</span>
+			{/if}
+		{/each}
+		</div>
+	</div>
+	<header class="comic-header">
+		<h1>Supporters</h1>
+	</header>
+	<div class="comic-body mb-5">
+		<p>
+			You can read more about becoming a supporter <a href="/donate">here</a>. All supporters earn a <span class="badge badge-icon contents"><iconify-icon icon="mdi:donate"></iconify-icon></span> badge and their name will be listed here if they allow for it. If you are a supporter and would like your name removed, please contact me.
+		</p>
+		<div  class="logo-cloud grid-cols-1 lg:grid-cols-4 gap-1">
+		{#each supportersList as supporter}
+			<span class="logo-item bg-primary-900 text-primary-100">{supporter.name}</span>
+		{/each}
+		</div>
+	</div>
 	<header class="comic-header">
 		<h1>About</h1>
 	</header>
