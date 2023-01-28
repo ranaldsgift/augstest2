@@ -42,8 +42,6 @@
 <QueryClientProvider client={queryClient}>
 </QueryClientProvider>
 
-<svelte:head><title>AUGS Tools - augs.tools</title></svelte:head>
-
 <Modal/>
 
 <Drawer>  
@@ -113,7 +111,7 @@
                 <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="entypo:folder-images"></iconify-icon>
             </AppRailTile>
             <svelte:fragment slot="trail">
-                <AppRailTile tag="a" href="/about" value="About" label="About">
+                <AppRailTile tag="a" href="/about" value="About" aria-label="About">
                     <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="mdi:information"></iconify-icon>
                 </AppRailTile>
             </svelte:fragment>
