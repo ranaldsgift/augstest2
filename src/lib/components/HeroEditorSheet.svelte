@@ -278,6 +278,7 @@
     }
     :global(.hero-icon-image) {
         background-position: center !important;
+        background-size: contain !important;
     }
     .hero-sheet-container[data-theme="BTAS"] .ability-container .hero-ability-effect {
         text-align: left;
