@@ -1,5 +1,7 @@
 <script>
     const pdfs = Object.keys(import.meta.glob("/static/assets/*.pdf"));
+    const btasPdfs = pdfs.filter(pdf => pdf.toLocaleLowerCase().includes("btas"));
+    const tmntPdfs = pdfs.filter(pdf => pdf.toLocaleLowerCase().includes("tmnt"));
 </script>
 
 <svelte:head><title>Assets - augs.tools</title></svelte:head>
@@ -22,10 +24,21 @@
     </div>
     <div>
         <header>
-            <h1>PDFs</h1>
+            <h1>TMNT</h1>
+        </header>
+        <ul class="comic-body mb-5">
+            {#each tmntPdfs as pdf}
+            <li class="py-2 flex gap-2">
+                <iconify-icon icon="ph:file-pdf-fill" class=""></iconify-icon>
+                <a href={`https://github.com/ranaldsgift/augstools/raw/main${pdf}`}>{pdf.substring(pdf.lastIndexOf("/") + 1).replace('.pdf','')}</a>
+            </li>
+            {/each}
+        </ul>
+        <header>
+            <h1>BTAS</h1>
         </header>
         <ul class="comic-body">
-            {#each pdfs as pdf}
+            {#each btasPdfs as pdf}
             <li class="py-2 flex gap-2">
                 <iconify-icon icon="ph:file-pdf-fill" class=""></iconify-icon>
                 <a href={`https://github.com/ranaldsgift/augstools/raw/main${pdf}`}>{pdf.substring(pdf.lastIndexOf("/") + 1).replace('.pdf','')}</a>
