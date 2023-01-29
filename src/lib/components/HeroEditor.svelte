@@ -126,6 +126,14 @@
     .tab-buttons button h1 {
         margin-left: 0;
     }
+    .comic-form>div {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+    }
+    .comic-form>div>:global(span) {
+        flex: 1 100%;
+    }
 </style>
 
 <div class="hero-editor m-auto grid gap-5">
@@ -133,121 +141,6 @@
         <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
     </div>
     <div class="comic-form grid gap-5">
-        <div>
-            <div class="tab-buttons flex">
-                <button on:click={() => { $storeTab = "theme" }} data-selected={$storeTab === "theme"}>
-                <header>
-                    <h1>Style</h1>
-                </header>
-                </button>
-                <button on:click={() => { $storeTab = "details" }} data-selected={$storeTab === "details"}>
-                <header>
-                    <h1>Details</h1>
-                </header>
-                </button>
-                <button on:click={() => { $storeTab = "more" }} data-selected={$storeTab === "more"}>
-                <header>
-                    <h1>More</h1>
-                </header>
-                </button>
-            </div>
-            {#if $storeTab === "theme"}
-            <div data-tab="theme" class="comic-body">
-                <div>
-                    <label>
-                        <h1>Theme</h1>
-                        <RadioGroup selected={themeSelection}>
-                            {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
-                                <RadioItem value={theme}>{theme}</RadioItem>
-                            {/each}
-                        </RadioGroup>
-                        <select name="theme" bind:value={hero.theme} hidden>
-                            {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
-                                <option value={theme}>{theme}</option>
-                            {/each}
-                        </select>
-                    </label>
-                </div>
-                <div class="theme-fields-container">
-                    <label>
-                        <h1>Sheet Color</h1>
-                        <input type="color" name="sheetBackgroundColor" bind:value={hero.sheetBackgroundColor}>
-                    </label>
-                    <label>
-                        <span>Dice Color</span>
-                        <input type="color" name="actionDice.backgroundColor" bind:value={hero.actionDice.backgroundColor}>
-                    </label>
-                    <label>
-                        <span>Dice Icon Color</span>
-                        <input type="color" name="actionDice.iconColor" bind:value={hero.actionDice.iconColor}>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <span>Hero Image</span>
-                        <input type="text" name="heroImage.url" bind:value={hero.heroImage.url}>
-                    </label>
-                    <label>
-                        <span>Icon Image</span>
-                        <input type="text" name="heroIcon.url" bind:value={hero.iconImage.url}>
-                    </label>
-                </div>
-            </div>
-            {:else if $storeTab === "details"}
-            <div data-tab="details" class="comic-body">
-                <div class="general-fields-container">
-                    {#if false}
-                    <!-- TODO: Allow users to override the hero sheet image with their own
-                    This would allow users to use their own themes and styles by loading the image specified here
-                    instead of generating the hero sheet from the data provided -->
-                    <label use:tooltip={{ content: 'Use this to display a static image for this Hero Sheet instead of one generated from the saved Hero data.'}}>
-                        <span>Sheet Override</span>
-                        <input type="text" name="originalImage" bind:value={hero.originalImage}>
-                    </label>
-                    {/if}
-                    <label class="w-full">
-                        <span>Hero Description</span>
-                        <textarea name="description" rows="4" bind:value={hero.description} placeholder="Enter a description of your Hero here. Include details about any special mechanics related to your Hero. Feel free to leave details about the evolution of your Hero after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
-                    </label>
-                </div>
-            </div>
-            {:else if $storeTab === "more"}
-            <div data-tab="more" class="comic-body">
-                <div class="image-fields-container">
-                    <label use:tooltip={{ content: 'Use scrollwheel up/down while hovering to scale your Hero image. Hold shift for larger scaling.' }}>
-                        <span>Image Scale</span>
-                        <input type="number" name="heroImage.scale" bind:value={hero.heroImage.scale}>
-                    </label>
-                    <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
-                        <span>Image Left Position</span>
-                        <input type="number" name="heroImage.positionLeft" bind:value={hero.heroImage.positionLeft}>
-                    </label>
-                    <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
-                        <span>Hero Top Position</span>
-                        <input type="number" name="heroImage.positionTop" bind:value={hero.heroImage.positionTop}>
-                    </label>
-                </div>
-                <div class="font-fields-container">
-                    <label>
-                        <span>Hero Name<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.font_size.toString()}>
-                    </label>
-                    <label>
-                        <span>Keywords<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.font_size.toString()}>
-                    </label>
-                    <label>
-                        <span>Ability Name<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.font_size.toString()}>
-                    </label>
-                    <label>
-                        <span>Ability Effect<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.font_size.toString()}>
-                    </label>
-                </div>
-            </div>
-            {/if}
-        </div>
         {#if !$page.data.session}
             <PigeonPeteSays>
                 <p>You must be logged in to create a Hero!</p>
@@ -263,6 +156,95 @@
                 <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
             </PigeonPeteSays>
         {/if}
+        <header>
+            <h1>Customize your Hero</h1>
+        </header>
+        <div>
+            <label class="">
+                <h1>Theme</h1>
+                <RadioGroup selected={themeSelection}>
+                    {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
+                        <RadioItem value={theme}>{theme}</RadioItem>
+                    {/each}
+                </RadioGroup>
+                <select name="theme" bind:value={hero.theme} hidden>
+                    {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
+                        <option value={theme}>{theme}</option>
+                    {/each}
+                </select>
+            </label>
+        </div>
+        <div class="theme-fields-container">
+            <label>
+                <h1>Sheet Background Color</h1>
+                <input type="color" name="sheetBackgroundColor" bind:value={hero.sheetBackgroundColor}>
+            </label>
+            <label>
+                <span>Dice Background Color</span>
+                <input type="color" name="actionDice.backgroundColor" bind:value={hero.actionDice.backgroundColor}>
+            </label>
+            <label>
+                <span>Dice Icon Color</span>
+                <input type="color" name="actionDice.iconColor" bind:value={hero.actionDice.iconColor}>
+            </label>
+        </div>
+        <div class="general-fields-container">
+            {#if false}
+            <!-- TODO: Allow users to override the hero sheet image with their own
+            This would allow users to use their own themes and styles by loading the image specified here
+            instead of generating the hero sheet from the data provided -->
+            <label use:tooltip={{ content: 'Use this to display a static image for this Hero Sheet instead of one generated from the saved Hero data.'}}>
+                <span>Sheet Override</span>
+                <input type="text" name="originalImage" bind:value={hero.originalImage}>
+            </label>
+            {/if}
+            <label class="w-full">
+                <span>Hero Description</span>
+                <textarea name="description" rows="4" bind:value={hero.description} placeholder="Enter a description of your Hero here. Include details about any special mechanics related to your Hero. Feel free to leave details about the evolution of your Hero after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>Hero Image</span>
+                <input type="text" name="heroImage.url" bind:value={hero.heroImage.url}>
+            </label>
+            <label>
+                <span>Icon Image</span>
+                <input type="text" name="heroIcon.url" bind:value={hero.iconImage.url}>
+            </label>
+        </div>
+        <div class="image-fields-container">
+            <label use:tooltip={{ content: 'Use scrollwheel up/down while hovering to scale your Hero image. Hold shift for larger scaling.' }}>
+                <span>Hero Image Scale</span>
+                <input type="number" name="heroImage.scale" bind:value={hero.heroImage.scale}>
+            </label>
+            <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
+                <span>Hero Image Position Left</span>
+                <input type="number" name="heroImage.positionLeft" bind:value={hero.heroImage.positionLeft}>
+            </label>
+            <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
+                <span>Hero Image Position Top</span>
+                <input type="number" name="heroImage.positionTop" bind:value={hero.heroImage.positionTop}>
+            </label>
+        </div>
+        <div class="font-fields-container">
+            <label>
+                <span>Hero Name<br/>Font Size</span>
+                <input type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.font_size.toString()}>
+            </label>
+            <label>
+                <span>Keywords<br/>Font Size</span>
+                <input type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.font_size.toString()}>
+            </label>
+            <label>
+                <span>Ability Name<br/>Font Size</span>
+                <input type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.font_size.toString()}>
+            </label>
+            <label>
+                <span>Ability Effect<br/>Font Size</span>
+                <input type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.font_size.toString()}>
+            </label>
+        </div>
         <div>
             <div class="grid gap-5 page-button-container">
                 {#if hero.isValid() && isDirty() && $page.data.session}
