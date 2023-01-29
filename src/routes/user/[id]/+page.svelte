@@ -1,10 +1,10 @@
 <script lang="ts">
+    import { enhance } from "$app/forms";
     import { page } from "$app/stores";
     import ComicButton from "$lib/components/ComicButton.svelte";
     import HeroTable from "$lib/components/HeroTable.svelte";
     import { User } from "$lib/entities/User";
     import { DataHelper } from "$lib/helpers/DataHelper";
-    import { UserHelper } from "$lib/helpers/UserHelper";
     import { Avatar } from "@skeletonlabs/skeleton";
     import type { PageData } from './$types';
 
@@ -104,7 +104,9 @@
         <a href="/user/{$page.params.id}/edit" class="unstyled">
             <ComicButton text="Edit Profile" icon="mdi:edit"></ComicButton>
         </a>
-        <ComicButton text="Logout" icon="mdi:logout" callback={async () => { await UserHelper.signOut(); }}></ComicButton>
+        <form action="/api/user?/logout" method="POST" use:enhance>
+            <ComicButton text="Logout" icon="mdi:logout"></ComicButton>
+        </form>
     </div>
     {/if}
 </div>

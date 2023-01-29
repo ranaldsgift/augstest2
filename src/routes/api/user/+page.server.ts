@@ -1,30 +1,52 @@
 
-import { UserHelper } from "$lib/helpers/UserHelper";
 import type { Actions } from "./$types";
-import { fail, error } from '@sveltejs/kit';
+import { fail, error, redirect } from '@sveltejs/kit';
 import { FormHelper } from "$lib/helpers/FormHelper";
 import { User } from "$lib/entities/User";
-import { Homebrew } from "$lib/entities/Homebrew";
 import { UserHomebrewFavorite } from "$lib/entities/UserHomebrewFavorite";
 import { DataHelper } from "$lib/helpers/DataHelper";
 
 export const actions: Actions = {
     login: async ({ request, url, locals }) => {
         const formData = await request.formData();
-        const email = formData.get('email');
+        const email = formData.get('email')?.toString();
 
         if (!email) {
 			return fail(400, { email, missing: true });
         }
-        
-        const response = await UserHelper.signIn(email.toString(), url.searchParams.get('redirectTo') ?? undefined);
 
-        if (response.error) {
-            console.log(response.error);
+        if (!locals.supabaseClient) {
+            throw error(500, 'Internal Server Error');
+        }
+        
+        try {
+            const { error } = await locals.supabaseClient.auth.signInWithOtp({ email, 
+                options: {
+                    emailRedirectTo: url.searchParams.get('redirectTo') ?? undefined
+                }
+            });
+            if (error) throw error
+        } catch (err) {
+            console.error(err);
             throw error(500, "Internal Server Error");
         }
 
         return { id: locals.session?.user.id };
+    },
+
+    logout: async ({ request, url, locals }) => {
+        if (!locals.session || !locals.supabaseClient) {
+            throw redirect(301, '/');
+        }
+
+        try {
+            const { error } = await locals.supabaseClient.auth.signOut();
+            if (error) throw error
+            return { error: null };
+        } catch (err) {
+            console.error(err);
+            throw error(500, "Internal Server Error");
+        }
     },
 
     save: async ({ request, locals }) => {
