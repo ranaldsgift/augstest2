@@ -43,7 +43,6 @@
 	.comic-body p {
 		line-height: 2rem;
 		margin-bottom: 1rem;
-		//font-family: monospace;
 	}
 	h1 {
 		text-align: center;
