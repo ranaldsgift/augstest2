@@ -11,7 +11,7 @@
 		"lint": "eslint ."
 	},
 	"devDependencies": {
-		"@skeletonlabs/skeleton": "^0.99.5",
+		"@skeletonlabs/skeleton": "^0.92.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^5.49.0",
