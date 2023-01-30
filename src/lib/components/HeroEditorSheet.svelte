@@ -183,6 +183,7 @@
     }
 
     let scaleMultiplier = 1;
+    let scalable = false;
 </script>
 
 <style>
@@ -297,7 +298,7 @@
         mix-blend-mode: difference;
         mix-blend-mode: exclusion;
         mix-blend-mode: multiply;
-        opacity: 0.7;
+        opacity: 0.35;
     }
     :global([contentEditable=true]:empty:before) {
     content: attr(placeholder);
@@ -308,11 +309,13 @@
 <svelte:window
 on:keydown={(e) => {
     if (e.key === 'Shift') {
+        scalable = true;
         scaleMultiplier = 10; 
     }
 }} 
 on:keyup={(e) => { 
     scaleMultiplier = 1;
+    scalable = false;
 }}/>
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
@@ -323,13 +326,13 @@ on:keyup={(e) => {
     <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
     {/if}
     {#if hero.heroImage.url}
-    <img class="absolute" on:wheel={handleScaleImage} use:draggable={{
+    <img class="absolute" on:wheel|preventDefault={handleScaleImage} use:draggable={{
         position: { x: hero.heroImage.positionLeft * scale, y:hero.heroImage.positionTop * scale },
         onDrag: ({ offsetX, offsetY }) => {
             hero.heroImage.positionLeft = offsetX;
             hero.heroImage.positionTop = offsetY;
         },
-      }} src={hero.heroImage.url} alt="Hero" style:height={`${100 * (hero.heroImage.scale/100)}%`} style:width="auto">
+      }} src={hero.heroImage.url} alt="Hero" style:height={`${100 * (hero.heroImage.scale/100)}%`} style:object-fit="cover">
     {:else}
     <button class="absolute" on:click={handleEditHeroImage}
         style:top={template.image.position.top}

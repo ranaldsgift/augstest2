@@ -30,3 +30,15 @@ export enum DiceIconsEnum {
     DefendRange = "DefendRange",
     DefendMove = "DefendMove"
 }
+
+export enum SkillCardIconsEnum {
+    Melee = "Melee",
+    Range = "Range",
+    Move = "Move",
+    Defend = "Defend",
+    Focus = "Focus",
+    Persistent = "Persistent",
+    OneTimeUse = "OneTimeUse",
+    Wild = "Wild",
+    Wound = "Wound",
+}

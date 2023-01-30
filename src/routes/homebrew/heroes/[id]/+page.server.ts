@@ -18,7 +18,10 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     const loadData = async () => {    
         let hero = null;
         try {
-            hero = await Hero.findOneBy({ id: id });
+            hero = await Hero.findOne({
+                relations: { skillCards: true },
+                where: { id: id }
+            });
         }
         catch (err) {
             console.log(err);

@@ -18,7 +18,7 @@
 		"@typescript-eslint/parser": "^5.49.0",
 		"autoprefixer": "^10.4.13",
 		"downloadjs": "^1.4.7",
-		"eslint": "^8.32.0",
+		"eslint": "^8.33.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"postcss": "^8.4.21",
 		"svelte": "^3.55.1",

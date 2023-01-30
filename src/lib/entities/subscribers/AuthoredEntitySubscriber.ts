@@ -16,6 +16,11 @@ export class AuthoredEntitySubscriber implements EntitySubscriberInterface<Autho
      * Called before post insertion.
      */
     beforeUpdate(event: UpdateEvent<AuthoredEntity>) {
+        // Check if the entity is valid.
+        if (!event.entity) {
+            return;
+        }
+
         const session = event.queryRunner.data.session as Session;
 
         if (!session) {

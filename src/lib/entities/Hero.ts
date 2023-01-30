@@ -7,6 +7,7 @@ import { HeroActionDice } from "./HeroActionDice"
 import { HeroAttributes } from "./HeroAttributes"
 import { Homebrew } from "./Homebrew"
 import { Image } from "./Image"
+import { SkillCard } from "./SkillCard"
 import { Token } from "./Token"
 import { User } from "./User"
 
@@ -54,6 +55,10 @@ export class Hero extends Homebrew {
     @OneToOne(type => HeroAttributes, { eager: true, cascade: true })
     @JoinColumn()
     attributes: HeroAttributes
+
+    @Type(() => SkillCard)
+    @OneToMany(() => SkillCard, skillCard => skillCard.hero, { cascade: true })
+    skillCards: SkillCard[]
 
     @Type(() => Image)
     @OneToOne(type => Image, { eager: true, cascade: true })

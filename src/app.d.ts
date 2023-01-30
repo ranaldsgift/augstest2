@@ -9,6 +9,7 @@ declare namespace App {
 	}
 	interface Locals {
     	session: import('@supabase/supabase-js').Session | null
+    	supabaseClient: import('@supabase/auth-helpers-sveltekit').TypedSupabaseClient | null
 		user: import('$lib/entities/User').User | null
 	}
 	interface PageData {

@@ -16,6 +16,7 @@
     import { DateHelper } from '$lib/helpers/DateHelper';
     import download from 'downloadjs'
     import JSZip from 'jszip';
+    import SkillCardEditor from '$lib/components/SkillCardEditor.svelte';
 
     export let data: PageData;
     export let heroPage: HTMLElement;
@@ -55,8 +56,8 @@
 </script>
 
 <style>
-    .hero-page :global(.hero-sheet-container) {
-        pointer-events: none;
+    .hero-page :global(.hero-sheet-container), .hero-page :global(.skill-card-editor-container) {
+        pointer-events: none !important;
     }
     .hero-page {
         max-width: 1566px;
@@ -141,10 +142,19 @@
                     <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
                 </div>
             </div>
-        </div>            
+        </div>     
+        {#if hero.skillCards}       
         <header class="comic-header">
             <h1>Skill Cards</h1>
         </header>
+        <div class="comic-body flex gap-5 items-center justify-center flex-wrap">
+            {#each hero.skillCards as skillCard, index}
+                <div class="relative">
+                    <SkillCardEditor scale={0.7} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard}></SkillCardEditor>
+                </div>
+            {/each}
+        </div>
+        {/if}
     </div>
     
     <div class="flex justify-center edit-button gap-2">

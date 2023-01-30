@@ -84,7 +84,7 @@
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb">Home</li>
 </ol>
-<div class="pt-10">
+<div>
 {#if visible}
     <aside class="alert max-w-5xl m-auto mb-6" transition:fade|local={{ duration: 200 }}>
         <!-- Icon -->
