@@ -17,6 +17,9 @@
     import download from 'downloadjs'
     import JSZip from 'jszip';
     import SkillCardEditor from '$lib/components/SkillCardEditor.svelte';
+    import { SkillCardTemplates } from '$lib/interfaces/templates/SkillCardTemplate';
+    import { Drawer, drawerStore, ProgressRadial } from '@skeletonlabs/skeleton';
+    import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
 
     export let data: PageData;
     export let heroPage: HTMLElement;
@@ -27,20 +30,40 @@
     let heroSheet: HTMLElement;
 
     const handleDownload = async () => {
+        drawerStore.open({ width: 'w-full' });
         var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
         var initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
         var figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
 
+        const initiativeCardClone = initiativeCard.cloneNode(true) as HTMLElement;
+        initiativeCardClone.style.setProperty('--scale', '1.0');
+        document.body.appendChild(initiativeCardClone);
+
         const heroSheetPng = await htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } });
-        const initiativeCardPng = await htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } });
+        const initiativeCardPng = await htmlToImage.toPng(initiativeCardClone, { style: { borderRadius: '0px' } });
         const figureTokenPng = await htmlToImage.toPng(figureToken);
         const zip = new JSZip();
         zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
         zip.file(`${hero.name} by ${hero.user.userName}-Initiative Card.png`, initiativeCardPng.split(',')[1], { base64: true });
         zip.file(`${hero.name} by ${hero.user.userName}-Figure Token.png`, figureTokenPng.split(',')[1], { base64: true });
 
+        if (hero.skillCards && hero.skillCards.length > 0) {
+            zip.folder('skills');
+            const skillCards = heroPage.querySelectorAll('.skill-card-container') as NodeListOf<HTMLElement>;
+            for (let i = 0; i < skillCards.length; i++) {
+                const skillCard = skillCards[i];
+                const skillCardScale = skillCard.style.getPropertyValue('--scale');
+                skillCard.style.setProperty('--scale', '1.0');
+                const skillCardPng = await htmlToImage.toPng(skillCard, { style: { borderRadius: '0px' } });
+                skillCard.style.setProperty('--scale', skillCardScale);
+                zip.file(`skills/${hero.name} by ${hero.user.userName}-Skill Card-${hero.skillCards[i].name}.png`, skillCardPng.split(',')[1], { base64: true });
+            }
+        }
+
         const content = await zip.generateAsync({type:"blob"});
         download(content, `${hero.name} by ${hero.user.userName}-${Date.now()}.zip`);
+        initiativeCardClone.remove();
+        drawerStore.close();
     }
 
     async function updateUserData(json: string) {
@@ -56,7 +79,8 @@
 </script>
 
 <style>
-    .hero-page :global(.hero-sheet-container), .hero-page :global(.skill-card-editor-container) {
+    .hero-page :global(.hero-sheet-container), 
+    .hero-page :global(.skill-card-container) {
         pointer-events: none !important;
     }
     .hero-page {
@@ -71,7 +95,7 @@
         position: fixed;
         top: 90px;
         right: 20px;
-        z-index: 100;
+        z-index: 10;
     }
     @media (max-width: 1162px) {
         .homebrew-details-container {
@@ -83,6 +107,18 @@
         }
     }
 </style>
+
+<Drawer>
+    <div class="grid justify-center content-center h-full gap-5">
+        <div style:width="120px" style:height="120px" class="grid justify-self-center">
+            <ProgressRadial stroke={100} meter="stroke-tertiary-700" track="stroke-tertiary-700/20"></ProgressRadial>
+        </div>
+        <PigeonPeteSays>
+            <p>I'm just packaging {hero.name}'s assets for you.</p>
+            <p>Hang tight...</p>
+        </PigeonPeteSays>
+    </div>
+</Drawer>
 
 <svelte:head><title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title></svelte:head>
 
@@ -143,15 +179,13 @@
                 </div>
             </div>
         </div>     
-        {#if hero.skillCards}       
+        {#if hero.skillCards && hero.skillCards.length > 0}
         <header class="comic-header">
             <h1>Skill Cards</h1>
         </header>
         <div class="comic-body flex gap-5 items-center justify-center flex-wrap">
             {#each hero.skillCards as skillCard, index}
-                <div class="relative">
-                    <SkillCardEditor scale={0.7} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard}></SkillCardEditor>
-                </div>
+                    <SkillCardEditor scale={0.5} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
             {/each}
         </div>
         {/if}

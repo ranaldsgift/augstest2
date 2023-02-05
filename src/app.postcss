@@ -62,20 +62,36 @@ body {
 .modal>* {
     transform: skew(1deg);
 }
-
+.show-on-hover {
+    display: none;
+}
+*:hover>.show-on-hover, .hover-parent:hover .show-on-hover {
+    display: inherit;
+}
 iconify-icon {
     font-size: 1.5rem;
 }
-iconify-icon.context-button {
-    display: inline-block;
-    padding: 2px;
-    background: #eab308;
-    color: #000000;
+iconify-icon.context-button.hidden, .context-button.hidden {
+    display: none;
+}
+iconify-icon.context-button.active {
+    color: rgba(var(--color-primary-800));
+    background: rgba(var(--color-primary-400));
+}
+iconify-icon.context-button, .context-button {
+    padding: 4px;
+    background: rgba(var(--color-primary-900));
+    color: #ffffff;
     border-radius: 4px;
-    width: 20px;
-    height: 20px;
-    box-shadow: 1px 1px 2px 1px black;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+}
+*:hover>iconify-icon.context-button, .context-button-container:hover iconify-icon.context-button, *:hover>.context-button {
+    display: flex;
+    gap: 5px;
+    box-shadow: 0px 0px 5px -1px rgba(var(--color-primary-100) / .6);
+    z-index: 100;
 }
 
 *:hover>iconify-icon.hover, .hover-parent:hover iconify-icon.hover {
@@ -89,16 +105,17 @@ iconify-icon.context-button {
     top: 0px;
     width: 20px;
     height: 20px;
-    box-shadow: 1px 1px 2px 1px black;
+    box-shadow: 1px 1px 2px 1px black;  
     font-size: 1rem;
 }
 *:hover>iconify-icon.hover.center {
     left: calc(50% - 17px);
     top: calc(50% - 17px);
 }
-*:hover>iconify-icon.hover:hover {
+*:hover>iconify-icon.hover:hover, iconify-icon.context-button:hover, .context-button:hover {
     color: #ffffff;
     background: #a16207;
+    cursor: pointer;
 }
 .disabled-button {
     filter: grayscale(1);
@@ -206,7 +223,7 @@ input:not(:focus, :hover) {
     border-radius: 5px;
     border: 2px solid black;
 }
-.toast *:not(.text-base) {
+.toast.autohide *:not(.text-base) {
     display: none;
 }
 div:hover>.hover-only {
@@ -303,4 +320,11 @@ li.crumb-separator {
 .card-shadow {
 box-shadow: black 0 0 3px 1px;
 border-radius: 5px;
+}
+
+.blurred-background {
+    backdrop-filter: blur(20px);
+}
+.scale-and-drag {
+    cursor: move;
 }

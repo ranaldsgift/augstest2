@@ -17,8 +17,8 @@
 <style>
     .user-badge-container {
         position: absolute;
-        top: 80px;
-        right: 200px;
+        top: 16px;
+        right: 166px;
         padding: 5px 25px 15px 8px;
         background: rgba(var(--color-primary-100));
         box-shadow: 0px 0px 3px -1px black;

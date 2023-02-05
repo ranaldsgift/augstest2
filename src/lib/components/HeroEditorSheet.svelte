@@ -183,7 +183,6 @@
     }
 
     let scaleMultiplier = 1;
-    let scalable = false;
 </script>
 
 <style>
@@ -309,13 +308,11 @@
 <svelte:window
 on:keydown={(e) => {
     if (e.key === 'Shift') {
-        scalable = true;
         scaleMultiplier = 10; 
     }
 }} 
 on:keyup={(e) => { 
     scaleMultiplier = 1;
-    scalable = false;
 }}/>
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
@@ -327,7 +324,7 @@ on:keyup={(e) => {
     {/if}
     {#if hero.heroImage.url}
     <img class="absolute" on:wheel|preventDefault={handleScaleImage} use:draggable={{
-        position: { x: hero.heroImage.positionLeft * scale, y:hero.heroImage.positionTop * scale },
+        position: { x: hero.heroImage.positionLeft, y: hero.heroImage.positionTop },
         onDrag: ({ offsetX, offsetY }) => {
             hero.heroImage.positionLeft = offsetX;
             hero.heroImage.positionTop = offsetY;
@@ -396,27 +393,25 @@ on:keyup={(e) => {
     </div>
     <PositionedContainer className="ability-container" template={template.ability_container}>
         {#if hero.abilities && hero.abilities.length > 0}
-            {#each hero.abilities as ability, index}
-            <input type="hidden" name="abilities.name" hidden bind:value={ability.name}>
-            <input type="hidden" name="abilities.effect" hidden bind:value={ability.effect}>
-                <button style:position="relative" on:click|preventDefault={() => handleEditAbility(index) }>
-                    <p
-                        class="hero-ability-name text-center pb-1" 
-                        style:font-family={template.ability_name.font}
-                        style:font-size="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
-                        style:line-height="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
-                        style:color={template.ability_name.font_color}
-                    >{ability.name}</p>
-                    <p 
-                        style:white-space="pre-wrap"
-                        class="hero-ability-effect pb-4 text-center" 
-                        style:font-family={template.ability_effect.font}
-                        style:font-size="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
-                        style:line-height="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale + 2}px"
-                        style:color={template.ability_effect.font_color}
-                    >{ability.effect}</p>
-                    <iconify-icon icon="mdi:edit" class="hover" hidden></iconify-icon>
-                </button>
+            {#each hero.getAbilities() as ability, index}
+            <button style:position="relative" on:click|preventDefault={() => handleEditAbility(index) }>
+                <p
+                    class="hero-ability-name text-center pb-1" 
+                    style:font-family={template.ability_name.font}
+                    style:font-size="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
+                    style:line-height="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
+                    style:color={template.ability_name.font_color}
+                >{ability.name}</p>
+                <p 
+                    style:white-space="pre-wrap"
+                    class="hero-ability-effect pb-4 text-center" 
+                    style:font-family={template.ability_effect.font}
+                    style:font-size="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
+                    style:line-height="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale + 2}px"
+                    style:color={template.ability_effect.font_color}
+                >{ability.effect.replaceAll('[[hero]]', hero.name)}</p>
+                <iconify-icon icon="mdi:edit" class="hover" hidden></iconify-icon>
+            </button>
             {/each}
         {:else}
             <p 

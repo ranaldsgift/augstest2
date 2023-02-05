@@ -1,6 +1,6 @@
 <script lang="ts">
     import { applyAction, deserialize } from "$app/forms";
-    import { RadioGroup, RadioItem, tooltip } from '@skeletonlabs/skeleton';
+    import { modalStore, RadioGroup, RadioItem, tooltip, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
     import { writable, type Writable } from "svelte/store";
@@ -17,6 +17,10 @@
     import { page } from "$app/stores";
     import SkillCardEditor from "./SkillCardEditor.svelte";
     import { SkillCard } from "$lib/entities/SkillCard";
+    import SkillCardForm from "./SkillCardForm.svelte";
+    import { fade, fly, slide } from 'svelte/transition'
+	import { quintOut } from 'svelte/easing';
+    import { SkillCardTemplates } from "$lib/interfaces/templates/SkillCardTemplate";
 
     const storeTab: Writable<"theme" | "details" | "more"> = writable("theme");
 
@@ -65,11 +69,12 @@
     }
 
     function handleAddSkillCard() {
-        console.log('adding cards');
         if (!hero.skillCards) {
             hero.skillCards = [];
         }
-        hero.skillCards.push(new SkillCard(hero.user.id));
+
+        const skillCard = new SkillCard(!hero.user ? undefined : hero.user.id);
+        hero.skillCards.push(skillCard);
         hero = hero;
     }
 
@@ -78,6 +83,22 @@
         hero = hero;
     }
 
+
+    function handleSkillCardSelection() {
+        const c: ModalComponent = { ref: SkillCardForm, props: { skillCards: hero.skillCards, userId: hero.user.id } };
+        const d: ModalSettings = {
+            type: 'component',
+            component: c,
+            response: (skillCards: SkillCard[]) => {
+                if (!skillCards || skillCards.length === 0)
+                    return
+                
+                hero.skillCards = skillCards;
+                hero = hero;
+            }
+        };
+        modalStore.trigger(d);
+    }
 </script>
 
 <style>
@@ -284,13 +305,25 @@
         <div class="comic-body flex gap-5 items-center justify-center flex-wrap">
             {#if hero.skillCards}
             {#each hero.skillCards as skillCard, index}
-                <div class="relative">
-                    <iconify-icon class="hover absolute z-10 cursor-pointer mr-1 mt-1 hidden" icon="material-symbols:remove" on:click={() => handleRemoveSkillCard(index)} on:keydown={() =>  handleRemoveSkillCard(index)}></iconify-icon>
-                    <SkillCardEditor scale={0.7} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard}></SkillCardEditor>
+                <div class="relative" in:slide="{{ delay: 0, duration: 300, easing: quintOut }}">
+                    <iconify-icon class="absolute z-10 cursor-pointer mr-1 mt-1 hidden context-button top-0 right-0 p-1" style:font-size="1.2rem" icon="material-symbols:delete" on:click={() => handleRemoveSkillCard(index)} on:keydown={() =>  handleRemoveSkillCard(index)}></iconify-icon>
+                    <SkillCardEditor scale={1} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
                 </div>
             {/each}
             {/if}
-            <button on:click|preventDefault={handleAddSkillCard} class="card-shadow" style:width="{100}px" style:height="{100}px"><iconify-icon icon="material-symbols:add" style:font-size="6rem"></iconify-icon></button>
+            <div class="flex-col">
+                {#if $page.data.session}
+                <div class="grid text-center">
+                    <span>Existing </span>
+                    <button title="Select From Existing Skill Cards" on:click|preventDefault={handleSkillCardSelection} style:width="{100}px" style:height="{100}px"><iconify-icon icon="mdi:ellipsis-horizontal-circle" style:font-size="6rem"></iconify-icon></button>
+                </div>
+                {/if}
+                <div class="grid text-center">
+                    <button title="Add A New Skill Card" on:click|preventDefault={handleAddSkillCard} style:width="{100}px" style:height="{100}px"><iconify-icon icon="material-symbols:add-circle-rounded" style:font-size="6rem"></iconify-icon></button>
+                    <span>New</span>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

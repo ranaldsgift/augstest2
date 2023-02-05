@@ -6,7 +6,8 @@ export class ToastHelper {
             message: message,
             preset: preset,
             timeout: timeout,
-            autohide: autohide
+            autohide: autohide,
+            classes: autohide ? 'autohide ' : ''
         };
         toastStore.trigger(t);
     }

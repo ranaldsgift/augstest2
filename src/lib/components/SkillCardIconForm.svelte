@@ -1,21 +1,26 @@
 <script lang="ts">
-	import { DiceIconsEnum } from '$lib/enums/Enums';
+	import { SkillCardIconsEnum } from '$lib/enums/Enums';
     import { EnumHelper } from '$lib/helpers/EnumHelper';
     import type { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
 	import { modalStore, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
     import { writable, type Writable } from 'svelte/store';
-    import ActionDiceIcon from './ActionDiceIcon.svelte';
     import ComicButton from './ComicButton.svelte';
+    import SkillCardIcon from './SkillCardIcon.svelte';
 	export let parent: any;
 
 	export let theme: ThemeTemplatesEnum;
-	export let icon: DiceIconsEnum = DiceIconsEnum.Move;
+	export let icon: SkillCardIconsEnum = SkillCardIconsEnum.Move;
 	
-	const actionDice: Writable<string> = writable(icon);
-	const diceIconList = EnumHelper.getKeys(DiceIconsEnum);
+	const iconStore: Writable<string> = writable(icon);
+	const iconList = EnumHelper.getKeys(SkillCardIconsEnum);
 
 	function onFormSubmit(): void {
-		if ($modalStore[0].response) $modalStore[0].response($actionDice);
+		if ($modalStore[0].response) $modalStore[0].response($iconStore);
+		modalStore.close();
+	}
+
+	function removeIcon(): void {
+		if ($modalStore[0].response) $modalStore[0].response(null);
 		modalStore.close();
 	}
 </script>
@@ -28,14 +33,15 @@
 </style>
 
 <div class="modal-example-form space-y-4">
-	<RadioGroup selected={actionDice} regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
-		{#each diceIconList as diceIcon}
-			<RadioItem value={diceIcon}>
-				<ActionDiceIcon {theme} icon={DiceIconsEnum[diceIcon]}></ActionDiceIcon>
+	<RadioGroup selected={iconStore} regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
+		{#each iconList as i}
+			<RadioItem value={i}>
+				<SkillCardIcon {theme} icon={SkillCardIconsEnum[i]}></SkillCardIcon>
 			</RadioItem>
 		{/each}
 	</RadioGroup>
 	<footer class="modal-footer {parent.regionFooter}">
+        <ComicButton text="Remove" icon="material-symbols:delete" callback={removeIcon}></ComicButton>
         <ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
     </footer>
 </div>

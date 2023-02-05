@@ -7,7 +7,7 @@
     import { invalidate } from '$app/navigation'
     import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
-    import { AppShell, AppBar, Divider, Modal, Toast, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
+    import { AppShell, AppBar, Divider, Modal, Toast, AppRail, AppRailTile, LightSwitch } from '@skeletonlabs/skeleton';
     import { menu } from '@skeletonlabs/skeleton';
     import { Drawer } from '@skeletonlabs/skeleton';
     import { drawerStore } from '@skeletonlabs/skeleton';
@@ -72,6 +72,7 @@
                 <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
+                <LightSwitch></LightSwitch>
                 <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
                     <iconify-icon icon="mdi:github"></iconify-icon>
                 </a>

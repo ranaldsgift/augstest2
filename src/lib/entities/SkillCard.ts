@@ -15,14 +15,15 @@ export class SkillCard extends Homebrew {
             this.user = new User();
             this.user.id = userId;
         }
+        this.image = new Image();
 
-        this.name ="Into The Shadows"
+/*         this.name ="Into The Shadows"
         this.description = "This is a skill card"
         this.effect = `Place a smoke token in up to 3 different spaces that are within 2 spaces of Leo and in his line of sight.
             While this card is active, Clan Hamato figures suffer no penalty when making a melee strike into or out of obscuring terrain. 
             When this card is no longer active, remove the smoke tokens.`
         this.image = new Image();
-        this.image.url = 'https://i.imgur.com/KyEyMCI.png'
+        this.image.url = 'https://i.imgur.com/KyEyMCI.png' */
     }
 
     @Type(() => Image)

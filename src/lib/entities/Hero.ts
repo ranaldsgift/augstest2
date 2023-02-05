@@ -48,7 +48,7 @@ export class Hero extends Homebrew {
     actionDice: HeroActionDice
 
     @Type(() => HeroAbility)
-    @OneToMany(type => HeroAbility, (ability) => ability.hero, { eager: true, cascade: true })
+    @OneToMany(type => HeroAbility, (ability) => ability.hero, { eager: true, cascade: true,  })
     abilities: HeroAbility[]
     
     @Type(() => HeroAttributes)
@@ -87,6 +87,10 @@ export class Hero extends Homebrew {
 
     @Column("varchar")    
     sheetBackgroundColor: string
+
+    public getAbilities(): HeroAbility[] {
+        return this.abilities.sort((a, b) => a.id - b.id);
+    }
 
     public isValid(): boolean {
         if (!this.name || !this.keywords || this.keywords.length == 0 || !this.abilities || this.abilities.length == 0 || !this.heroImage || this.heroImage.url?.length == 0 || !this.iconImage || this.iconImage.url?.length == 0) {
