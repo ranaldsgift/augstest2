@@ -18,7 +18,7 @@
     import JSZip from 'jszip';
     import SkillCardEditor from '$lib/components/SkillCardEditor.svelte';
     import { SkillCardTemplates } from '$lib/interfaces/templates/SkillCardTemplate';
-    import { Drawer, drawerStore, ProgressRadial } from '@skeletonlabs/skeleton';
+    import { Drawer, drawerStore, ProgressRadial, RangeSlider } from '@skeletonlabs/skeleton';
     import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
 
     export let data: PageData;
@@ -28,6 +28,8 @@
     let authUser = data.authUser ? DataHelper.deserialize<User>(User, data.authUser) : null;
 
     let heroSheet: HTMLElement;
+
+    let skillCardScale = 0.5;
 
     const handleDownload = async () => {
         drawerStore.open({ width: 'w-full' });
@@ -90,12 +92,6 @@
         margin-left: -150px;
         margin-top: -25px;
         z-index: 0;
-    }
-    .edit-button {        
-        position: fixed;
-        top: 90px;
-        right: 20px;
-        z-index: 10;
     }
     @media (max-width: 1162px) {
         .homebrew-details-container {
@@ -182,16 +178,23 @@
         {#if hero.skillCards && hero.skillCards.length > 0}
         <header class="comic-header">
             <h1>Skill Cards</h1>
+            <RangeSlider class="absolute content-center items-center self-center bottom-0 pb-2 pt-1 pr-4 pl-4 gap-2 rounded-t-md border-primary-100 border-2 border-b-0 right-2 text-white bg-primary-900 !flex"
+                accent="!accent-primary-500" 
+                bind:value={skillCardScale} 
+                max={1.5} 
+                min={0.1} 
+                step={0.05}
+            ><iconify-icon icon="material-symbols:zoom-in-rounded" height={30} class="-mb-3"></iconify-icon></RangeSlider>
         </header>
         <div class="comic-body flex gap-5 items-center justify-center flex-wrap">
             {#each hero.skillCards as skillCard, index}
-                    <SkillCardEditor scale={0.5} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
+                    <SkillCardEditor scale={skillCardScale} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
             {/each}
         </div>
         {/if}
     </div>
     
-    <div class="flex justify-center edit-button gap-2">
+    <div class="flex justify-center page-button-container gap-2">
         {#if $page.data.session?.user.id == hero.user.id}
         <a href={$page.url + "/edit"} class="unstyled">
             <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>

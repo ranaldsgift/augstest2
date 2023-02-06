@@ -7,15 +7,21 @@
     import { invalidate } from '$app/navigation'
     import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
-    import { AppShell, AppBar, Divider, Modal, Toast, AppRail, AppRailTile, LightSwitch } from '@skeletonlabs/skeleton';
+    import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch } from '@skeletonlabs/skeleton';
     import { menu } from '@skeletonlabs/skeleton';
     import { Drawer } from '@skeletonlabs/skeleton';
     import { drawerStore } from '@skeletonlabs/skeleton';
     import ComicButton from '$lib/components/ComicButton.svelte';
-    import {  enhance } from '$app/forms';
+    import {  enhance, type SubmitFunction } from '$app/forms';
     import { ToastHelper } from '$lib/helpers/ToastHelper';
     import { QueryClientProvider, QueryClient } from '@tanstack/svelte-query'
     import { writable, type Writable } from 'svelte/store';
+    import { storeTheme } from '$lib/stores/ThemeStore';
+    import { browser } from '$app/environment';
+    import type { LayoutServerData } from './$types';
+
+	export let data: LayoutServerData;
+    $: ({ currentTheme } = data);
 
     const storeValue: Writable<string> = writable("Home");
     
@@ -35,9 +41,37 @@
         }
     });
     
+	const setTheme: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			await update();
+			if (result.type === 'success') {
+				const theme = result.data?.theme as string;
+				storeTheme.set(theme);
+			}
+		};
+	};
+
+    storeTheme.subscribe(setBodyThemeAttribute);
+	function setBodyThemeAttribute(): void {
+		if (!browser) return;
+		document.body.setAttribute('data-theme', $storeTheme);
+	}
+
+
+	const themes = [
+		{ type: 'default', name: 'Default', icon: '💫' },
+		{ type: 'hamlindigo', name: 'Hamlindigo', icon: '👔' },
+		{ type: 'vintage', name: 'Vintage', icon: '📺' },
+	];
+    
     const drawerOpen: any = () => { drawerStore.open({position: 'left'}) };
     const drawerClose: any = () => { drawerStore.close() };
 </script>
+
+<svelte:head>
+	<!-- Select Preset Theme CSS DO NOT REMOVE ESCAPES-->
+	{@html `\<style\>${currentTheme}}\</style\>`}
+</svelte:head>
 
 <QueryClientProvider client={queryClient}>
 </QueryClientProvider>
@@ -64,7 +98,7 @@
     </form>
 </Drawer>
 
-<AppShell>
+<AppShell slotHeader="z-50">
     <!-- Header -->
     <svelte:fragment slot="header">
         <AppBar background="bg-tertiary-600" class="text-black">
@@ -72,7 +106,34 @@
                 <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
-                <LightSwitch></LightSwitch>
+                <div class="relative">
+                    <button class="btn-icon" use:menu={{ menu: 'theme', fixed: true, interactive: true }}>
+                        <iconify-icon icon="material-symbols:palette"></iconify-icon>
+                    </button>
+                    <!-- <div class="card w-64 shadow-xl max-w-fit menu-tr sm:max-w-none" data-menu="theme"> -->
+                    <div class="card p-4 w-60 shadow-xl menu-tr " data-menu="theme">
+                        <section class="flex justify-between items-center">
+                            <p>Dark Mode</p>
+                            <LightSwitch />
+                        </section>
+                        <hr class="my-4" />
+                        <nav class="list-nav p-4 -m-4 max-h-64 lg:max-h-[500px] overflow-y-auto">
+                            <form action="/?/setTheme" method="POST" use:enhance={setTheme}>
+                                <ul>
+                                    {#each themes as { icon, name, type }}
+                                        <li>
+                                            <!-- prettier-ignore -->
+                                            <button class="option w-full h-full" type="submit" name="theme" value={type} class:bg-primary-active-token={$storeTheme === type}>
+                                                <span>{icon}</span>
+                                                <span>{name}</span>
+                                            </button>
+                                        </li>
+                                    {/each}
+                                </ul>
+                            </form>
+                        </nav>
+                    </div>
+                </div>
                 <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
                     <iconify-icon icon="mdi:github"></iconify-icon>
                 </a>

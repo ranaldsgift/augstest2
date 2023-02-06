@@ -51,11 +51,14 @@
         background-color: transparent;
         overflow-x: visible;
     }
+    .dark .table-container tbody tr {
+        background-color: rgb(var(--color-primary-800) / 0.5);
+    }
     .table-container tbody tr {
-        background-color: rgb(var(--color-surface-200) / 1);
+        background-color: rgb(var(--color-primary-200) / 0.5);
     }
     .table-hover tbody tr:hover {
-        box-shadow: -4px 4px 0 0 black, inset 0 -5px 4px -4px rgb(var(--color-secondary-800)), inset 0 10px 9px -9px rgb(var(--color-secondary-800)), inset 1000px 1000px 0 0 rgb(var(--color-secondary-300)) !important;
+        box-shadow: -4px 4px 0 0 black, inset 0 -5px 4px -4px rgb(var(--color-surface-800)), inset 0 10px 9px -9px rgb(var(--color-surface-800)), inset 1000px 1000px 0 0 rgb(var(--color-primary-300)) !important;
     }
     .table-container .table tbody td:nth-child(n+6) {
         background-color: var(--diceBackgroundColor);
@@ -104,14 +107,14 @@
         <div class="flex gap-5 relative">
             <div class="comic-label" style:max-width="200px">
                 <h1>Sort</h1>
-                <select bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
+                <select class="unstyled" bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
                     <option value="dateModified">Last Updated</option>
                     <option value="name">Name</option>
                 </select>
             </div>
             <div class="comic-label" style:max-width="150px">
                 <h1>Order</h1>
-                <select bind:value={sortAscState} on:change={(e) => { handleSort() }}>
+                <select class="unstyled" bind:value={sortAscState} on:change={(e) => { handleSort() }}>
                     <option value="true">Ascending</option>
                     <option selected value="false">Descending</option>
                 </select>

@@ -205,7 +205,7 @@
                                 <RadioItem value={theme}>{theme}</RadioItem>
                             {/each}
                         </RadioGroup>
-                        <select name="theme" bind:value={hero.theme} hidden>
+                        <select class="unstyled" name="theme" bind:value={hero.theme} hidden>
                             {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
                                 <option value={theme}>{theme}</option>
                             {/each}
@@ -215,15 +215,15 @@
                 <div class="theme-fields-container">
                     <label>
                         <h1>Sheet Background Color</h1>
-                        <input type="color" name="sheetBackgroundColor" bind:value={hero.sheetBackgroundColor}>
+                        <input class="unstyled" type="color" name="sheetBackgroundColor" bind:value={hero.sheetBackgroundColor}>
                     </label>
                     <label>
                         <span>Dice Background Color</span>
-                        <input type="color" name="actionDice.backgroundColor" bind:value={hero.actionDice.backgroundColor}>
+                        <input class="unstyled" type="color" name="actionDice.backgroundColor" bind:value={hero.actionDice.backgroundColor}>
                     </label>
                     <label>
                         <span>Dice Icon Color</span>
-                        <input type="color" name="actionDice.iconColor" bind:value={hero.actionDice.iconColor}>
+                        <input class="unstyled" type="color" name="actionDice.iconColor" bind:value={hero.actionDice.iconColor}>
                     </label>
                 </div>
                 <div class="general-fields-container">
@@ -238,49 +238,49 @@
                     {/if}
                     <label class="w-full">
                         <span>Hero Description</span>
-                        <textarea name="description" rows="4" bind:value={hero.description} placeholder="Enter a description of your Hero here. Include details about any special mechanics related to your Hero. Feel free to leave details about the evolution of your Hero after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
+                        <textarea class="unstyled" name="description" rows="4" bind:value={hero.description} placeholder="Enter a description of your Hero here. Include details about any special mechanics related to your Hero. Feel free to leave details about the evolution of your Hero after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
                     </label>
                 </div>
                 <div>
                     <label>
                         <span>Hero Image</span>
-                        <input type="text" name="heroImage.url" bind:value={hero.heroImage.url}>
+                        <input class="unstyled" type="text" name="heroImage.url" bind:value={hero.heroImage.url}>
                     </label>
                     <label>
                         <span>Icon Image</span>
-                        <input type="text" name="heroIcon.url" bind:value={hero.iconImage.url}>
+                        <input class="unstyled" type="text" name="heroIcon.url" bind:value={hero.iconImage.url}>
                     </label>
                 </div>
                 <div class="image-fields-container">
                     <label use:tooltip={{ content: 'Use scrollwheel up/down while hovering to scale your Hero image. Hold shift for larger scaling.' }}>
                         <span>Hero Image Scale</span>
-                        <input type="number" name="heroImage.scale" bind:value={hero.heroImage.scale}>
+                        <input class="unstyled" type="number" name="heroImage.scale" bind:value={hero.heroImage.scale}>
                     </label>
                     <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
                         <span>Hero Image Position Left</span>
-                        <input type="number" name="heroImage.positionLeft" bind:value={hero.heroImage.positionLeft}>
+                        <input class="unstyled" type="number" name="heroImage.positionLeft" bind:value={hero.heroImage.positionLeft}>
                     </label>
                     <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
                         <span>Hero Image Position Top</span>
-                        <input type="number" name="heroImage.positionTop" bind:value={hero.heroImage.positionTop}>
+                        <input class="unstyled" type="number" name="heroImage.positionTop" bind:value={hero.heroImage.positionTop}>
                     </label>
                 </div>
                 <div class="font-fields-container">
                     <label>
                         <span>Hero Name<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.font_size.toString()}>
                     </label>
                     <label>
                         <span>Keywords<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.font_size.toString()}>
                     </label>
                     <label>
                         <span>Ability Name<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.font_size.toString()}>
                     </label>
                     <label>
                         <span>Ability Effect<br/>Font Size</span>
-                        <input type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.font_size.toString()}>
                     </label>
                 </div>
                 <div>

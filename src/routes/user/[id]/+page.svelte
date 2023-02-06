@@ -47,7 +47,7 @@
     {#if userModel.avatar}
     <div class="user-badge-container shadow-2xl flex gap-1">
         {#each userModel.getBadges() as badge}
-            <span class="badge bg-primary-900 text-primary-100 z-10 flex gap-1">
+            <span class="badge bg-primary-900 text-primary-100 flex gap-1">
                 <iconify-icon icon={badge.icon}></iconify-icon>
                 {badge.text}
             </span>

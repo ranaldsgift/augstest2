@@ -404,6 +404,7 @@
             letter-spacing: 1px;
             text-align: center;
             display: grid;
+            max-height: 100%;
         }
         .skill-card-name span {
             padding: 6px 0;

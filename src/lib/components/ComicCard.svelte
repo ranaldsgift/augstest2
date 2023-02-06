@@ -65,7 +65,7 @@
         background-position: bottom;
         opacity: 0.25;
     }
-    .card-footer p, .card-header h1 {
+    .card-footer p, .card-header h3 {
         transform: skew(15deg);
     }
     .card-body iconify-icon {
@@ -79,13 +79,13 @@
     <div class="comic-background"></div>
     {/if}
     {#if title.length > 0}
-    <header class="card-header bg-tertiary-600">
-        <h1 class="font-bold text-2xl pb-2">{title}</h1>
+    <header class="card-header bg-tertiary-600 text-black">
+        <h3 class="font-bold text-2xl pb-2">{title}</h3>
     </header>
     {/if}
     <div class="card-body">
         {#if icon.length > 0}
-        <iconify-icon icon="{icon}"></iconify-icon>
+        <iconify-icon icon="{icon}" style:color="black"></iconify-icon>
         {/if}
         <p class="text-gray-700">{body}</p>
     </div>
