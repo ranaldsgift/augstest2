@@ -98,7 +98,7 @@
     </form>
 </Drawer>
 
-<AppShell slotHeader="z-50">
+<AppShell slotHeader="z-30">
     <!-- Header -->
     <svelte:fragment slot="header">
         <AppBar background="bg-tertiary-600" class="text-black">
