@@ -17,9 +17,9 @@
 <style>
     .user-badge-container {
         position: absolute;
-        top: 16px;
-        right: 166px;
-        padding: 5px 25px 15px 8px;
+        top: 6px;
+        right: 175px;
+        padding: 5px 40px 15px 8px;
         background: rgba(var(--color-primary-100));
         box-shadow: 0px 0px 3px -1px black;
         border-radius: 10px 0px
@@ -53,17 +53,12 @@
             </span>
         {/each}
     </div>
-    <div class="mr-14 relative z-10 flex justify-end" style:margin-bottom="-70px">
-        <Avatar src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-tertiary-700 border-4"></Avatar>
+    <div class="mr-14 relative z-10 flex justify-end" style:margin-bottom="-80px">
+        <Avatar src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-black border-4"></Avatar>
     </div>
     {/if}
     <div class="comic-form grid gap-10">
         <div class="grid relative">
-            {#if userModel.avatar}
-            <div class="mr-14 z-0 absolute flex justify-end right-0" style:top="-58px" style:margin-bottom="-128px">
-                <div class="rounded-full" style:outline="5px solid black" style:width="128px" style:height="128px"></div>
-            </div>
-            {/if}
             <header>
                 <h1>{userModel.userName}</h1>
             </header>

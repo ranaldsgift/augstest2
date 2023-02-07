@@ -45,7 +45,6 @@
             skillCard.iconCost = [];
         }
             
-        console.log('handleAddCost');
         skillCard.iconCost.push(SkillCardIconsEnum.Melee);
         skillCard = skillCard;
     }
@@ -211,12 +210,12 @@
         }
 
         .skill-card-cost-container {
-            left: 50px;
+            left: calc(50px * var(--scale));
             top: 0px;
-            width: 80px;
+            width: calc(80px * var(--scale));
             display: grid;
             grid-row-gap: 1px;
-            padding: 64px 0 20px 0px;
+            padding: calc(64px * var(--scale)) 0 calc(20px * var(--scale)) 0px;
             background: linear-gradient(0deg, #101010, #3e3e3e);
             justify-content: center;
             clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
@@ -228,25 +227,13 @@
         }
 
         .skill-card-cost-container .icon {
-            height: 60px;
-            width: 60px;
+            height: calc(60px * var(--scale));
+            width: calc(60px * var(--scale));
             background-size: contain;
             background-color: #221f20;
-            border-radius: 30px;
+            border-radius: 999px;
             background-position: center;
             background-repeat: no-repeat;
-        }
-
-        .skill-card-cost-container .icon[data-icon='focus'] {
-            background-size: 80%;
-        }
-
-        .skill-card-cost-container .icon[data-icon='one-time-use'] {
-            background-size: 68%;
-        }
-
-        .skill-card-cost-container .icon[data-icon='wild'] {
-            background-size: 78%;
         }
 
         .skill-card-homebrew-container {
@@ -264,7 +251,7 @@
             background-size: contain;
         }
         .skill-card-halftone-background, .halftone-container {
-            --size: 0.95rem;
+            --size: calc(0.95rem * var(--scale));
             --mask: radial-gradient(circle at center, rgb(0 0 0), rgb(0 0 0 / 0) 85%);
             --dotsColor: 255 255 255;
             --bg: radial-gradient(circle at center, rgb(var(--dotsColor)) 20%, rgb(var(--dotsColor) / 0.4) var(--dotRadius, 115%));
@@ -426,16 +413,35 @@
         }
 
         .skill-card-cost-container {
-            left: 50px;
+            left: calc(45px * var(--scale));
             top: 0px;
-            width: 80px;
+            width: calc(47px * var(--scale));
             display: grid;
-            grid-row-gap: 1px;
-            padding: 64px 0 20px 0px;
-            background: linear-gradient(0deg, #101010, #3e3e3e);
+            grid-row-gap: 6px;
+            padding: calc(25px * var(--scale)) 0 calc(25px * var(--scale)) 0px;
             justify-content: center;
-            clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
             position: absolute;
+        }
+
+        .skill-card-cost-container::after {
+            position: absolute;
+            width: calc(100% - calc(4px * var(--scale)));
+            height: calc(100% - calc(4px * var(--scale)));
+            background: linear-gradient(0deg, #222222 0%, #303030 15px, #222222 30px, #1a1a1a 100%);
+            content: '';
+            margin-left: calc(2px * var(--scale));
+            margin-bottom: 0px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .skill-card-cost-container::before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            border: calc(2px * var(--scale)) solid transparent;
+            background: linear-gradient(#777777 0%, #a7a7a7 25%, #a7a7a7 75%, #77777700 100%) border-box;
+            border-radius: 0 0 10px 10px;
         }
 
         .skill-card-cost-container:empty {
@@ -443,13 +449,39 @@
         }
 
         .skill-card-cost-container .icon {
-            height: 60px;
-            width: 60px;
+            height: calc(74px  * var(--scale));
+            width: calc(74px * var(--scale));
             background-size: contain;
             background-color: #221f20;
-            border-radius: 30px;
+            border-radius: 999px;
             background-position: center;
             background-repeat: no-repeat;
+            background: linear-gradient(0deg, #101010, #3e3e3e);
+            z-index: 10;
+            position: relative;
+        }
+        .skill-card-cost-container .icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(#a7a7a7 0%, #77777797 45%, #77777797 75%, #757575 100%) border-box;
+            z-index: -1;
+        }
+
+        .skill-card-cost-container .icon::after {
+            content: '';
+            position: absolute;
+            top: calc(1.5px * var(--scale));;
+            left: calc(1.5px * var(--scale));;
+            width: calc(100% - calc(3px * var(--scale)));
+            height: calc(100% - calc(3px * var(--scale)));
+            background: radial-gradient(circle, #3e3e3e, #101010);
+            border-radius: 999px;
+            z-index: -1;
         }
 
         .skill-card-homebrew-container {
@@ -539,13 +571,12 @@ on:keyup={(e) => {
     <div class="skill-card-halftone-background absolute h-full w-full hidden"><div class="halftone"></div></div>
     <div class="skill-card-image-container">
         <div class="show-on-hover absolute z-20 left-1 bottom-10 w-full" style:display={scaleAndDrag ? 'none' : ''}>
-            <span class="skill-card-image-url h-10 border-black border-2 grid content-center bg-primary-900 text-primary-100 overflow-hidden" 
+            <span class="skill-card-image-url h-10 border-black border-2 grid content-center bg-primary-900 text-primary-100 overflow-hidden cursor-text" 
                 style:width="calc(100% - 8px)"
                 placeholder="Image URL" 
                 contenteditable="true" 
                 bind:innerHTML={skillCard.image.url}
-            >
-                {skillCard.image.url ?? ''}
+            >                {skillCard.image.url ?? ''}
             </span>    
         </div>        
         {#if skillCard.image && skillCard.image.url.length > 0}
@@ -554,17 +585,11 @@ on:keyup={(e) => {
                     on:click={toggleScalable} 
                     on:keydown={toggleScalable}
                 ></iconify-icon>
-<!--                 <div class="bg-primary-100 z-20 card-shadow show-on-hover gap-1 p-1 absolute -right-1 -top-1 pr-2 pt-2">
-                    <iconify-icon icon="mdi:arrow-expand-all" class="context-button hidden {scalable ? 'active' : ''}" 
-                        on:click={toggleScalable} 
-                        on:keydown={toggleScalable}
-                    ></iconify-icon>
-                </div> -->
                 <img class="skill-card-image z-10 absolute" style:width="{skillCard.image.scale}%" src={skillCard.image.url} alt="Card" 
                     on:wheel={handleScaleImage}
                     use:draggable={{
                         disabled: !scaleAndDrag,
-                        position: { x: skillCard.image.positionLeft, y: skillCard.image.positionTop },
+                        position: { x: skillCard.image.positionLeft * scale, y: skillCard.image.positionTop * scale },
                         onDrag: ({ offsetX, offsetY }) => {
                             skillCard.image.positionLeft = offsetX;
                             skillCard.image.positionTop = offsetY;
@@ -590,13 +615,13 @@ on:keyup={(e) => {
     {#if skillCard.iconCost && skillCard.iconCost.length > 0}
     <div class="skill-card-cost-container z-30">
         {#each skillCard.iconCost as icon, i}
-        <button class="icon p-3" on:click|preventDefault={() => handleEditCost(i)}><SkillCardIcon icon={icon} color="#ffffff" theme={theme}></SkillCardIcon></button>
+        <button class="icon" style:padding="calc(12px * var(--scale))" on:click|preventDefault={() => handleEditCost(i)}><SkillCardIcon icon={icon} color="#ffffff" theme={theme}></SkillCardIcon></button>
         {/each}
     </div>
     {/if}
     <PositionedContainer template={template.name}>
         <div class="skill-card-name overflow-hidden z-40">
-            <span contenteditable="true" spellcheck="false" placeholder="Skill Name" bind:innerHTML={skillCard.name}
+            <span class="cursor-text" contenteditable="true" spellcheck="false" placeholder="Skill Name" bind:innerHTML={skillCard.name}
                 style:--fontSize="{template.name.font_size}px" 
                 style:font-size="calc(var(--fontSize) * var(--scale))"
                 style:font-family={template.name.font}
@@ -608,7 +633,7 @@ on:keyup={(e) => {
         </div>
     </PositionedContainer>
     <PositionedContainer template={template.ability}>
-        <span class="skill-card-effect" contenteditable="true" spellcheck="false" placeholder="Skill Effect"  bind:innerHTML={skillCard.effect}
+        <span class="skill-card-effect cursor-text" contenteditable="true" spellcheck="false" placeholder="Skill Effect"  bind:innerHTML={skillCard.effect}
             style:--fontSize="{template.ability.font_size}px"
             style:--fontFamily={template.ability.font}
             style:--fontColor={template.ability.font_color}

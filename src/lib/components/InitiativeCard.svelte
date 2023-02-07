@@ -17,7 +17,6 @@
             const img = new Image();
             img.src = image;
             await img.decode()
-            console.log(img.naturalHeight / img.naturalWidth);
             if (img.naturalHeight / img.naturalWidth < 1.5) {
                 wideImage = true;
             }

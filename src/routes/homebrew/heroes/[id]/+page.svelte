@@ -29,10 +29,10 @@
 
     let heroSheet: HTMLElement;
 
-    let skillCardScale = 0.5;
+    let skillCardScale = 0.75;
 
     const handleDownload = async () => {
-        drawerStore.open({ width: 'w-full' });
+        drawerStore.open({ id: 'download', width: 'w-full' });
         var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
         var initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
         var figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
@@ -103,18 +103,6 @@
         }
     }
 </style>
-
-<Drawer>
-    <div class="grid justify-center content-center h-full gap-5">
-        <div style:width="120px" style:height="120px" class="grid justify-self-center">
-            <ProgressRadial stroke={100} meter="stroke-tertiary-700" track="stroke-tertiary-700/20"></ProgressRadial>
-        </div>
-        <PigeonPeteSays>
-            <p>I'm just packaging {hero.name}'s assets for you.</p>
-            <p>Hang tight...</p>
-        </PigeonPeteSays>
-    </div>
-</Drawer>
 
 <svelte:head><title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title></svelte:head>
 

@@ -7,7 +7,7 @@
     import { invalidate } from '$app/navigation'
     import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
-    import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch } from '@skeletonlabs/skeleton';
+    import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch, ProgressRadial } from '@skeletonlabs/skeleton';
     import { menu } from '@skeletonlabs/skeleton';
     import { Drawer } from '@skeletonlabs/skeleton';
     import { drawerStore } from '@skeletonlabs/skeleton';
@@ -19,6 +19,7 @@
     import { storeTheme } from '$lib/stores/ThemeStore';
     import { browser } from '$app/environment';
     import type { LayoutServerData } from './$types';
+    import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
 
 	export let data: LayoutServerData;
     $: ({ currentTheme } = data);
@@ -64,8 +65,8 @@
 		{ type: 'vintage', name: 'Vintage', icon: '📺' },
 	];
     
-    const drawerOpen: any = () => { drawerStore.open({position: 'left'}) };
-    const drawerClose: any = () => { drawerStore.close() };
+    const drawerOpen: any = () => { drawerStore.open({ id: 'login', position: 'left' }); };
+    const drawerClose: any = () => { drawerStore.close(); };
 </script>
 
 <svelte:head>
@@ -78,7 +79,8 @@
 
 <Modal/>
 
-<Drawer>  
+<Drawer>    
+	{#if $drawerStore.id === 'login'}
     <form method="POST" action="/api/user?/login&redirectTo={$page.url.href}" class="comic-form grid grid-flow-row m-auto max-w-xl gap-5 mt-10" use:enhance={({ form, data, action, cancel }) => {    
         return async ({ result }) => {
                 if (result.type === 'success') {
@@ -96,6 +98,17 @@
             <ComicButton text="Sign In" icon="mdi:login"></ComicButton>
         </div>        
     </form>
+    {:else if $drawerStore.id === 'download'}
+    <div class="grid justify-center content-center h-full gap-5">
+        <div style:width="120px" style:height="120px" class="grid justify-self-center">
+            <ProgressRadial stroke={100} meter="stroke-tertiary-700" track="stroke-tertiary-700/20"></ProgressRadial>
+        </div>
+        <PigeonPeteSays>
+            <p>Hey bird brain, I'm getting your download ready!</p>
+            <p>Hang tight...</p>
+        </PigeonPeteSays>
+    </div>
+    {/if}
 </Drawer>
 
 <AppShell slotHeader="z-30">

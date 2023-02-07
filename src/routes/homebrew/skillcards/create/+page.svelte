@@ -15,4 +15,6 @@
 <li>Heroes</li>
 </ol>
 
-<SkillCardEditor></SkillCardEditor>
+<div class="page flex justify-center">
+    <SkillCardEditor></SkillCardEditor>
+</div>
