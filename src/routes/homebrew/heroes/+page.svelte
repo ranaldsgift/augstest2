@@ -9,6 +9,7 @@
     import ActionDiceIcon from '$lib/components/ActionDiceIcon.svelte';
     import { DataHelper } from '$lib/helpers/DataHelper';
     import HeroTable from '$lib/components/HeroTable.svelte';
+    import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
 
     export let data: PageData;
 
@@ -60,10 +61,10 @@
 <div class="max-w-7xl grid gap-5">
     <HeroTable heroes={parsedItems}></HeroTable>
     {#if data.session}
-    <div class="page-button-container">
+    <PageButtonContainer>
         <a href="/homebrew/heroes/create/" class="unstyled">
             <ComicButton icon="mdi:edit" text="Create"></ComicButton>
         </a>
-    </div>
+    </PageButtonContainer>
     {/if}
 </div>

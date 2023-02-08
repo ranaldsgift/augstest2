@@ -104,24 +104,24 @@
         <h1>{title}</h1>
     </header>
     <div class="comic-body">
-        <div class="flex gap-5 relative">
-            <div class="comic-label" style:max-width="200px">
+        <div class="flex flex-wrap gap-5 relative justify-center">
+            <div class="comic-label sm:max-w-[200px]">
                 <h1>Sort</h1>
                 <select class="unstyled" bind:value={sortKeyState} on:change={(e) => { $dataTableStore.sort = sortKeyState; handleSort()}}>
                     <option value="dateModified">Last Updated</option>
                     <option value="name">Name</option>
                 </select>
             </div>
-            <div class="comic-label" style:max-width="150px">
+            <div class="comic-label sm:max-w-[150px]">
                 <h1>Order</h1>
                 <select class="unstyled" bind:value={sortAscState} on:change={(e) => { handleSort() }}>
                     <option value="true">Ascending</option>
                     <option selected value="false">Descending</option>
                 </select>
             </div>
-            <div class="comic-label flex-1 grid">
+            <div class="comic-label grow">
                 <h1>Search</h1>
-                <input class="unstyled" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
+                <input class="unstyled w-full" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
             </div>
         </div>
         <table class="table table-hover" use:tableInteraction>
@@ -136,26 +136,26 @@
             </thead>
             <tbody>
                 {#each $dataTableStore.filtered as row, rowIndex}
-                    <tr style:height="80px"></tr>
+                    <tr class="h-[50px] sm:h-[80px]"></tr>
                     <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
-                        <td style:position="relative" width="180px">
-                            <div style:overflow="hidden" style:margin-top="-64px" style:height="135px" style:min-width="180px">
-                                <img src={row.heroImage.url} alt="Hero" style:top="0px">    
+                        <td style:position="relative" class="w-[100px] sm:w-[180px]">
+                            <div style:overflow="hidden" class="-mt-[32px] sm:-mt-[64px] h-[110px] sm:h-[135px]" style:min-width="100%">
+                                <img style:object-fit="cover" src={row.heroImage.url} alt="Hero" style:top="0px" class="w-full h-auto">    
                             </div>
                         </td>
                         <td>
                             <a class="pl-2" href={'/homebrew/heroes/' + row.id}>{row.name}</a>
                         </td>
-                        <td>
+                        <td class="hidden sm:table-cell">
                             <a href={'/user/' + row.user.id}>{row.user.userName}</a>
                         </td>
-                        <td>
+                        <td class="hidden xl:table-cell">
                             {DateHelper.timeSinceString(new Date(row.dateModified), new Date())}
                         </td>
-                        <td style:width="10px" style:position="relative"></td>
+                        <td class="hidden lg:table-cell" style:width="10px" style:position="relative"></td>
                         {#if row.actionDice && row.theme}
                             {#each row.actionDice.dice as dice}
-                                <td height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
+                                <td class="hidden lg:table-cell" height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
                             {/each}
                         {/if}
                     </tr>

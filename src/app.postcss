@@ -19,15 +19,23 @@ body {
     position: relative;
 }
 #page-content>div {
-    padding: 0 2rem;
+    padding: 0 0.5rem;
 }
 #page-content ol.breadcrumb-nonresponsive {
     padding: 0.5rem 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     background: rgba(var(--color-secondary-800));
     color: rgba(var(--color-surface-100));
     font-family: system-ui;
     z-index: 5;
+}
+@media (min-width: 500px) {    
+#page-content ol.breadcrumb-nonresponsive {
+    margin-bottom: 2rem;
+}
+#page-content>div {
+    padding: 0 2rem;
+}
 }
 #page-content ol.breadcrumb-nonresponsive a {
     color: rgba(var(--color-secondary-400));
@@ -136,10 +144,12 @@ iconify-icon.context-button, .context-button {
     overflow: hidden;
     background: rgba(var(--color-tertiary-600));
     box-shadow: -4px 4px 0 0 black;
+    display: flex;
+    flex-direction: column;
 }
 .comic-form label:not(.radio-item-label, .paginator-label), .comic-form .comic-label {
     display: grid;
-    flex: 1 100%;
+    flex-grow: 1;
 }
 .comic-form label span, .comic-form label h1, .comic-label>*:first-child {
     font-family: 'bangersregular';
@@ -164,6 +174,9 @@ iconify-icon.context-button, .context-button {
 }
 .comic-label>span:nth-child(n+2), .comic-label>p:nth-child(n+2) {
     background: white;
+    align-content: center;
+    display: grid;
+    flex: 1;
 }
 input:focus, textarea:focus, select:focus {
     border-color: rgba(var(--color-primary-700)) !important;
@@ -301,13 +314,6 @@ span.chip.chip-primary span:first-child {
 }
 li.crumb-separator {
     color: white;
-}
-
-.page-button-container {        
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    z-index: 29;
 }
 .dark .comic-body input,
 .dark .comic-body textarea,

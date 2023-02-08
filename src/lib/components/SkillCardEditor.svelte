@@ -211,7 +211,7 @@
 
         .skill-card-cost-container {
             left: calc(50px * var(--scale));
-            top: 0px;
+            top: -1px;
             width: calc(80px * var(--scale));
             display: grid;
             grid-row-gap: 1px;

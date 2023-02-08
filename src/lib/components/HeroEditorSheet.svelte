@@ -324,7 +324,7 @@ on:keyup={(e) => {
     {/if}
     {#if hero.heroImage.url}
     <img class="absolute" on:wheel|preventDefault={handleScaleImage} use:draggable={{
-        position: { x: hero.heroImage.positionLeft, y: hero.heroImage.positionTop },
+        position: { x: hero.heroImage.positionLeft * scale, y: hero.heroImage.positionTop * scale },
         onDrag: ({ offsetX, offsetY }) => {
             hero.heroImage.positionLeft = offsetX;
             hero.heroImage.positionTop = offsetY;
@@ -343,10 +343,10 @@ on:keyup={(e) => {
     {/if}
     <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
     </PositionedImageEditor>
-    <div class="absolute flex" style:width={template.name.size.width} style:height={template.name.size.height} style:top={template.name.position.top} style:left={template.name.position.left}>
+    <div class="absolute flex" style:width="calc({template.name.size.width} * {scale})" style:height="calc({template.name.size.height} * {scale})" style:top="calc({template.name.position.top} * {scale})" style:left="calc({template.name.position.left} * {scale})">
         <span class="unstyled hero-name" style:position="relative" style:bottom="0px" style:align-self="flex-end" contenteditable="true"
-        style:font-size="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size : hero.fontSizeHeroName}px"
-        style:line-height="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size * 0.7 : hero.fontSizeHeroName * 0.7}px"
+        style:font-size="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size * scale : hero.fontSizeHeroName * scale}px"
+        style:line-height="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size * scale * 0.7 : hero.fontSizeHeroName * scale * 0.7}px"
         style:font-family={template.name.font}
         style:color={template.name.font_color}
         placeholder="Hero Name"
@@ -358,7 +358,7 @@ on:keyup={(e) => {
         <button on:click|preventDefault={handleEditKeywords} class="">
             <div
                 style:text-align="left" 
-                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.traits.font_size : hero.fontSizeKeywords}px" 
+                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.traits.font_size * scale : hero.fontSizeKeywords * scale}px" 
                 style:--fontFamily={template.traits.font} style:--color={template.traits.font_color}>
                 
                 {#if hero.keywords && hero.keywords.length > 0}

@@ -1,6 +1,7 @@
 <script>
     import { goto } from "$app/navigation";
     import ComicButton from "$lib/components/ComicButton.svelte";
+    import PageButtonContainer from "$lib/components/PageButtonContainer.svelte";
 
 </script>
 
@@ -75,9 +76,9 @@
 		</a>
 		</div>
 	</div>
-	<div class="page-button-container">
+	<PageButtonContainer>
 		<ComicButton text="Donate" callback={() => goto(`https://www.paypal.com/donate/?hosted_button_id=MYJ9RA3FJAZQ6`)} icon="mdi:donate"></ComicButton>
-	</div>
+	</PageButtonContainer>
 </div>
 
 

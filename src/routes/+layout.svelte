@@ -20,11 +20,12 @@
     import { browser } from '$app/environment';
     import type { LayoutServerData } from './$types';
     import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
+    import AppSidebar from '$lib/components/AppSidebar.svelte';
 
 	export let data: LayoutServerData;
     $: ({ currentTheme } = data);
 
-    const storeValue: Writable<string> = writable("Home");
+    const sidebarStore: Writable<string> = writable("Home");
     
     const queryClient = new QueryClient()
 
@@ -79,7 +80,7 @@
 
 <Modal/>
 
-<Drawer>    
+<Drawer>
 	{#if $drawerStore.id === 'login'}
     <form method="POST" action="/api/user?/login&redirectTo={$page.url.href}" class="comic-form grid grid-flow-row m-auto max-w-xl gap-5 mt-10" use:enhance={({ form, data, action, cancel }) => {    
         return async ({ result }) => {
@@ -108,6 +109,8 @@
             <p>Hang tight...</p>
         </PigeonPeteSays>
     </div>
+    {:else if $drawerStore.id === 'mobile-menu'}
+    <AppSidebar classList="w-[80px]" selected={sidebarStore}></AppSidebar>
     {/if}
 </Drawer>
 
@@ -116,6 +119,9 @@
     <svelte:fragment slot="header">
         <AppBar background="bg-tertiary-600" class="text-black">
             <svelte:fragment slot="lead">
+                <button class="sm:hidden mr-4" on:click={() => drawerStore.open({ id: 'mobile-menu', width: '120px' })} >
+                    <iconify-icon icon="mdi:menu"></iconify-icon>
+                </button>
                 <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
@@ -166,31 +172,8 @@
         </AppBar>
     </svelte:fragment>
     <!-- Sidebar -->
-	<svelte:fragment slot="sidebarLeft">        
-        <AppRail selected={storeValue}>
-            <svelte:fragment slot="lead">
-                <AppRailTile label="Home" title="Home" tag="a" href="/" value="Home">
-                    <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:home"></iconify-icon>
-                </AppRailTile>
-            </svelte:fragment>
-            <AppRailTile label="Browse" title="Browse Homebrews" tag="a" href="/homebrew" value="Browse">
-                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:web"></iconify-icon>
-            </AppRailTile>
-            <AppRailTile label="Create" title="Create Homebrews" tag="a" href="/create" value="Create">
-                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:edit"></iconify-icon>
-            </AppRailTile>
-            <AppRailTile label="AUGS Assistant" title="AUGS Assistant" tag="a" href="/assistant" value="Assistant">
-                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:play-circle"></iconify-icon>
-            </AppRailTile>
-            <AppRailTile label="Assets" title="Assets" tag="a" href="/assets" value="Assets">
-                <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="entypo:folder-images"></iconify-icon>
-            </AppRailTile>
-            <svelte:fragment slot="trail">
-                <AppRailTile tag="a" href="/about" value="About" aria-label="About">
-                    <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="mdi:information"></iconify-icon>
-                </AppRailTile>
-            </svelte:fragment>
-        </AppRail>  
+	<svelte:fragment slot="sidebarLeft">
+        <AppSidebar classList="hidden sm:grid" selected={sidebarStore}></AppSidebar>
     </svelte:fragment>
     <!-- Page Content Slot -->
     <slot />

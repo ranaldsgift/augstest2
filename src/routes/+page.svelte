@@ -1,6 +1,7 @@
 <script lang="ts">
     import ComicButton from '$lib/components/ComicButton.svelte';
     import ComicCard from '$lib/components/ComicCard.svelte';
+    import { localStorageStore } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
@@ -9,7 +10,7 @@
             "title": "Homebrews",
             "icon": "material-symbols:web",
             "url": "/homebrew",
-            "description": "Browse the largest collection of AUGS homebrews created by community members.",
+            "description": "Browse the largest collection of AUGS homebrews.",
             "shadowColor": "#ffeb3bd9"
         },
         {
@@ -23,21 +24,21 @@
             "title": "AUGS Assistant",
             "icon": "material-symbols:play-circle",
             "url": "/assistant",
-            "description": "This tool will help you run your solo and cooperative games. You can use it to play with the AUGS Event Deck!",
+            "description": "Run your solo and cooperative games. Play with the AUGS Event Deck!",
             "shadowColor": "#9acd32d9"
         },
         {
-            "title": "Assets",
+            "title": "Resources",
             "icon": "entypo:folder-images",
             "url": "/assets",
-            "description": "Find high quality assets to inspire your designs and for homebrewing offline.",
+            "description": "Homebrew assets, rules, unreleased content and more.",
             "shadowColor": "#ff6347d9"
         },
         {
             "title": "Facebook",
             "icon": "mdi:facebook",
             "url": "https://www.facebook.com/groups/TMNTShadowsOfThePast",
-            "description": "Check out the AUGS Facebook community to connect with other fans and find the latest news.",
+            "description": "Connect with other AUGS fans.",
             "shadowColor": "#ffeb3bd9",
             "linkTarget": "_blank"
         },
@@ -86,14 +87,11 @@
 </ol>
 <div>
 {#if visible}
-    <aside class="alert max-w-5xl m-auto mb-6" transition:fade|local={{ duration: 200 }}>
-        <!-- Icon -->
+    <aside class="alert max-w-5xl m-auto mb-6 border-warning-500 border-2 bg-warning-200" transition:fade|local={{ duration: 200 }}>
         <iconify-icon style:font-size="4rem" icon="material-symbols:warning-outline"></iconify-icon>
-        <!-- Message -->
         <div class="alert-message">
             <p>This website is in BETA. It is currently undergoing major development. There is the risk of losing all your saved data at any time. Please be aware of this until we are ready for a full release!</p>
         </div>
-        <!-- Actions -->
         <div class="alert-actions">
             <ComicButton icon="mdi:close" callback={toggleVisible}></ComicButton>
         </div>

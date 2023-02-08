@@ -21,6 +21,7 @@
     import { fade, fly, slide } from 'svelte/transition'
 	import { quintOut } from 'svelte/easing';
     import { SkillCardTemplates } from "$lib/interfaces/templates/SkillCardTemplate";
+    import PageButtonContainer from "./PageButtonContainer.svelte";
 
     const storeTab: Writable<"theme" | "details" | "more"> = writable("theme");
 
@@ -173,6 +174,15 @@
 </style>
 
 <div class="grid gap-5 hero-editor-container justify-center">
+    <PageButtonContainer>
+        {#if hero.isValid() && isDirty() && $page.data.session}
+            <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
+        {:else}
+            <div class="disabled-button">
+                <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
+            </div>
+        {/if}        
+    </PageButtonContainer>
     <div class="hero-editor m-auto flex gap-5 flex-wrap pl-5 pr-5 justify-center">
         <div class="grid gap-5">
             <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
@@ -283,19 +293,7 @@
                         <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.font_size.toString()}>
                     </label>
                 </div>
-                <div>
-                    <div class="grid gap-5 page-button-container">
-                        {#if hero.isValid() && isDirty() && $page.data.session}
-                            <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
-                        {:else}
-                            <div class="disabled-button">
-                                <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
-                            </div>
-                        {/if}        
-                    </div>
-                </div>
-            </div>
-            
+            </div>            
         </div>
     </div>
     <div class="p-0 pl-5 pr-5">

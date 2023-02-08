@@ -2,7 +2,6 @@
     export let title = '';
     export let description = '';
     export let icon = '';
-    export let body = '';
     export let useBackground = true;
     export let shadowColor = '#ffeb3bd9';
 </script>
@@ -19,6 +18,8 @@
         overflow: hidden;
         background-size: cover;
         display: grid;
+        justify-items: baseline;
+        grid-template-rows: auto 1fr auto;
     }
     .comic-text {
         font-family: "Comic Sans MS";
@@ -26,27 +27,26 @@
 
     .comic-card .card-header {
         border: 3px solid black;
-        position: absolute;
-        top: -3px;
-        left: -10px;
         transform: skew(-15deg);
         padding-left: 20px;
         padding-top: 10px;
         letter-spacing: 0.15rem;
+        position: relative;
+        left: -10px;
+        top: -3px;
     }
 
     .comic-card .card-footer {
         border: 3px solid black;
         position: relative;
         bottom: -3px;
-        left: 110px;
+        right: -20px;
         transform: skew(-15deg);
         max-width: 80%;
         padding-right: 40px;
         padding-top: 10px;
         background: #ffffff;
-        display: grid;
-        align-content: center;
+        justify-self: end;
     }
     .comic-card .card-body {
         justify-content: center;
@@ -68,13 +68,9 @@
     .card-footer p, .card-header h3 {
         transform: skew(15deg);
     }
-    .card-body iconify-icon {
-        font-size: 6rem;
-        padding: 1.5rem 0;
-    }
 </style>
 
-<div class="card comic-card comic-text" style:--shadow-color="{shadowColor}">
+<div class="card comic-card comic-text gap-2" style:--shadow-color="{shadowColor}">
     {#if useBackground}
     <div class="comic-background"></div>
     {/if}
@@ -83,14 +79,13 @@
         <h3 class="font-bold text-2xl pb-2">{title}</h3>
     </header>
     {/if}
-    <div class="card-body">
-        {#if icon.length > 0}
-        <iconify-icon icon="{icon}" style:color="black"></iconify-icon>
-        {/if}
-        <p class="text-gray-700">{body}</p>
+    {#if icon.length > 0}
+    <div class="flex content-center justify-center w-full">
+        <iconify-icon icon="{icon}" style:color="black" style:font-size="6rem"></iconify-icon>
     </div>
+    {/if}
     {#if description.length > 0}
-    <footer class="card-footer">
+    <footer class="card-footer hidden sm:block">
         <p class="text-gray-700">{description}</p>
     </footer>
     {/if}

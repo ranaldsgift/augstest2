@@ -20,6 +20,7 @@
     import { SkillCardTemplates } from '$lib/interfaces/templates/SkillCardTemplate';
     import { Drawer, drawerStore, ProgressRadial, RangeSlider } from '@skeletonlabs/skeleton';
     import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
+    import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
 
     export let data: PageData;
     export let heroPage: HTMLElement;
@@ -30,6 +31,18 @@
     let heroSheet: HTMLElement;
 
     let skillCardScale = 0.75;
+    let initiativeCardScale = 0.75;
+    let sheetScale = 1.0;
+
+    onMount(async () => {
+        updateScales();
+    });
+
+    const updateScales = () => {
+        sheetScale =  window.innerWidth < 300 ? 0.35 : window.innerWidth < 350 ? 0.4 : window.innerWidth < 375 ? 0.45 : window.innerWidth < 550 ? 0.5 : window.innerWidth < 800 ? 0.75 : 1.0;
+        skillCardScale = window.innerWidth < 550 ? 0.3 : window.innerWidth < 800 ? 0.5 : 0.75;
+        initiativeCardScale = window.innerWidth < 550 ? 0.4 : window.innerWidth < 800 ? 0.6 : 0.8;
+    }
 
     const handleDownload = async () => {
         drawerStore.open({ id: 'download', width: 'w-full' });
@@ -93,16 +106,9 @@
         margin-top: -25px;
         z-index: 0;
     }
-    @media (max-width: 1162px) {
-        .homebrew-details-container {
-            flex-direction: row;
-            width: 100%;
-        }
-        .homebrew-details-container div {
-            flex: 1;
-        }
-    }
 </style>
+
+<svelte:window on:resize={updateScales} />
 
 <svelte:head><title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title></svelte:head>
 
@@ -117,11 +123,39 @@
 </ol>
 
 <div bind:this={heroPage} class="hero-page flex justify-center gap-5 flex-col">
+    <PageButtonContainer>
+        <div class="flex justify-center page-button-container gap-2">
+            {#if $page.data.session?.user.id == hero.user.id}
+            <a href={$page.url + "/edit"} class="unstyled">
+                <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
+            </a>
+            {:else if authUser}
+            <form method="POST" action="/api/user?/favoriteHomebrew&id={hero.id}" use:enhance={() => {
+                return async ( { result } ) => {
+                    if (result.type === 'error' || result.type === 'redirect') {
+                        await applyAction(result);
+                        return;
+                    }
+
+                    updateUserData(result.data?.user);
+                };
+            }}>
+                <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
+                <ComicButton icon="material-symbols:favorite"
+                    background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }></ComicButton>
+                </div>
+            </form>
+            {/if}
+            <div title="Download ZIP">
+                <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
+            </div>
+        </div>
+    </PageButtonContainer>
     <div class="flex gap-5 justify-center flex-wrap">
         <div bind:this={heroSheet}>
-            <HeroSheet hero={hero}></HeroSheet>
+            <HeroSheet scale={sheetScale} hero={hero}></HeroSheet>
         </div>
-            <div class="homebrew-details-container flex flex-col gap-5 pb-5">                
+            <div class="homebrew-details-container flex flex-col sm:flex-row lg:flex-col gap-5 pb-5">                
                 <div class="comic-label">
                     <h1>Designer</h1>
                     <p><a href="/user/{hero.user.id}">{hero.user.userName}</a></p>
@@ -150,13 +184,13 @@
         <header class="comic-header">
             <h1>Initiative Card, Token & Dice</h1>
         </header>
-        <div class="comic-body flex items-end justify-center mb-5">
-            <InitiativeCard theme={hero.theme} scale={0.8} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
-            <div class="grid">
-                <div class="-mb-10 -ml-12 z-10">
+        <div class="comic-body grid sm:flex items-end justify-center mb-5">
+            <InitiativeCard theme={hero.theme} scale={initiativeCardScale} image={hero.heroImage.url} name={hero.name} ability={hero.abilities[0].name} backgroundColor={hero.sheetBackgroundColor}></InitiativeCard>    
+            <div class="grid justify-center mt-5 sm:mt-0">
+                <div class="sm:-mb-10 sm:-ml-12 z-10">
                     <FigureToken imageUrl={hero.heroImage.url}></FigureToken>
                 </div>
-                <div class="flex gap-10 mb-5 pt-16 -ml-4 justify-center dice-container">
+                <div class="flex gap-10 mb-5 mt-14 -ml-10 sm:-ml-2 justify-center dice-container">
                     <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
                     <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
                     <ActionDie backgroundColor={hero.actionDice.backgroundColor} faces={hero.actionDice.dice} iconColor={hero.actionDice.iconColor} theme={hero.theme}></ActionDie>
@@ -164,15 +198,17 @@
             </div>
         </div>     
         {#if hero.skillCards && hero.skillCards.length > 0}
-        <header class="comic-header">
+        <header class="comic-header justify-center sm:justify-between !grid sm:!flex">
             <h1>Skill Cards</h1>
-            <RangeSlider class="absolute content-center items-center self-center bottom-0 pb-2 pt-1 pr-4 pl-4 gap-2 rounded-t-md border-primary-100 border-2 border-b-0 right-2 text-white bg-primary-900 !flex"
+            <RangeSlider class="hidden sm:!flex self-end content-center items-center mr-1 sm:mr-2 pb-2 pt-1 pr-4 pl-4 sm:gap-2 rounded-t-md border-primary-100 border-2 border-b-0 text-white bg-primary-900"
                 accent="!accent-primary-500" 
                 bind:value={skillCardScale} 
                 max={1.5} 
                 min={0.1} 
                 step={0.05}
-            ><iconify-icon icon="material-symbols:zoom-in-rounded" height={30} class="-mb-3"></iconify-icon></RangeSlider>
+            >
+                <iconify-icon icon="material-symbols:zoom-in-rounded" height={30} class="-mb-3"></iconify-icon>
+            </RangeSlider>
         </header>
         <div class="comic-body flex gap-5 items-center justify-center flex-wrap">
             {#each hero.skillCards as skillCard, index}
@@ -180,32 +216,5 @@
             {/each}
         </div>
         {/if}
-    </div>
-    
-    <div class="flex justify-center page-button-container gap-2">
-        {#if $page.data.session?.user.id == hero.user.id}
-        <a href={$page.url + "/edit"} class="unstyled">
-            <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
-        </a>
-        {:else if authUser}
-        <form method="POST" action="/api/user?/favoriteHomebrew&id={hero.id}" use:enhance={() => {
-            return async ( { result } ) => {
-                if (result.type === 'error' || result.type === 'redirect') {
-                    await applyAction(result);
-                    return;
-                }
-
-                updateUserData(result.data?.user);
-            };
-        }}>
-            <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
-            <ComicButton icon="material-symbols:favorite"
-                background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }></ComicButton>
-            </div>
-        </form>
-        {/if}
-        <div title="Download ZIP">
-            <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
-        </div>
     </div>
 </div>
