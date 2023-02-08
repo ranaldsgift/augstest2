@@ -9,10 +9,6 @@
     .comic-list-nav a {
         border: 3px solid black;
         border-radius: 0;
-        background-size: 121%;
-        background-repeat: no-repeat;
-        box-shadow: rgb(129 140 248 / 86%) 1px 1px 1px 38px inset;
-        background-position: -13px -123px;
         text-align: left;
         justify-content: start;
         text-transform: uppercase;
@@ -37,6 +33,8 @@
         width: 200%;
         height: 100%;
         opacity: 0.1;
+        top: 0px;
+        pointer-events: none;
 
     }
     .halftone {
@@ -63,16 +61,24 @@
         mask-position: center;
         transition: background-size 100ms;
     }
+
+    @media (max-width: 300px) {
+        a {
+            font-size: 1.5rem !important;
+            -webkit-text-stroke: 1px;
+            -webkit-text-stroke-color: black;
+        }
+    }
 </style>
 
 <div class="m-auto">
-    <nav class="grid m-auto gap-4 px-8 max-w-7xl comic-list-nav">
+    <nav class="grid m-auto gap-4 sm:px-8 max-w-7xl comic-list-nav">
         {#each listItems as listItem}
-        <div class="">
-            <a href="{listItem.url}" class="grid btn relative overflow-hidden text-stroke" data-title={listItem.name}>
+        <div class="overflow-hidden relative bg-primary-500">
+            <a href="{listItem.url}" class="flex flex-wrap btn overflow-hidden text-stroke whitespace-pre-wrap" data-title={listItem.name}>
                 {listItem.name}
-                <div class="halftone-container"><div class="halftone"></div></div>
             </a>
+            <div class="halftone-container"><div class="halftone"></div></div>
         </div>
         {/each}
     </nav>

@@ -75,7 +75,7 @@
     <div class="comic-background"></div>
     {/if}
     {#if title.length > 0}
-    <header class="card-header bg-tertiary-600 text-black">
+    <header class="card-header bg-tertiary-600 text-black mr-4 sm:!w-auto" style:width="calc(100% - 10px)">
         <h3 class="font-bold text-2xl pb-2">{title}</h3>
     </header>
     {/if}

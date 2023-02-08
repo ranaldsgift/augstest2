@@ -65,9 +65,6 @@
 </script>
 
 <style>
-    div {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    }
     .alert { 
         flex-direction: row;
         align-items: center;
@@ -98,9 +95,9 @@
     </aside>
 {/if}
 
-<div class="grid gap-5 max-w-5xl m-auto px-8">
+<div class="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-5 max-w-5xl m-auto px-8">
     {#each homepageItems as homepageItem}
-        <a class="grid unstyled" href="{homepageItem.url}" target="{homepageItem.linkTarget}" rel="noreferrer">
+        <a class="grid unstyled max-w-[420px] grow" href="{homepageItem.url}" target="{homepageItem.linkTarget}" rel="noreferrer">
             <ComicCard title={homepageItem.title} icon={homepageItem.icon} description={homepageItem.description} shadowColor={homepageItem.shadowColor}></ComicCard>
         </a>
     {/each}

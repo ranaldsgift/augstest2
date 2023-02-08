@@ -122,7 +122,7 @@
                 <button class="sm:hidden mr-4" on:click={() => drawerStore.open({ id: 'mobile-menu', width: '120px' })} >
                     <iconify-icon icon="mdi:menu"></iconify-icon>
                 </button>
-                <a href="/"><span class="text-3xl tracking-wider text-black" style:font-family="bangersregular">AUGSTOOLS</a>
+                <a href="/"><span class="text-3xl tracking-wider text-black hidden sm:block" style:font-family="bangersregular">AUGSTOOLS</a>
             </svelte:fragment>
             <svelte:fragment slot="trail">
                 <div class="relative">
@@ -153,7 +153,7 @@
                         </nav>
                     </div>
                 </div>
-                <a class="btn-icon" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
+                <a class="btn-icon hidden sm:flex" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
                     <iconify-icon icon="mdi:github"></iconify-icon>
                 </a>
                 <a class="btn-icon" href="/donate" aria-label="Donate">

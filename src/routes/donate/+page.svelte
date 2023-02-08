@@ -28,6 +28,9 @@
 </ol>
 
 <div class="about-page max-w-5xl grid">
+	<PageButtonContainer>
+		<ComicButton text="Donate" callback={() => goto(`https://www.paypal.com/donate/?hosted_button_id=MYJ9RA3FJAZQ6`)} icon="mdi:donate"></ComicButton>
+	</PageButtonContainer>
 	<header class="comic-header">
 		<h1>Donate</h1>
 	</header>
@@ -76,9 +79,6 @@
 		</a>
 		</div>
 	</div>
-	<PageButtonContainer>
-		<ComicButton text="Donate" callback={() => goto(`https://www.paypal.com/donate/?hosted_button_id=MYJ9RA3FJAZQ6`)} icon="mdi:donate"></ComicButton>
-	</PageButtonContainer>
 </div>
 
 
