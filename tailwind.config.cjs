@@ -6,6 +6,12 @@ module.exports = {
     require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
   ],
   theme: {
+    backgroundSize: {
+      'auto': 'auto',
+      'cover': 'cover',
+      'contain': 'contain',
+      'bottomline': '100% 1px',
+    },
     extend: {},
   },
   plugins: [

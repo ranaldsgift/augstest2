@@ -1,8 +1,11 @@
 <script lang="ts">
     import SkillCardEditor from '$lib/components/SkillCardEditor.svelte';
+    import SkillCardEditorForm from '$lib/components/SkillCardEditorForm.svelte';
+    import { SkillCard } from '$lib/entities/SkillCard';
     import type { PageData } from './$types';
     
     export let data: PageData;
+    const skillCard = new SkillCard(data.session?.user.id);
 </script>
 
 <svelte:head><title>Create Your Hero - augs.tools</title></svelte:head>
@@ -16,5 +19,5 @@
 </ol>
 
 <div class="page flex justify-center">
-    <SkillCardEditor></SkillCardEditor>
+    <SkillCardEditorForm {skillCard} session={data.session}></SkillCardEditorForm>
 </div>

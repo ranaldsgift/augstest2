@@ -86,10 +86,11 @@
 
 
     function handleSkillCardSelection() {
-        const c: ModalComponent = { ref: SkillCardForm, props: { skillCards: hero.skillCards, userId: hero.user.id } };
+        const c: ModalComponent = { ref: SkillCardForm, props: { skillCards: hero.skillCards, userId: hero.user.id, width: 'w-full' } };
         const d: ModalSettings = {
             type: 'component',
             component: c,
+            modalClasses: 'w-full max-w-[1200px]',
             response: (skillCards: SkillCard[]) => {
                 if (!skillCards || skillCards.length === 0)
                     return
@@ -188,11 +189,11 @@
             <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
             {#if !$page.data.session}
                 <PigeonPeteSays>
-                    <p>You must be logged in to create a Hero!</p>
+                    <p>You must be logged in to save a Hero!</p>
                 </PigeonPeteSays>
             {:else if !hero.isValid()}
                 <PigeonPeteSays>
-                    <p>To save your Hero, please complete the following fields:</p>
+                    <p>To save your Hero, please complete or fix the following fields:</p>
                     <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
                 </PigeonPeteSays>
             {:else if hero.id && isDirty()}        
@@ -278,19 +279,19 @@
                 <div class="font-fields-container">
                     <label>
                         <span>Hero Name<br/>Font Size</span>
-                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.fontSize.toString()}>
                     </label>
                     <label>
                         <span>Keywords<br/>Font Size</span>
-                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.fontSize.toString()}>
                     </label>
                     <label>
                         <span>Ability Name<br/>Font Size</span>
-                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.fontSize.toString()}>
                     </label>
                     <label>
                         <span>Ability Effect<br/>Font Size</span>
-                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.font_size.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.fontSize.toString()}>
                     </label>
                 </div>
             </div>            
@@ -305,7 +306,7 @@
             {#each hero.skillCards as skillCard, index}
                 <div class="relative" in:slide="{{ delay: 0, duration: 300, easing: quintOut }}">
                     <iconify-icon class="absolute z-10 cursor-pointer mr-1 mt-1 hidden context-button top-0 right-0 p-1" style:font-size="1.2rem" icon="material-symbols:delete" on:click={() => handleRemoveSkillCard(index)} on:keydown={() =>  handleRemoveSkillCard(index)}></iconify-icon>
-                    <SkillCardEditor scale={1} backgroundColor={hero.sheetBackgroundColor} skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
+                    <SkillCardEditor scale={1} backgroundColor={hero.sheetBackgroundColor} bind:skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
                 </div>
             {/each}
             {/if}

@@ -1,6 +1,7 @@
 export enum HomebrewCategoriesEnum {
     Heroes = "Heroes",
-    Villains = "Villains",
+    SkillCards = "SkillCards",
+/*     Villains = "Villains",
     MapTiles = "MapTiles",
     Tokens = "Tokens",
     Scenarios = "Scenarios",
@@ -8,7 +9,7 @@ export enum HomebrewCategoriesEnum {
     SkillCards = "SkillCards",
     VillainDecks = "VillainDecks",
     Gadgets = "Gadgets",
-    Allies = "Allies"
+    Allies = "Allies" */
 }
 
 export enum AugsLicensesEnum {

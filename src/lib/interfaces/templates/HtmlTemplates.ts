@@ -8,20 +8,32 @@ export interface Position {
     top: string;
 }
 
+export interface TemplateText {
+    font: string,
+    fontSize: number
+    fontColor: string
+    textShadow?: string
+    lineHeight?: number,
+    classList?: string
+}
+
 export interface PositionedTemplateText {
     size: Size,
     position: Position,
     font: string,
-    font_size: number
-    font_color: string
-    text_shadow?: string
+    fontSize: number
+    fontColor: string
+    textShadow?: string
+    lineHeight?: number,
+    classList?: string
 }
 
 export interface PositionedTemplateContainer extends PositionedItem {
     color?: string;
     background_color?: string,
     border_color?: string,
-    border_radius?: string
+    border_radius?: string,
+    classList?: string
 }
 
 export interface PositionedItem {

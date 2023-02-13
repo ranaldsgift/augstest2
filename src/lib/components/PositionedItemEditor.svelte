@@ -60,14 +60,14 @@
     style:--width={template.size.width}
     style:--height={template.size.height}
     style:--font={template.font}
-    style:--fontSize="{!fontSize || fontSize == 0 ? template.font_size : fontSize}px"
-    style:--fontColor={template.font_color}
+    style:--fontSize="{!fontSize || fontSize == 0 ? template.fontSize : fontSize}px"
+    style:--fontColor={template.fontColor}
     style:--textAlign={alignment}
     style:--display={display}
     style:--verticalAlign={verticalAlign}
     on:click|preventDefault={handleEdit}
 >
     <p class="unstyled">{content ?? placeholder}</p>
-    <iconify-icon icon="mdi:edit" class="hover" hidden></iconify-icon>
+    <iconify-icon icon="mdi:edit" class="context-button absolute p-1 left-[calc(50%-15px)] top-[calc(50%-15px)]" hidden></iconify-icon>
     <slot></slot>
 </button>

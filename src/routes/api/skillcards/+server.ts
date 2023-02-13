@@ -10,6 +10,7 @@ export const GET: RequestHandler = async (event) => {
     let data = null;
     try {
         data = await SkillCard.createQueryBuilder('skillcard')
+            .leftJoinAndSelect("skillcard.image", "image")
             .leftJoinAndSelect("skillcard.user", "user")
             .where("user.id = :userId", { userId: userId }).andWhere("skillcard.heroId is NULL").getMany();
     }

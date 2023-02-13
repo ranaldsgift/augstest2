@@ -1,38 +1,33 @@
 <script lang="ts">
     import type { PositionedTemplateText } from "$lib/interfaces/templates/HtmlTemplates";
 
+    export let className: string = '';
     export let template: PositionedTemplateText;
-    export let content: string | number = '';
-    export let alignment: string = "center";
     export let fontSize: number = 0;
-    
-    let fontSizeValue = fontSize == 0 ? `${template.fontSize}px` : `${fontSize}px`;
 </script>
 
 <style>
-    .positioned-text {
+    .positioned-text-container {
         position: absolute;
+        display: flex;
+        flex-direction: column;
         left: calc(var(--left) * var(--scale));
         top: calc(var(--top) * var(--scale));
         width: calc(var(--width) * var(--scale));
         height: calc(var(--height) * var(--scale));
-        font-family: var(--font);
-        font-size: var(--fontSize);
-        color: var(--fontColor);
-        text-align: var(--textAlign);
     }
 </style>
 
-<span 
-    class="positioned-text" 
+<div 
+    class="positioned-text-container{className.length > 0 ? ` ${className}` : ''}" 
     style:--left={template.position.left}
     style:--top={template.position.top}
     style:--width={template.size.width}
     style:--height={template.size.height}
     style:--font={template.font}
-    style:--fontSize={fontSizeValue}
-    style:--fontColor={template.fontColor}
-    style:--textAlign={alignment}
+    style:--fontSize="{!fontSize || fontSize === 0 ? template.fontSize : fontSize}px"
+    style:--lineHeight={template.lineHeight}
+    style:--color={template.fontColor}
 >
-    {content}
-</span>
+    <slot></slot>
+</div>

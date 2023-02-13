@@ -49,7 +49,7 @@
 				keywords = keywords.filter(k => k !== keyword)
 			}
 		}}>
-		<span class="chip chip-primary capitalize h-full {keywords.includes(keyword) ? 'chip-active' : ''}">
+		<span class="chip variant-filled-primary capitalize h-full {keywords.includes(keyword) ? 'chip-active' : ''}">
 			{#if keywords.includes(keyword)}
 			<span class="chip-check"><iconify-icon icon="material-symbols:check"></iconify-icon></span>
 			{/if}

@@ -364,3 +364,11 @@ input[type="color"]::-webkit-color-swatch {
 div[data-menu='theme'] {
     z-index: 100;
 }
+[contentEditable=true]:empty:before {
+    content: attr(placeholder);
+    opacity: 0.6;
+}
+
+.read-only * {
+    pointer-events: none;
+}

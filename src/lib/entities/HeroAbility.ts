@@ -14,4 +14,12 @@ export class HeroAbility extends BaseEntity {
 
     @Column("text")
     effect: string
+
+    public isValid(): boolean {
+        if (!this.name || this.name.length == 0 || !this.effect || this.effect.length == 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

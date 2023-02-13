@@ -85,7 +85,7 @@ export class Hero extends Homebrew {
     @Column("varchar", { array: true })
     keywords: string[]
 
-    @Column("varchar")    
+    @Column("varchar")
     sheetBackgroundColor: string
 
     public getAbilities(): HeroAbility[] {
@@ -93,7 +93,11 @@ export class Hero extends Homebrew {
     }
 
     public isValid(): boolean {
-        if (!this.name || !this.keywords || this.keywords.length == 0 || !this.abilities || this.abilities.length == 0 || !this.heroImage || this.heroImage.url?.length == 0 || !this.iconImage || this.iconImage.url?.length == 0) {
+        if (!this.name 
+            || !this.keywords || this.keywords.length == 0 
+            || !this.abilities || this.abilities.length == 0 
+            || !this.heroImage || this.heroImage.url?.length == 0 
+            || !this.iconImage || this.iconImage.url?.length == 0) {
             return false;
         }
 
@@ -119,8 +123,8 @@ export class Hero extends Homebrew {
         if (!this.iconImage || this.iconImage.url?.length == 0) {
             errors.push('Icon Image')
         }
-        if (!this.abilities || this.abilities.length == 0) {
-            errors.push('Ability Name');
+        if (!this.abilities || this.abilities.length == 0 || this.abilities.some(a => !a.isValid())) {
+            errors.push('Hero Abilities');
         }
         
         return errors.join(', ');

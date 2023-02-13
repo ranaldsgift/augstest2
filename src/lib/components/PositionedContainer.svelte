@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PositionedTemplateContainer } from "$lib/interfaces/templates/HtmlTemplates";
 
-    export let className: string = '';
+    export let classList: string = '';
     export let template: PositionedTemplateContainer;
 </script>
 
@@ -19,7 +19,7 @@
 </style>
 
 <div 
-    class="positioned-container{className.length > 0 ? ` ${className}` : ''}" 
+    class="positioned-container{classList.length > 0 ? ` ${classList}` : ''}{template.classList && template.classList.length > 0 ? ` ${template.classList}` : ''}" 
     style:--left={template.position.left}
     style:--top={template.position.top}
     style:--width={template.size.width}

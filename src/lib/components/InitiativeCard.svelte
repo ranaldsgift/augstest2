@@ -141,9 +141,9 @@
         <p
         class="{theme === ThemeTemplatesEnum.BTAS ? 'gradient-heading' : ''}"
         style:bottom="0px"
-        style:--fontSize="{template.name.font_size}px"
-        style:--lineHeight="{template.name.font_size - 14}px"
-        style:color={template.name.font_color}
+        style:--fontSize="{template.name.fontSize}px"
+        style:--lineHeight="{template.name.fontSize - 14}px"
+        style:color={template.name.fontColor}
         style:font-family={template.name.font}>{name}</p>
     </div>
     <svg
@@ -152,8 +152,8 @@
     style:--left={template.ability.position.left}
     style:--width={template.ability.size.width}
     style:--height={template.ability.size.height}
-    style:--fontSize="{template.ability.font_size}px"
-    style:--color={template.ability.font_color}
+    style:--fontSize="{template.ability.fontSize}px"
+    style:--color={template.ability.fontColor}
     style:--fontFamily={template.ability.font}>
         <linearGradient id="gr-simple" x1="1" y1="0" x2="100%" y2="100%">
           <stop stop-color="#ffffff" offset="10%"/>

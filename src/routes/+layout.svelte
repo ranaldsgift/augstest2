@@ -80,7 +80,7 @@
 
 <Modal/>
 
-<Drawer>
+<Drawer class="z-[100]">
 	{#if $drawerStore.id === 'login'}
     <form method="POST" action="/api/user?/login&redirectTo={$page.url.href}" class="comic-form grid grid-flow-row m-auto max-w-xl gap-5 mt-10" use:enhance={({ form, data, action, cancel }) => {    
         return async ({ result }) => {

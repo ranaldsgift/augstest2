@@ -21,6 +21,7 @@
         border-radius: 50px;
         background: black;
         margin: -1px !important;
+        margin-right: -3px !important;
     }
     span {
         padding: 2px 10px 0 12px;

@@ -1,6 +1,6 @@
 <script lang="ts">
     import PositionedContainer from "./PositionedContainer.svelte";
-    import PositionedTextEditor from "./PositionedItemEditor.svelte";
+    import PositionedItemEditor from "./PositionedItemEditor.svelte";
     import { modalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import HeroActionDiceForm from "./ActionDiceForm.svelte";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
@@ -13,9 +13,10 @@
     import { HeroAbility } from "$lib/entities/HeroAbility";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
-    import PositionedImageEditor from "./PositionedImageEditor.svelte";
     import KeywordForm from "./KeywordForm.svelte";
-    import { draggable } from '@neodrag/svelte';
+    import ImageEditor from "./ImageEditor.svelte";
+    import TextEditor from "./TextEditor.svelte";
+    import PositionedTextContainer from "./PositionedTextContainer.svelte";
 
     export let template = ThemeTemplates.TMNT.heroSheet;
     export let hero: Hero;
@@ -70,7 +71,7 @@
         modalStore.trigger(d);
     }
 
-    function handleAddAbility() {
+/*     function handleAddAbility() {
         const formFields: FormField[] = [
             {
                 name: 'ability_name',
@@ -114,6 +115,29 @@
 			}
 		};
 		modalStore.trigger(d);
+    } */
+
+    
+    function handleAddAbility() {
+        const ability = new HeroAbility();
+        ability.name = '';
+        ability.effect = '';
+
+        if (!hero.abilities) {
+            hero.abilities = [];
+        }
+
+        hero.abilities.push(ability);
+        hero = hero;
+    }
+
+    function handleRemoveAbility(index: number) {
+        if (!hero.abilities || hero.abilities.length <= index) {
+            return;
+        }
+
+        hero.abilities.splice(index, 1);
+        hero = hero;
     }
 
     function handleEditAbility(index: number) {
@@ -159,14 +183,6 @@
         modalStore.trigger(d);
     }
 
-    function handleScaleImage(event: WheelEvent) {
-        if (event.deltaY > 0) {
-            hero.heroImage.scale -= (1 * scaleMultiplier);
-        } else {
-            hero.heroImage.scale += (1 * scaleMultiplier);
-        }
-    }
-
     function handleEditHeroImage() {
         const prompt: ModalSettings = {
             type: 'prompt',
@@ -181,8 +197,6 @@
         };
         modalStore.trigger(prompt);
     }
-
-    let scaleMultiplier = 1;
 </script>
 
 <style>
@@ -199,6 +213,9 @@
     :global(.positioned-container:hover .add-ability-button) {
         display: flex;
         justify-content: center;
+    }
+    .hero-sheet-container[data-theme="TMNT"] .hero-name {
+        letter-spacing: 2px;
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container button {
         border: none !important;
@@ -299,21 +316,8 @@
         mix-blend-mode: multiply;
         opacity: 0.35;
     }
-    :global([contentEditable=true]:empty:before) {
-    content: attr(placeholder);
-    opacity: 0.6;
-  }
 </style>
 
-<svelte:window
-on:keydown={(e) => {
-    if (e.key === 'Shift') {
-        scaleMultiplier = 10; 
-    }
-}} 
-on:keyup={(e) => { 
-    scaleMultiplier = 1;
-}}/>
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
     {#if hero.theme === ThemeTemplatesEnum.BTAS}
@@ -322,116 +326,83 @@ on:keyup={(e) => {
     {#if template.overlay_image}
     <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
     {/if}
-    {#if hero.heroImage.url}
-    <img class="absolute" on:wheel|preventDefault={handleScaleImage} use:draggable={{
-        position: { x: hero.heroImage.positionLeft * scale, y: hero.heroImage.positionTop * scale },
-        onDrag: ({ offsetX, offsetY }) => {
-            hero.heroImage.positionLeft = offsetX;
-            hero.heroImage.positionTop = offsetY;
-        },
-      }} src={hero.heroImage.url} alt="Hero" style:height={`${100 * (hero.heroImage.scale/100)}%`} style:object-fit="cover">
-    {:else}
-    <button class="absolute" on:click={handleEditHeroImage}
-        style:top={template.image.position.top}
-        style:left={template.image.position.left}
-        style:width={template.image.size.width}
-        style:height={template.image.size.height}
-    >
-        <span class="border-dashed border-2 p-2 inline-block">Hero Image URL</span>
-        <iconify-icon icon="mdi:edit" class="hover center" hidden></iconify-icon>
-    </button>
-    {/if}
-    <PositionedImageEditor name="iconImage" title="Icon Image URL" bind:template={template.icon} bind:imageUrl={hero.iconImage.url} className="hero-icon-image">
-    </PositionedImageEditor>
-    <div class="absolute flex" style:width="calc({template.name.size.width} * {scale})" style:height="calc({template.name.size.height} * {scale})" style:top="calc({template.name.position.top} * {scale})" style:left="calc({template.name.position.left} * {scale})">
-        <span class="unstyled hero-name" style:position="relative" style:bottom="0px" style:align-self="flex-end" contenteditable="true"
-        style:font-size="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size * scale : hero.fontSizeHeroName * scale}px"
-        style:line-height="{!hero.fontSizeHeroName || hero.fontSizeHeroName === 0 ? template.name.font_size * scale * 0.7 : hero.fontSizeHeroName * scale * 0.7}px"
-        style:font-family={template.name.font}
-        style:color={template.name.font_color}
-        placeholder="Hero Name"
-        spellcheck="false"
-        bind:innerHTML={hero.name}>
-        </span>
-    </div>
-    <PositionedContainer className="keywords-container" template={template.traits}>
+    <PositionedContainer template={template.image} classList="!overflow-visible">
+        <ImageEditor bind:image={hero.heroImage} scale={scale} scaleAxis='height'></ImageEditor>
+    </PositionedContainer>
+    <PositionedContainer template={template.icon}>
+        <ImageEditor bind:image={hero.iconImage} scale={scale}></ImageEditor>
+    </PositionedContainer>
+    <PositionedContainer classList="flex justify-end !overflow-visible " template={template.name}>
+        <TextEditor bind:text={hero.name} placeholder="Hero Name" classList={template.name.classList} template={template.name} bind:fontSize={hero.fontSizeHeroName}></TextEditor>
+    </PositionedContainer>
+    <PositionedContainer classList="keywords-container z-[2]" template={template.traits}>
         <button on:click|preventDefault={handleEditKeywords} class="">
             <div
                 style:text-align="left" 
-                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.traits.font_size * scale : hero.fontSizeKeywords * scale}px" 
-                style:--fontFamily={template.traits.font} style:--color={template.traits.font_color}>
+                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.traits.fontSize * scale : hero.fontSizeKeywords * scale}px" 
+                style:--fontFamily={template.traits.font} style:--color={template.traits.fontColor}>
                 
                 {#if hero.keywords && hero.keywords.length > 0}
                 {#each hero.keywords as keyword, index}
                     <span>{keyword}</span>
                     {#if index < hero.keywords.length - 1}
-                    <span>&nbsp;•&nbsp;&nbsp;</span>
+                    <span>•&nbsp;</span>
                     {/if}
                 {/each}
                 {:else}
                 <span>Factions • Keywords</span>
                 {/if}                
             </div>
-        <iconify-icon icon="material-symbols:add" class="hover" hidden></iconify-icon>
+        <iconify-icon icon="material-symbols:add" class="context-button p-1 absolute right-0 top-0" hidden></iconify-icon>
     </button>
     </PositionedContainer>
     <div class="hero-attribute-container">
-        <PositionedTextEditor name="attributes.move" type="number" template={template.move_value} bind:content={hero.attributes.move}>
-        </PositionedTextEditor>
-        <PositionedTextEditor name="attributes.attack" type="number" template={template.attack_value} bind:content={hero.attributes.attack}>
-        </PositionedTextEditor>
-        <PositionedTextEditor name="attributes.defend" type="number" template={template.defend_value} bind:content={hero.attributes.defend}>
-        </PositionedTextEditor>
-        <PositionedTextEditor name="attributes.skill" type="number" template={template.skill_value} bind:content={hero.attributes.skill}>
-        </PositionedTextEditor>
-        <PositionedTextEditor name="attributes.focus" type="number" template={template.focus_value} bind:content={hero.attributes.focus}>
-        </PositionedTextEditor>
-        <PositionedTextEditor name="attributes.life" type="number" template={template.life_value} bind:content={hero.attributes.life}>
-        </PositionedTextEditor>
-        <PositionedTextEditor name="attributes.awakening" type="number" template={template.awakening_value} bind:content={hero.attributes.awakening}>
-        </PositionedTextEditor>
+        <PositionedItemEditor name="attributes.move" type="number" template={template.move_value} bind:content={hero.attributes.move}>
+        </PositionedItemEditor>
+        <PositionedItemEditor name="attributes.attack" type="number" template={template.attack_value} bind:content={hero.attributes.attack}>
+        </PositionedItemEditor>
+        <PositionedItemEditor name="attributes.defend" type="number" template={template.defend_value} bind:content={hero.attributes.defend}>
+        </PositionedItemEditor>
+        <PositionedItemEditor name="attributes.skill" type="number" template={template.skill_value} bind:content={hero.attributes.skill}>
+        </PositionedItemEditor>
+        <PositionedItemEditor name="attributes.focus" type="number" template={template.focus_value} bind:content={hero.attributes.focus}>
+        </PositionedItemEditor>
+        <PositionedItemEditor name="attributes.life" type="number" template={template.life_value} bind:content={hero.attributes.life}>
+        </PositionedItemEditor>
+        <PositionedItemEditor name="attributes.awakening" type="number" template={template.awakening_value} bind:content={hero.attributes.awakening}>
+        </PositionedItemEditor>
     </div>
-    <PositionedContainer className="ability-container" template={template.ability_container}>
+    <PositionedContainer classList="ability-container" template={template.ability_container}>
         {#if hero.abilities && hero.abilities.length > 0}
             {#each hero.getAbilities() as ability, index}
-            <button style:position="relative" on:click|preventDefault={() => handleEditAbility(index) }>
-                <p
-                    class="hero-ability-name text-center pb-1" 
-                    style:font-family={template.ability_name.font}
-                    style:font-size="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
-                    style:line-height="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
-                    style:color={template.ability_name.font_color}
-                >{ability.name}</p>
-                <p 
-                    style:white-space="pre-wrap"
-                    class="hero-ability-effect pb-4 text-center" 
-                    style:font-family={template.ability_effect.font}
-                    style:font-size="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
-                    style:line-height="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale + 2}px"
-                    style:color={template.ability_effect.font_color}
-                >{ability.effect.replaceAll('[[hero]]', hero.name)}</p>
-                <iconify-icon icon="mdi:edit" class="hover" hidden></iconify-icon>
-            </button>
+            <div class="relative grid">
+                <TextEditor 
+                    template={template.ability_name} 
+                    fontSize={hero.fontSizeAbilityName}
+                    placeholder="Ability Name"
+                    classList="pb-1"
+                    bind:text={ability.name}>
+                </TextEditor>
+                <TextEditor
+                    template={template.ability_effect} 
+                    fontSize={hero.fontSizeAbilityEffect}
+                    placeholder="Ability Effect"
+                    classList="pb-4"
+                    bind:text={ability.effect}>
+                </TextEditor>
+                <button class="absolute right-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
+                    <iconify-icon icon="material-symbols:delete"></iconify-icon>
+                </button>
+            </div>
             {/each}
         {:else}
-            <p 
-                class="hero-ability-name text-center pb-1" 
-                style:font-family={template.ability_name.font}
-                style:font-size="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
-                style:line-height="{hero.fontSizeAbilityName && hero.fontSizeAbilityName > 0 ? hero.fontSizeAbilityName * scale : template.ability_name.font_size * scale}px"
-                style:color={template.ability_name.font_color}
-            >Hero Ability Name</p>
-            <p 
-                class="hero-ability-effect pb-4 text-center" 
-                style:font-family={template.ability_effect.font}
-                style:font-size="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
-                style:line-height="{hero.fontSizeAbilityEffect && hero.fontSizeAbilityEffect > 0 ? hero.fontSizeAbilityEffect * scale : template.ability_effect.font_size * scale}px"
-                style:color={template.ability_effect.font_color}
-            >Hero Ability Effect</p>
+            <div class="absolute w-full h-full flex justify-center items-center">
+                <ComicButton text="Hero Ability" callback={handleAddAbility} icon="material-symbols:add-circle-rounded"></ComicButton>
+            </div>
         {/if}
-        <div class="add-ability-button" hidden>
-            <ComicButton text="Add Ability" icon="material-symbols:add" callback={handleAddAbility}></ComicButton>
-        </div>            
+        <button class="absolute left-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
+            <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon>
+        </button>
     </PositionedContainer>
     <div class="hero-action-dice-container" style:--iconColor={hero.actionDice.iconColor}>
         <input type="hidden" name="actionDice" hidden bind:value={hero.actionDice}>

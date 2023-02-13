@@ -26,7 +26,7 @@
 
 <div class="page create-page max-w-7xl">
     <header class="comic-header">
-        <h1>Pick Your Poison</h1>
+        <h1>What would you like to see?</h1>
     </header>
     <div class="comic-body">
         <NavList listItems={navItems}></NavList>

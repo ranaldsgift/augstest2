@@ -1,56 +1,34 @@
 <script lang="ts">
-    import type { FormField } from "$lib/interfaces/templates/HtmlTemplates";
-    import { modalStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
-    import ModalFormEditor from "./ModalFormEditor.svelte";
+    import type { TemplateText } from "$lib/interfaces/templates/HtmlTemplates";
 
-    export let font: string = "Comic Sans MS"
-    export let fontColor: string = "#000000";
-    export let content: string | number | undefined;
-    export let alignment: string = "center";
-    export let type: string = 'text';
+
+    export let text: string = '';
     export let placeholder: string = '';
-    export let fontSize: number | undefined = undefined;
-
-    function handleEdit() {
-        const formFields: FormField[] = [{
-            name: "field",
-            type,
-            value: content
-        }]
-
-        const c: ModalComponent = { ref: ModalFormEditor, props: { fields: JSON.stringify(formFields) } };
-        const d: ModalSettings = {
-            type: 'component',
-            component: c,
-            response: (response: any) => {
-                if (response[0] && response[0].value.toString().length > 0) {
-                    content = response[0].value;    
-                }
-            }
-        };
-        modalStore.trigger(d);
-    }
+    export let spellcheck: boolean = false;
+    export let classList: string = '';
+    export let template: TemplateText;
+    export let fontSize: number = 0;
 </script>
 
-<style>
-    .text-editor {
+<style lang="scss">
+    span {
         font-family: var(--font);
         font-size: calc(var(--fontSize) * var(--scale));
         line-height: calc(var(--fontSize) * var(--scale));
-        color: var(--fontColor);
+        color: var(--color);
         text-align: var(--textAlign);
+        line-height: calc(var(--lineHeight));
+        cursor: text;
     }
 </style>
 
-<button 
-    class="text-editor" 
-    style:--font={font}
-    style:--fontSize="{fontSize}px"
-    style:--fontColor={fontColor}
-    style:--textAlign={alignment}
-    on:click|preventDefault={handleEdit}
->
-    {content ?? placeholder}
-    <iconify-icon icon="mdi:edit" class="hover" hidden></iconify-icon>
-    <slot></slot>
-</button>
+<span class="unstyled outline-none{classList.length > 0 ? ` ${classList}` : ''}{template.classList && template.classList.length > 0 ? ` ${template.classList}` : ''}" 
+    style:--font={template.font}
+    style:--fontSize="{!fontSize || fontSize === 0 ? template.fontSize : fontSize}px"
+    style:--lineHeight={template.lineHeight ?? `${template.fontSize}px`}
+    style:--color={template.fontColor}
+    contenteditable="true"
+    placeholder={placeholder}
+    spellcheck={spellcheck}
+    bind:innerHTML={text}>
+</span>
