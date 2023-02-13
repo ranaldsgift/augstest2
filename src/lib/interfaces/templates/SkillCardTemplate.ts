@@ -64,12 +64,12 @@ export const SkillCardTemplates: Record<ThemeTemplatesEnum, SkillCardTemplate> =
             font: 'BebasNeueRegular', 
             fontSize: 48, 
             fontColor: 'white', 
-            classList: 'transform scale-x-[75%] w-full h-full !leading-[1] tracking-[4px] items-center !text-center !grid whitespace-nowrap'
+            classList: 'transform scale-x-[75%] h-full !leading-[1] tracking-[4px] items-center !text-center !grid whitespace-nowrap'
         },
         nameContainer: {
             size: { width: '447px', height: '86px' }, 
             position: { left: '70px', top: '400px' },
-            classList: 'overflow-hidden !bg-bottomline [background:_linear-gradient(to_right,_#77777700_0px,_#ffffff70_15%,_#ffffff_50%,_#ffffff70_85%,_#77777700_100%)_left_bottom_no-repeat]'
+            classList: 'overflow-hidden !grid justify-center items-center !bg-bottomline [background:_linear-gradient(to_right,_#77777700_0px,_#ffffff70_15%,_#ffffff_50%,_#ffffff70_85%,_#77777700_100%)_left_bottom_no-repeat]'
         },
         ability:  {
             font: 'DINCondensedLightRegular', 
