@@ -18,10 +18,20 @@
     let authUser = data.authUser ? DataHelper.deserialize<User>(User, data.authUser) : null;
 </script>
 
+<svelte:head><title>{skillCard.name} by {skillCard.user.userName} - augs.tools</title></svelte:head>
+
+<ol class="breadcrumb-nonresponsive">
+	<li class="crumb"><a href="/">Home</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="crumb"><a href="/homebrew">Homebrew</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="crumb">{skillCard.name}</li>
+</ol>
+
 <div class="skill-card-page h-full">
     <div class="flex h-full justify-center gap-5 mt-5">
         <div class="read-only">
-            <SkillCardEditor scale={1} skillCard={skillCard} template={skillCardTemplate} backgroundColor={skillCardBackgroundColor} theme={skillCardTheme}></SkillCardEditor>
+            <SkillCardEditor scale={1} skillCard={skillCard}></SkillCardEditor>
         </div>
         <div class="homebrew-details-container flex flex-col sm:flex-row lg:flex-col gap-5 pb-5">                
             <div class="comic-label">

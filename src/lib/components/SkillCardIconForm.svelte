@@ -33,9 +33,9 @@
 </style>
 
 <div class="modal-example-form space-y-4">
-	<RadioGroup selected={iconStore} regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
+	<RadioGroup active="variant-filled-primary" regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
 		{#each iconList as i}
-			<RadioItem value={i}>
+			<RadioItem bind:group={$iconStore} name={`radio-${i}`} value={i}>
 				<SkillCardIcon {theme} icon={SkillCardIconsEnum[i]}></SkillCardIcon>
 			</RadioItem>
 		{/each}

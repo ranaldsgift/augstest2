@@ -45,17 +45,21 @@
     }
 
     const handleDownload = async () => {
+        let initialSheetScale = sheetScale;
+        let initialSkillCardScale = skillCardScale;
+        let initialInitiativeCardScale = initiativeCardScale;
+
+        sheetScale = 1;
+        skillCardScale = 1;
+        initiativeCardScale = 1;
+
         drawerStore.open({ id: 'download', width: 'w-full' });
         var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
         var initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
         var figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
 
-        const initiativeCardClone = initiativeCard.cloneNode(true) as HTMLElement;
-        initiativeCardClone.style.setProperty('--scale', '1.0');
-        document.body.appendChild(initiativeCardClone);
-
         const heroSheetPng = await htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } });
-        const initiativeCardPng = await htmlToImage.toPng(initiativeCardClone, { style: { borderRadius: '0px' } });
+        const initiativeCardPng = await htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } });
         const figureTokenPng = await htmlToImage.toPng(figureToken);
         const zip = new JSZip();
         zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
@@ -67,17 +71,16 @@
             const skillCards = heroPage.querySelectorAll('.skill-card-container') as NodeListOf<HTMLElement>;
             for (let i = 0; i < skillCards.length; i++) {
                 const skillCard = skillCards[i];
-                const skillCardScale = skillCard.style.getPropertyValue('--scale');
-                skillCard.style.setProperty('--scale', '1.0');
                 const skillCardPng = await htmlToImage.toPng(skillCard, { style: { borderRadius: '0px' } });
-                skillCard.style.setProperty('--scale', skillCardScale);
                 zip.file(`skills/${hero.name} by ${hero.user.userName}-Skill Card-${hero.skillCards[i].name}.png`, skillCardPng.split(',')[1], { base64: true });
             }
         }
 
         const content = await zip.generateAsync({type:"blob"});
         download(content, `${hero.name} by ${hero.user.userName}-${Date.now()}.zip`);
-        initiativeCardClone.remove();
+        sheetScale = initialSheetScale;
+        skillCardScale = initialSkillCardScale;
+        initiativeCardScale = initialInitiativeCardScale;
         drawerStore.close();
     }
 
@@ -200,7 +203,7 @@
         {#if hero.skillCards && hero.skillCards.length > 0}
         <header class="comic-header justify-center sm:justify-between !grid sm:!flex">
             <h1>Skill Cards</h1>
-            <RangeSlider class="hidden sm:!flex self-end content-center items-center mr-1 sm:mr-2 pb-2 pt-1 pr-4 pl-4 sm:gap-2 rounded-t-md border-primary-100 border-2 border-b-0 text-white bg-primary-900"
+            <RangeSlider name="scale" class="hidden sm:!flex self-end content-center items-center mr-1 sm:mr-2 pb-2 pt-1 pr-4 pl-4 sm:gap-2 rounded-t-md border-primary-100 border-2 border-b-0 text-white bg-primary-900"
                 accent="!accent-primary-500" 
                 bind:value={skillCardScale} 
                 max={1.5} 

@@ -28,6 +28,7 @@
     export let hero: Hero;
     export let template = ThemeTemplates[hero.theme].heroSheet;
     let savedHero = instanceToInstance(hero);
+    savedHero.abilities = savedHero.abilities.sort((a, b) => a.id < b.id ? -1 : 1);
     
     const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
     themeSelection.subscribe(value => { 
@@ -40,6 +41,7 @@
     });
 
     function isDirty() {
+        //return hero !== savedHero;
         return DataHelper.serialize(hero) !== DataHelper.serialize(savedHero);
     }
 
@@ -86,11 +88,11 @@
 
 
     function handleSkillCardSelection() {
-        const c: ModalComponent = { ref: SkillCardForm, props: { skillCards: hero.skillCards, userId: hero.user.id, width: 'w-full' } };
+        const c: ModalComponent = { ref: SkillCardForm, props: { skillCards: hero.skillCards, userId: hero.user.id } };
         const d: ModalSettings = {
             type: 'component',
             component: c,
-            modalClasses: 'w-full max-w-[1200px]',
+            modalClasses: '!max-w-[1200px]',
             response: (skillCards: SkillCard[]) => {
                 if (!skillCards || skillCards.length === 0)
                     return
@@ -211,9 +213,9 @@
                 <div>
                     <label class="">
                         <h1>Theme</h1>
-                        <RadioGroup selected={themeSelection}>
+                        <RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
                             {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
-                                <RadioItem value={theme}>{theme}</RadioItem>
+                                <RadioItem bind:group={$themeSelection} name={`radio-${theme}`} value={theme}>{theme}</RadioItem>
                             {/each}
                         </RadioGroup>
                         <select class="unstyled" name="theme" bind:value={hero.theme} hidden>
@@ -283,7 +285,7 @@
                     </label>
                     <label>
                         <span>Keywords<br/>Font Size</span>
-                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.traits.fontSize.toString()}>
+                        <input class="unstyled" type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.keywords.fontSize.toString()}>
                     </label>
                     <label>
                         <span>Ability Name<br/>Font Size</span>

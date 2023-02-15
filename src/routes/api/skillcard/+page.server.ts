@@ -3,6 +3,7 @@ import type { Actions } from "./$types";
 import { FormHelper } from "$lib/helpers/FormHelper";
 import { redirect, error } from "@sveltejs/kit";
 import { SkillCard } from "$lib/entities/SkillCard";
+import { DataHelper } from "$lib/helpers/DataHelper";
 
 export const actions: Actions = {
     save: async ({ request, locals }) => {
@@ -26,5 +27,18 @@ export const actions: Actions = {
         }  
         
         return { id: skillCard?.id };
+    },
+    load: async ({ request, locals }) => {
+        let data = null;
+        try {
+            data = await SkillCard.find();
+        }
+        catch (err) {
+            console.error(err);
+            throw error(500, "Internal Server Error");
+        }
+    
+        const jsonData = DataHelper.serialize(data);        
+        return new Response(jsonData);
     }
 };

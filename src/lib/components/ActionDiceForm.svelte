@@ -28,9 +28,9 @@
 </style>
 
 <div class="modal-example-form space-y-4">
-	<RadioGroup selected={actionDice} regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
+	<RadioGroup active="variant-filled-primary" regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
 		{#each diceIconList as diceIcon}
-			<RadioItem value={diceIcon}>
+			<RadioItem bind:group={$actionDice} name={`radio-${diceIcon}`} value={diceIcon}>
 				<ActionDiceIcon {theme} icon={DiceIconsEnum[diceIcon]}></ActionDiceIcon>
 			</RadioItem>
 		{/each}

@@ -24,7 +24,7 @@
         margin-right: -3px !important;
     }
     span {
-        padding: 2px 10px 0 12px;
+        padding: 2px 12px 0 10px;
     }
 
     @keyframes color_anim {

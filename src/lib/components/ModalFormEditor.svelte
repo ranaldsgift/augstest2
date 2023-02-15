@@ -24,7 +24,7 @@
 <div class="modal-example-form space-y-4">
 	<form class="modal-form border border-surface-500 p-4 space-y-4 rounded-container-token" on:submit|preventDefault={onFormSubmit}>
         {#each parsedFields as field}
-            <label>
+            <label class="comic-label">
                 <span>{field.name.replace(/([a-z])([A-Z])/g, '$1 $2')}</span>
                 {#if field.type == "number"}
                 <input type="number" name={field.name} bind:value={field.value}/>

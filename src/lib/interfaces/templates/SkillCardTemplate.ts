@@ -64,7 +64,7 @@ export const SkillCardTemplates: Record<ThemeTemplatesEnum, SkillCardTemplate> =
             font: 'BebasNeueRegular', 
             fontSize: 48, 
             fontColor: 'white', 
-            classList: 'transform scale-x-[75%] h-full !leading-[1] tracking-[4px] items-center !text-center !grid whitespace-nowrap'
+            classList: 'transform scale-x-[75%] h-full !leading-[1] tracking-[4px] items-center !text-center !grid whitespace-nowrap !mr-[-4px]'
         },
         nameContainer: {
             size: { width: '447px', height: '86px' }, 
@@ -75,7 +75,7 @@ export const SkillCardTemplates: Record<ThemeTemplatesEnum, SkillCardTemplate> =
             font: 'DINCondensedLightRegular', 
             fontSize: 30, 
             fontColor: 'white',
-            classList: 'h-full !text-center pt-[1px] px-[10px] !leading-[1.2] grid content-center'
+            classList: 'h-full !text-center pt-[1px] px-[10px] !leading-[1] grid content-center'
         },
         abilityContainer: {
             size: { width: '447px', height: '244px' }, 

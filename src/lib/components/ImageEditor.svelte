@@ -55,7 +55,7 @@ on:keyup={(e) => {
 }}/>
 
 <div class="image-container">   
-    <div class="w-full h-full z-[1] absolute flex context-button-container {scaleAndDrag ? 'scale-and-drag' : ''}">
+    <div class="w-full h-full absolute flex context-button-container {scaleAndDrag ? 'scale-and-drag' : ''}">
         <div class="show-on-hover z-20 absolute left-1 bottom-2 w-full{inputContainerClassList.length > 0 ? ` ${inputContainerClassList}` : ''}" style:display={scaleAndDrag ? 'none' : ''}>
             <input class="card-image-url h-10 border-black border-2 grid content-center bg-primary-900 text-primary-900-100-token overflow-hidden cursor-text text-center !rounded-none" 
                 style:width="calc(100% - 8px)"
@@ -69,7 +69,7 @@ on:keyup={(e) => {
             on:click={toggleScalable} 
             on:keydown={toggleScalable}
         ></iconify-icon>
-        <img class="card-image absolute object-cover max-w-none"
+        <img class="card-image absolute object-cover max-w-none z-0"
             style:width="{scaleAxis === 'width' ? `${image.scale}%` : ''}" 
             style:height="{scaleAxis === 'height' ? `${image.scale}%` : ''}"
             src={image.url} alt="Card" 
@@ -86,7 +86,7 @@ on:keyup={(e) => {
         {/if}
     </div>
     {#if !image || image.url.length === 0}
-    <div class="absolute w-full h-full bg-transparent text-center grid justify-center content-center {classList.length > 0 ? ` ${classList}` : ''}">
+    <div class="pointer-events-none absolute w-full h-full bg-transparent text-center grid justify-center content-center {classList.length > 0 ? ` ${classList}` : ''}">
         <span class="border-dashed border-2 p-2 flex justify-center text-surface-900 border-surface-900"><iconify-icon icon="material-symbols:image"></iconify-icon></span>
     </div>
     {/if}

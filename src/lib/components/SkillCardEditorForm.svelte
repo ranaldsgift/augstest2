@@ -131,9 +131,9 @@
                 <div>
                     <label class="">
                         <h1>Theme</h1>
-                        <RadioGroup selected={themeSelection}>
+                        <RadioGroup active="variant-filled-primary">
                             {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
-                                <RadioItem value={theme}>{theme}</RadioItem>
+                                <RadioItem bind:group={$themeSelection} name={`radio-${theme}`} value={theme}>{theme}</RadioItem>
                             {/each}
                         </RadioGroup>
                         <select class="unstyled" name="theme" bind:value={skillCard.theme} hidden>
@@ -161,7 +161,7 @@
                     {/if}
                     <label class="w-full">
                         <span>Skill Card Description</span>
-                        <textarea class="unstyled" name="description" rows="6" bind:value={skillCard.description} placeholder="Enter a description of your Skill Card here. Include details about any special mechanics related to your Skill Card. Feel free to leave details about the evolution of your Skill Card after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
+                        <textarea class="unstyled" name="description" rows="7" bind:value={skillCard.description} placeholder="Enter a description of your Skill Card here. Include details about any special mechanics related to your Skill Card. Feel free to leave details about the evolution of your Skill Card after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
                     </label>
                 </div>
             </div>            

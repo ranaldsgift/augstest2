@@ -43,10 +43,20 @@
     .initiative-card-container p {
         position: absolute;
         text-align: center;
+    
+    }
+    .initiative-card-container[data-theme='BTAS'] .name,
+    .initiative-card-container[data-theme='BTAS'] .ability-text {
+        text-shadow: 0px 0px 10px rgb(0 0 0 / 80%);
+        fill: url(#gr-simple);
+    }
+    .initiative-card-container[data-theme='TMNT'] .ability-text {
+        fill: white;
+        stroke: black;
+        stroke-width: 0.07em;
+        letter-spacing: 0px;
     }
     .initiative-card-container[data-theme='TMNT'] .initiative-card-name {
-        -webkit-text-stroke: 5px;
-        -webkit-text-stroke-color: black;
         letter-spacing: -1px;
     }
     .initiative-card-image {
@@ -65,7 +75,6 @@
     .text {
         font: calc(var(--fontSize) * var(--scale)) var(--fontFamily), Impact;
         text-transform: uppercase;
-        fill: url(#gr-simple);
     }
     .initiative-card-name {
         top: calc(var(--top) * var(--scale));
@@ -139,7 +148,8 @@
         style:--height={template.name.size.height}
     >
         <p
-        class="{theme === ThemeTemplatesEnum.BTAS ? 'gradient-heading' : ''}"
+        data-content={name}
+        class="name {theme === ThemeTemplatesEnum.BTAS ? ' gradient-heading' : ' text-outline-large'}"
         style:bottom="0px"
         style:--fontSize="{template.name.fontSize}px"
         style:--lineHeight="{template.name.fontSize - 14}px"
@@ -162,14 +172,13 @@
           <stop stop-color="#ffffff" offset="90%"/>
         </linearGradient>
         <text
-        text-anchor="middle"
-        x="50%"
-        y="28%"
-        dy=".35em"
-              class="text"
-              stroke-width="{theme === ThemeTemplatesEnum.BTAS ? 0 : 1.5}" stroke="#000000"
-              >
-                {ability}
+            text-anchor="middle"
+            x="50%"
+            y="28%"
+            dy=".35em"
+            class="ability-text text text-stroke"
+        >
+            {ability}
         </text>
       </svg>
 </div>

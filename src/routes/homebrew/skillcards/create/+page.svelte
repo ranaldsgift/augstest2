@@ -8,14 +8,14 @@
     const skillCard = new SkillCard(data.session?.user.id);
 </script>
 
-<svelte:head><title>Create Your Hero - augs.tools</title></svelte:head>
+<svelte:head><title>Create Your Skill Card - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 <li class="crumb"><a href="/">Home</a></li>
 <li class="crumb-separator" aria-hidden>&rsaquo;</li>
 <li class="crumb"><a href="/create">Create</a></li>
 <li class="crumb-separator" aria-hidden>&rsaquo;</li>
-<li>Heroes</li>
+<li>Skill Card</li>
 </ol>
 
 <div class="page flex justify-center">

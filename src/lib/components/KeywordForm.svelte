@@ -33,7 +33,7 @@
 		<header class="comic-header">
 			<h1>Add Keywords</h1>
 		</header>
-		<InputChip placeholder="Add keyword..." class="h-full" bind:value={keywords} allowDuplicates={false}></InputChip>
+		<InputChip name="keywords" placeholder="Add keyword..." class="h-full" bind:value={keywords} allowDuplicates={false}></InputChip>
 	</form>
 	{#await $keywordsStore}
 		<div style:height="40px" style:width="40px"><ProgressRadial></ProgressRadial></div>

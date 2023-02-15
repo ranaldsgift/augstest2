@@ -17,6 +17,9 @@
     import ImageEditor from "./ImageEditor.svelte";
     import TextEditor from "./TextEditor.svelte";
     import PositionedTextContainer from "./PositionedTextContainer.svelte";
+    import TextViewer from "./TextViewer.svelte";
+    import HeroAttributesForm from "./HeroAttributesForm.svelte";
+    import type { HeroAttributes } from "$lib/entities/HeroAttributes";
 
     export let template = ThemeTemplates.TMNT.heroSheet;
     export let hero: Hero;
@@ -52,6 +55,22 @@
 			}
 		};
 		modalStore.trigger(d);
+    }
+
+    function handleEditAttributes(event: any, focusedAttribute: string) {
+        const c: ModalComponent = { ref: HeroAttributesForm, props: { attributes: hero.attributes, focus: focusedAttribute } };
+        const d: ModalSettings = {
+            type: 'component',
+            component: c,
+            response: (attributes: HeroAttributes) => {
+                if (!attributes)
+                    return
+                
+                hero.attributes = attributes;
+                hero = hero;
+            }
+        };
+        modalStore.trigger(d);
     }
 
     function handleEditKeywords() {
@@ -217,16 +236,15 @@
     .hero-sheet-container[data-theme="TMNT"] .hero-name {
         letter-spacing: 2px;
     }
+    .hero-sheet-container[data-theme="TMNT"] .hero-action-dice-container, .hero-sheet-container[data-theme="TMNT"] :global(.positioned-text) {
+        transform: skew(1.7deg, -1.7deg);
+    }
     .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container button {
         border: none !important;
         border-radius: 0 !important;
     }
     .hero-action-dice-container button:hover {
         filter: contrast(1.5);
-    }
-    .hero-sheet-container[data-theme="TMNT"] .hero-action-dice-container, .hero-sheet-container[data-theme="TMNT"] :global(.positioned-text),
-    .hero-sheet-container[data-theme="TMNT"] .hero-name, .hero-sheet-container[data-theme="TMNT"] :global(.keywords-container) {
-        transform: skew(1.7deg, -1.7deg);
     }
     .hero-sheet-container[data-theme="TMNT"] .ability-container p {
         transform: skew(1deg, -1deg);
@@ -332,15 +350,15 @@
     <PositionedContainer template={template.icon}>
         <ImageEditor bind:image={hero.iconImage} scale={scale}></ImageEditor>
     </PositionedContainer>
-    <PositionedContainer classList="flex justify-end !overflow-visible " template={template.name}>
+    <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>
         <TextEditor bind:text={hero.name} placeholder="Hero Name" classList={template.name.classList} template={template.name} bind:fontSize={hero.fontSizeHeroName}></TextEditor>
     </PositionedContainer>
-    <PositionedContainer classList="keywords-container z-[2]" template={template.traits}>
-        <button on:click|preventDefault={handleEditKeywords} class="">
+    <PositionedContainer classList="keywords-container z-[2]" template={template.keywordsContainer}>
+        <button on:click|preventDefault={handleEditKeywords}>
             <div
                 style:text-align="left" 
-                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.traits.fontSize * scale : hero.fontSizeKeywords * scale}px" 
-                style:--fontFamily={template.traits.font} style:--color={template.traits.fontColor}>
+                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : hero.fontSizeKeywords * scale}px" 
+                style:--fontFamily={template.keywords.font} style:--color={template.keywords.fontColor}>
                 
                 {#if hero.keywords && hero.keywords.length > 0}
                 {#each hero.keywords as keyword, index}
@@ -356,21 +374,49 @@
         <iconify-icon icon="material-symbols:add" class="context-button p-1 absolute right-0 top-0" hidden></iconify-icon>
     </button>
     </PositionedContainer>
-    <div class="hero-attribute-container">
-        <PositionedItemEditor name="attributes.move" type="number" template={template.move_value} bind:content={hero.attributes.move}>
-        </PositionedItemEditor>
-        <PositionedItemEditor name="attributes.attack" type="number" template={template.attack_value} bind:content={hero.attributes.attack}>
-        </PositionedItemEditor>
-        <PositionedItemEditor name="attributes.defend" type="number" template={template.defend_value} bind:content={hero.attributes.defend}>
-        </PositionedItemEditor>
-        <PositionedItemEditor name="attributes.skill" type="number" template={template.skill_value} bind:content={hero.attributes.skill}>
-        </PositionedItemEditor>
-        <PositionedItemEditor name="attributes.focus" type="number" template={template.focus_value} bind:content={hero.attributes.focus}>
-        </PositionedItemEditor>
-        <PositionedItemEditor name="attributes.life" type="number" template={template.life_value} bind:content={hero.attributes.life}>
-        </PositionedItemEditor>
-        <PositionedItemEditor name="attributes.awakening" type="number" template={template.awakening_value} bind:content={hero.attributes.awakening}>
-        </PositionedItemEditor>
+    <div class="hero-attribute-container absolute">
+        <PositionedContainer template={template.attributes.moveContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'move')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.move.toString()} template={template.attributes.move}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.attackContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'attack')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.attack.toString()} template={template.attributes.attack}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.defendContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'defend')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.defend.toString()} template={template.attributes.defend}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.skillContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'skill')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.skill.toString()} template={template.attributes.skill}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.focusContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'focus')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.focus.toString()} template={template.attributes.focus}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.lifeContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'life')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.life.toString()} template={template.attributes.life}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.awakeningContainer} classList="">
+            <button class="p-1 absolute right-0 top-0 context-button" hidden on:click|preventDefault={event => handleEditAttributes(event, 'awakening')}>
+                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+            </button>
+            <TextViewer text={hero.attributes.awakening.toString()} template={template.attributes.awakening}></TextViewer>
+        </PositionedContainer>
     </div>
     <PositionedContainer classList="ability-container" template={template.ability_container}>
         {#if hero.abilities && hero.abilities.length > 0}
@@ -409,7 +455,7 @@
         {#if hero.actionDice}
             {#each hero.actionDice.dice as action_die, index}
             <input type="hidden" name="dice" hidden bind:value={action_die}>
-            <PositionedContainer template={template.action_dice[index]}>
+            <PositionedContainer classList="!z-[60]" template={template.action_dice[index]}>
                 <button 
                     style:width={'100%'} 
                     style:height={'100%'} 

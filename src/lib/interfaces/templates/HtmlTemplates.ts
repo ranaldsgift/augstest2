@@ -17,6 +17,11 @@ export interface TemplateText {
     classList?: string
 }
 
+export interface TemplatePositionedText {
+    text: TemplateText,
+    container: PositionedTemplateContainer
+}
+
 export interface PositionedTemplateText {
     size: Size,
     position: Position,

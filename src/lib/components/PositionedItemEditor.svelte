@@ -8,7 +8,7 @@
     export let content: string | number | undefined;
     export let alignment: string = "center";
     export let name: string;
-    export let title: string = StringHelper.toTitleCase(name);
+    export let title: string | undefined = undefined;
     export let type: string = 'text';
     export let placeholder: string = '';
     export let fontSize: number | undefined = undefined;
@@ -25,7 +25,7 @@
         const c: ModalComponent = { ref: ModalFormEditor, props: { fields: JSON.stringify(formFields) } };
         const d: ModalSettings = {
             type: 'component',
-            title: title.length == 0 ? undefined : title,
+            title: !title || title.length == 0 ? undefined : title,
             component: c,
             response: (response: any) => {
                 if (response[0] && response[0].value.toString().length > 0) {
@@ -54,7 +54,7 @@
 
 <input type="hidden" {name} bind:value={content}>
 <button 
-    class="positioned-text" 
+    class="positioned-text{template.classList && template.classList.length > 0 ? ` ${template.classList}` : ''}" 
     style:--left={template.position.left}
     style:--top={template.position.top}
     style:--width={template.size.width}
@@ -67,7 +67,7 @@
     style:--verticalAlign={verticalAlign}
     on:click|preventDefault={handleEdit}
 >
-    <p class="unstyled">{content ?? placeholder}</p>
+    <p data-con={content} class="unstyled">{content ?? placeholder}</p>
     <iconify-icon icon="mdi:edit" class="context-button absolute p-1 left-[calc(50%-15px)] top-[calc(50%-15px)]" hidden></iconify-icon>
     <slot></slot>
 </button>

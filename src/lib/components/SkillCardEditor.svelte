@@ -15,17 +15,64 @@
     import ImageEditor from "./ImageEditor.svelte";
     
     export let scale: number = 0.7;
-    export let theme: ThemeTemplatesEnum = ThemeTemplatesEnum.TMNT;
-    export let heroName: string = '';
+    export let theme: ThemeTemplatesEnum | null = null;
+    export let heroName: string | null = null;
     export let skillCard: SkillCard = new SkillCard();
-    export let backgroundColor = "#adadad";
-    export let template: SkillCardTemplate = SkillCardTemplates.TMNT;
+    export let backgroundColor: string | null = null;
+    export let template: SkillCardTemplate | null = null;
+
+    if (!theme) {
+        if (skillCard.hero) {
+            theme = skillCard.hero.theme;
+        }
+        else if (skillCard.theme && skillCard.theme.length > 0) {
+            theme = skillCard.theme;
+        }
+        else {
+            theme = ThemeTemplatesEnum.TMNT;
+        }
+    }
+
+    if (!heroName) {
+        if (skillCard.hero) {
+            heroName = skillCard.hero.name;
+        }
+        else {
+            heroName = '';
+        }
+    }
+
+    if (!template) {
+        if (skillCard.hero) {
+            template = SkillCardTemplates[skillCard.hero.theme];
+        }
+        else {
+            template = SkillCardTemplates[theme];
+        }
+    }
+
+    if (!backgroundColor) {
+        if (skillCard.hero) {
+            backgroundColor = skillCard.hero.sheetBackgroundColor;
+        }
+        else if (skillCard.backgroundColor && skillCard.backgroundColor.length > 0) {
+            backgroundColor = skillCard.backgroundColor;
+        }
+        else {
+            backgroundColor = '#adadad';
+        }
+    }
+
+/*     if (skillCard.backgroundColor && skillCard.backgroundColor.length > 0) {
+        backgroundColor = skillCard.backgroundColor;
+    }
 
     if (skillCard.hero) {
         theme = skillCard.hero.theme;
         template = SkillCardTemplates[skillCard.hero.theme];
         heroName = skillCard.hero.name;
-    }
+        backgroundColor = skillCard.hero.sheetBackgroundColor;
+    } */
 
     function handleEditImage() {
         const prompt: ModalSettings = {
@@ -569,49 +616,11 @@ on:keyup={(e) => {
 }}/>
 
 <div class="skill-card-container" style:--scale={scale} data-theme={theme}>
-    <button class="absolute left-1 top-1 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddCost}>
-        <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon> 
-        <p class="unstyled text-white" style:line-height="24px">Cost</p>
-    </button>
     <div class="skill-card-background absolute w-full h-full  hidden" style:background="url('{template.background_image}') no-repeat center / cover, {backgroundColor}" style:background-size="cover"></div>
     <div class="skill-card-background-css w-full h-full hidden" style:--backgroundColor={backgroundColor}></div>
     <div class="skill-card-halftone-background absolute h-full w-full hidden"><div class="halftone"></div></div>
     <div class="skill-card-image-container">
-<!--         <div class="show-on-hover absolute z-20 left-1 bottom-10 w-full" style:display={scaleAndDrag ? 'none' : ''}>
-            <span class="skill-card-image-url h-10 border-black border-2 grid content-center bg-primary-900 text-primary-100 overflow-hidden cursor-text" 
-                style:width="calc(100% - 8px)"
-                placeholder="Image URL" 
-                contenteditable="true" 
-                bind:innerHTML={skillCard.image.url}
-            >                {skillCard.image.url ?? ''}
-            </span>    
-        </div>     -->
         <ImageEditor bind:image={skillCard.image} scale={scale} classList="bg-primary-200-700-token" inputContainerClassList="bottom-[calc(40px*var(--scale))]"></ImageEditor>
-<!--         {#if skillCard.image && skillCard.image.url.length > 0}
-            <div class="w-full h-full absolute flex context-button-container  {scalable ? 'scale-and-drag' : ''}">
-                <iconify-icon icon="mdi:arrow-expand-all" class="context-button p-1 absolute right-1 top-1 {scalable ? 'active' : ''}" 
-                    on:click={toggleScalable} 
-                    on:keydown={toggleScalable}
-                ></iconify-icon>
-                <img class="skill-card-image z-10 absolute" style:width="{skillCard.image.scale}%" src={skillCard.image.url} alt="Card" 
-                    on:wheel={handleScaleImage}
-                    use:draggable={{
-                        disabled: !scaleAndDrag,
-                        position: { x: skillCard.image.positionLeft * scale, y: skillCard.image.positionTop * scale },
-                        onDrag: ({ offsetX, offsetY }) => {
-                            skillCard.image.positionLeft = offsetX;
-                            skillCard.image.positionTop = offsetY;
-                        },
-                    }}
-                >
-            </div>
-        {:else}
-        <div class="absolute z-10 w-full h-full bg-secondary-900 text-center grid justify-center content-center">
-            {#if !skillCard.image || skillCard.image.url.length === 0}
-            <span class="border-dashed border-2 p-2 inline-block text-white">Image URL</span>
-            {/if}
-        </div>
-        {/if} -->
     </div>
 
     <div class="skill-card-overlay-container w-full h-full absolute">
@@ -619,6 +628,11 @@ on:keyup={(e) => {
         <div class="skill-card-name-container z-30"></div>
         <div class="skill-card-footer-container"></div>
     </div>
+
+    <button class="absolute left-1 top-1 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddCost}>
+        <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon> 
+        <p class="unstyled text-white" style:line-height="24px">Cost</p>
+    </button>
 
     {#if skillCard.iconCost && skillCard.iconCost.length > 0}
     <div class="skill-card-cost-container z-30">
@@ -634,24 +648,6 @@ on:keyup={(e) => {
         <TextEditor bind:text={skillCard.effect} placeholder="Skill Effect" template={template.ability}></TextEditor>
     </PositionedContainer>
     <PositionedContainer template={template.characterNameContainer}>
-        <TextEditor text={heroName} placeholder="Character Name" template={template.characterName} classList="readonly"></TextEditor>
+        <TextEditor text={heroName} placeholder="Character Name" template={template.characterName} classList="read-only"></TextEditor>
     </PositionedContainer>
-<!--     <div class="absolute grid content-center"
-        style:--left={template.characterName.position.left}
-        style:--top={template.characterName.position.top}
-        style:--width={template.characterName.size.width}
-        style:--height={template.characterName.size.height}
-        style:left="calc(var(--left) * var(--scale))"
-        style:top="calc(var(--top) * var(--scale))"
-        style:width="calc(var(--width) * var(--scale))"
-        style:height="calc(var(--height) * var(--scale))"
-    >
-    <span class="skill-card-character-name"
-        style:--fontSize="{template.characterName.fontSize}px"
-        style:--fontFamily={template.characterName.font}
-        style:--fontColor={template.characterName.fontColor}
-    >
-        {heroName ?? ''}
-    </span>
-    </div> -->
 </div>
