@@ -30,5 +30,12 @@
     contenteditable="true"
     placeholder={placeholder}
     spellcheck={spellcheck}
+    on:paste={(e) => {
+        e.preventDefault();
+        if (e.clipboardData) {
+            const text = e.clipboardData.getData('text/plain');
+            document.execCommand('insertHTML', false, text);
+        }
+    }}
     bind:innerHTML={text}>
 </span>
