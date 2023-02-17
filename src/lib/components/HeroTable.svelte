@@ -3,43 +3,83 @@
     import { DiceIconsEnum } from "$lib/enums/Enums";
     import { DateHelper } from "$lib/helpers/DateHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
-    import { createDataTableStore, dataTableHandler, Paginator, tableInteraction } from "@skeletonlabs/skeleton";
+    import { createDataTableStore, dataTableHandler, Paginator, ProgressRadial, tableInteraction } from "@skeletonlabs/skeleton";
+    import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
-    export let title: string = 'Heroes';
-    
-        export let heroes: Hero[];
-        
-        let searchInput: HTMLInputElement;
-        let sortKey: keyof Hero = 'dateModified';
-        $: sortKeyState = sortKey;
-        $: sortAscState = 'false';
-    
-        const dataTableStore = createDataTableStore(
-            heroes,
-            {
-                search: '',
-                sort: '',
-                pagination: { offset: 0, limit: 10, size: 0, amounts: [5, 10] }
-            }
-        );
-    
-    
-        $dataTableStore.sort = 'dateModified';
-        $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
-    
-        // This automatically handles search, sort, etc when the model updates.
-        dataTableStore.subscribe((model) => dataTableHandler(model));
-    
-        // Skeleton DataTables has a bug that causes the search field to not work after sorting columns
-        // These functions are a workaround until that bug is resolved
-        function handleSearch() {
-            $dataTableStore.sort = '';
+
+    const loadData = async () => {
+        let apiQuery = `/api/heroes?limit=${$dataTableStore.pagination?.limit}&offset=${$dataTableStore.pagination?.offset}&sort=${$dataTableStore.sort}&search=${$dataTableStore.search}&asc=${$dataTableStore.sortState?.asc}`;
+
+        if (userFavorites) {
+            apiQuery += `&userFavorites=${userFavorites}`;
         }
-        function handleSort() {
-            $dataTableStore.sortState = { asc: sortAscState === 'true' ? true : false, lastKey: '' };
-            $dataTableStore.sort = sortKeyState;
-            searchInput.dispatchEvent(new Event("input"));
+        if (userId) {
+            apiQuery += `&userId=${userId}`;
         }
+
+        const response = await fetch(apiQuery);
+        const data = await response.json();
+        dataTableStore.updateSource(data.items);
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.size = data.count;
+        }
+    }
+    
+    export let title: string = 'Heroes';        
+    export let heroes: Hero[] = [];
+    export let userId: string | null = null;
+    export let userFavorites: string | null = null;
+    
+    let searchInput: HTMLInputElement;
+    let sortKey: keyof Hero = 'dateModified';
+    $: sortKeyState = sortKey;
+    $: sortAscState = 'false';
+
+    const dataTableStore = createDataTableStore(
+        heroes,
+        {
+            search: '',
+            sort: '',
+            pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50] }
+        }
+    );
+
+    $dataTableStore.sort = 'dateModified';
+    $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
+
+    onMount(() => {
+        loadData();
+    });
+
+    function handleSearch() {
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.offset = 0;
+        }
+        loadData();
+    }
+    function handleSort() {
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.offset = 0;
+        }
+        $dataTableStore.sortState = { asc: sortAscState === 'true' ? true : false, lastKey: '' };
+        $dataTableStore.sort = sortKeyState;
+        loadData();
+    }
+
+    function handleAmountChange(e: CustomEvent): void {
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.limit = e.detail;
+        }
+        loadData();
+    }
+
+    function handlePageChange(e: CustomEvent): void {
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.offset = e.detail;
+        }
+        loadData();
+    }
 </script>
 
 <style>
@@ -136,8 +176,9 @@
             </thead>
             <tbody>
                 {#each $dataTableStore.filtered as row, rowIndex}
+                {#key row.id}
                     <tr class="h-[50px] sm:h-[80px]"></tr>
-                    <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
+                    <tr in:fade class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
                         <td style:position="relative" class="w-[100px] sm:w-[180px]">
                             <div style:overflow="hidden" class="-mt-[32px] sm:-mt-[64px] h-[110px] sm:h-[135px]" style:min-width="100%">
                                 <img style:object-fit="cover" src={row.heroImage.url} alt="Hero" style:top="0px" class="w-full h-auto">    
@@ -159,9 +200,10 @@
                             {/each}
                         {/if}
                     </tr>
+                {/key}
                 {/each}
             </tbody>
         </table>
     </div>
 </div>
-{#if $dataTableStore.pagination}<Paginator bind:settings={$dataTableStore.pagination} />{/if}
+{#if $dataTableStore.pagination}<Paginator on:amount={handleAmountChange} on:page={handlePageChange} bind:settings={$dataTableStore.pagination} />{/if}

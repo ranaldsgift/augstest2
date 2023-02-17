@@ -19,5 +19,5 @@
 </ol>
 
 <div class="page skill-card-page max-w-[1400px]">    
-    <SkillCardTable skillCards={parsedItems}></SkillCardTable>
+    <SkillCardTable data={[]}></SkillCardTable>
 </div>

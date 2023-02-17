@@ -18,12 +18,14 @@
     let authUser = data.authUser ? DataHelper.deserialize<User>(User, data.authUser) : null;
 </script>
 
-<svelte:head><title>{skillCard.name} by {skillCard.user.userName} - augs.tools</title></svelte:head>
+<svelte:head><title>{skillCard.name} by {skillCard.user.userName} - Skill Card - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb"><a href="/homebrew">Homebrew</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="crumb"><a href="/homebrew/skillcards">Skill Cards</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">{skillCard.name}</li>
 </ol>

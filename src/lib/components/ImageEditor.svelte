@@ -25,13 +25,23 @@
     }
 
     function toggleScalable() {
-        if (!localStorage.getItem('image-scaling-alert')) {
+        /* if (!localStorage.getItem('image-scaling-alert')) {
+        } */
+
+        if (scaleAndDrag) {
+            toastStore.clear();
+        }
+        else {
             toastStore.trigger({
                 preset: 'secondary',
-                message: `Image scaling enabled.<br/>Use scrollwheel to scale image.<br/>Press again to disable`,
+                message: `Drag your image to move it.<br/>Use scrollwheel to scale the image.`,
+                action: {
+                    label: 'Disable',
+                    response: () => { scaleAndDrag = false; }
+                },
+                classes: `hide-close-button `,
                 autohide: false
             });
-            localStorage.setItem('image-scaling-alert', 'true');
         }
 
         scaleAndDrag = !scaleAndDrag;
@@ -73,7 +83,7 @@ on:keyup={(e) => {
             style:width="{scaleAxis === 'width' ? `${image.scale}%` : ''}" 
             style:height="{scaleAxis === 'height' ? `${image.scale}%` : ''}"
             src={image.url} alt="Card" 
-            on:wheel={handleScaleImage}
+            on:wheel|nonpassive={handleScaleImage}
             use:draggable={{
                 disabled: !scaleAndDrag,
                 position: { x: image.positionLeft * scale, y: image.positionTop * scale },

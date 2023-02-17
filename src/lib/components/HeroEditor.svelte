@@ -28,7 +28,9 @@
     export let hero: Hero;
     export let template = ThemeTemplates[hero.theme].heroSheet;
     let savedHero = instanceToInstance(hero);
-    savedHero.abilities = savedHero.abilities.sort((a, b) => a.id < b.id ? -1 : 1);
+    if (savedHero.abilities && savedHero.abilities.length > 0) {
+        savedHero.abilities = savedHero.abilities.sort((a, b) => a.id < b.id ? -1 : 1);
+    }
     
     const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
     themeSelection.subscribe(value => { 

@@ -10,6 +10,7 @@ import { Image } from "./Image"
 import { SkillCard } from "./SkillCard"
 import { Token } from "./Token"
 import { User } from "./User"
+import { UserHomebrewFavorite } from "./UserHomebrewFavorite"
 
 @ChildEntity()
 export class Hero extends Homebrew {

@@ -32,6 +32,9 @@
             theme = ThemeTemplatesEnum.TMNT;
         }
     }
+    else {
+        skillCard.theme = theme;
+    }
 
     if (!heroName) {
         if (skillCard.hero) {

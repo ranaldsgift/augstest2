@@ -28,7 +28,7 @@ export class User extends TimestampedEntity {
     public boardgamegeek: string
 
     @Type(() => UserHomebrewFavorite)
-    @OneToMany(() => UserHomebrewFavorite, (save) => save.user, { eager: true })
+    @OneToMany(() => UserHomebrewFavorite, (save) => save.user)
     public homebrewFavorites: UserHomebrewFavorite[]
 
     @Type(() => Homebrew)

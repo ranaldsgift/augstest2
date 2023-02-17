@@ -91,7 +91,7 @@
         };
       }}>
         <p class="text-center">Enter your e-mail to sign in with a Magic Link.</p><p class="text-center italic">You will be sent a link to authenticate yourself.</p>
-        <label>
+        <label class="comic-label">
             <span>E-Mail</span>
             <input name="email" type="email" bind:value={email}>
         </label>

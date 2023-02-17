@@ -116,14 +116,14 @@
                 {/if}
             </div>
         </div>
-        {#if data.session?.user.id == $page.params.id && favorites && favorites.length > 0}
+        {#if data.session?.user.id === userModel.id}
             <hr class="divider">
-            <HeroTable title="Favorite Heroes" heroes={favorites}></HeroTable>
+            <HeroTable title="Favorite Heroes" userFavorites={userModel.id}></HeroTable>
         {/if}
 
         {#if userModel.heroes && userModel.heroes.length > 0}
             <hr class="divider">
-            <HeroTable title="{data.session?.user.id == $page.params.id ? 'My Heroes' : `${userModel.userName}'s Heroes` }" heroes={userModel.heroes}></HeroTable>
+            <HeroTable title="{data.session?.user.id == $page.params.id ? 'My Heroes' : `${userModel.userName}'s Heroes` }" userId={userModel.id}></HeroTable>
         {/if}
     </div>
     {/if}

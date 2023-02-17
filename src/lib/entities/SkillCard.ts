@@ -32,8 +32,7 @@ export class SkillCard extends Homebrew {
     
     @Column({
         type: "enum",
-        enum: ThemeTemplatesEnum,
-        default: ThemeTemplatesEnum.TMNT
+        enum: ThemeTemplatesEnum
     })
     theme: ThemeTemplatesEnum
 

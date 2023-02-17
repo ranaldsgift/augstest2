@@ -1,11 +1,18 @@
 import { AugsLicensesEnum } from "$lib/enums/Enums";
-import { Entity, Column, PrimaryGeneratedColumn, TableInheritance, OneToMany } from "typeorm"
+import { Type } from "class-transformer";
+import { Entity, Column, PrimaryGeneratedColumn, TableInheritance, OneToMany, BeforeUpdate } from "typeorm"
 import { AuthoredEntity } from "./AuthoredEntity";
 import { UserHomebrewFavorite } from "./UserHomebrewFavorite";
 
 @Entity()
 @TableInheritance({ column: { type: "varchar", name: "type" } })
 export class Homebrew extends AuthoredEntity {
+    @BeforeUpdate()
+    updateTimestamp() {
+        this.dateModified = new Date();
+        return this;
+    }
+
     @PrimaryGeneratedColumn("increment")
     id: number
 
@@ -23,9 +30,10 @@ export class Homebrew extends AuthoredEntity {
         enum: AugsLicensesEnum,
         default: AugsLicensesEnum.Homebrew
     })
-    augsLicense: AugsLicensesEnum    
+    augsLicense: AugsLicensesEnum
 
-    @OneToMany(() => UserHomebrewFavorite, (save) => save.homebrew)
+    @Type(() => UserHomebrewFavorite)
+    @OneToMany(() => UserHomebrewFavorite, (favorite) => favorite.homebrew)
     public userFavorites: UserHomebrewFavorite[]
 
     @Column("varchar")
