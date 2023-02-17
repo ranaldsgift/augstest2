@@ -15,7 +15,7 @@ export const handle: Handle = async ({event, resolve}) => {
 	}
 
  	if (event.locals.session) {
-		event.locals.user = await User.findOneBy({ id: event.locals.session.user.id });
+		event.locals.user = await User.findOne({ where: { id: event.locals.session.user.id }, relations: { homebrewFavorites: true } });
 	}
 
 	if (event.url.pathname.endsWith('/edit')) {

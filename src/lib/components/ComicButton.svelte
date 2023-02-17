@@ -20,8 +20,7 @@
         padding: 10px;
         border-radius: 50px;
         background: black;
-        margin: -1px !important;
-        margin-right: -3px !important;
+        margin: -3px !important;
     }
     span {
         padding: 2px 12px 0 10px;

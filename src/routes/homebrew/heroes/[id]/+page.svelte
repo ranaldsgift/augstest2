@@ -115,7 +115,7 @@
 
 <svelte:head><title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb">
+<ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb"><a href="/homebrew">Homebrew</a></li>
@@ -127,7 +127,7 @@
 
 <div bind:this={heroPage} class="hero-page flex justify-center gap-5 flex-col">
     <PageButtonContainer>
-        <div class="flex justify-center page-button-container gap-2">
+        <div class="flex justify-center flex-wrap page-button-container gap-2">
             {#if $page.data.session?.user.id == hero.user.id}
             <a href={$page.url + "/edit"} class="unstyled">
                 <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
@@ -143,10 +143,11 @@
                     updateUserData(result.data?.user);
                 };
             }}>
-                <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
+            <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
                 <ComicButton icon="material-symbols:favorite"
-                    background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }></ComicButton>
-                </div>
+                    background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }>
+                </ComicButton>
+            </div>
             </form>
             {/if}
             <div title="Download ZIP">
