@@ -115,7 +115,7 @@
 
 <svelte:head><title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class="breadcrumb">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb"><a href="/homebrew">Homebrew</a></li>

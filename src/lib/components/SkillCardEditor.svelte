@@ -369,12 +369,12 @@
             text-align: center;
         }
         .skill-card-overlay-container {
-            border: 6px solid black;
+            border: calc(6px * var(--scale)) solid black;
             left: calc(65px * var(--scale));
             top: calc(65px * var(--scale));
             width: calc(100% - calc(130px * var(--scale)));
             height: calc(100% - calc(130px * var(--scale)));
-            box-shadow: calc(8px * var(--scale)) calc(10px * var(--scale)) 0px -2px #00000040;
+            box-shadow: calc(8px * var(--scale)) calc(10px * var(--scale)) 0px calc(-2px * var(--scale)) #00000040;
             position: absolute;
         }
         .skill-card-name-container {
@@ -383,7 +383,7 @@
             width: 100%;
             height: calc(108px * var(--scale));
             background: #191919;
-            clip-path: polygon(-1px calc(28px * var(--scale)), calc(100% + 1px) 0%, calc(100% + 1px) calc(100% - calc(14px * var(--scale))), -1px 100%);
+            clip-path: polygon(calc(-1px * var(--scale)) calc(28px * var(--scale)), calc(100% + calc(1px * var(--scale))) 0%, calc(100% + calc(1px * var(--scale))) calc(100% - calc(14px * var(--scale))), calc(-1px * var(--scale)) 100%);
         }
         .skill-card-image-container {
             border: calc(12px * var(--scale)) solid #191919;

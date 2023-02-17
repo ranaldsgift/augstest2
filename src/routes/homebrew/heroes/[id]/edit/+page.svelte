@@ -4,6 +4,7 @@
     import type { PageData } from './$types';
     import { Hero } from '$lib/entities/Hero';
     import { DataHelper } from '$lib/helpers/DataHelper';
+    import { onMount } from 'svelte';
 
     export let data: PageData;
     

@@ -24,18 +24,16 @@ export const SkillCardTemplates: Record<ThemeTemplatesEnum, SkillCardTemplate> =
             font: 'bangersregular',
             fontSize: 62,
             fontColor: 'white',
-            lineHeight: 1.2,
-            classList: 'whitespace-nowrap !overflow-hidden z-[31] !leading-[1.25] tracking-[1px] transform rotate-[-2deg] !text-center'
+            classList: 'whitespace-nowrap z-[31] tracking-[1px] transform rotate-[-2deg] !text-center grid content-center'
         },
         nameContainer: {
             size: { width: '428px', height: '80px' }, 
-            position: { left: '80px', top: '398px' },
+            position: { left: '80px', top: '396px' },
         },
         ability:  {
             font: 'smackattack_bbregular',
             fontSize: 20,
             fontColor: 'black',
-            lineHeight: 1,
             classList: 'h-full font-bold italic !text-center'
         },
         abilityContainer: {

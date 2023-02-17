@@ -22,6 +22,7 @@
 	import { quintOut } from 'svelte/easing';
     import { SkillCardTemplates } from "$lib/interfaces/templates/SkillCardTemplate";
     import PageButtonContainer from "./PageButtonContainer.svelte";
+    import { onMount } from "svelte";
 
     const storeTab: Writable<"theme" | "details" | "more"> = writable("theme");
 
@@ -30,6 +31,18 @@
     let savedHero = instanceToInstance(hero);
     if (savedHero.abilities && savedHero.abilities.length > 0) {
         savedHero.abilities = savedHero.abilities.sort((a, b) => a.id < b.id ? -1 : 1);
+    }
+
+    let skillCardScale = 1.0;
+    let sheetScale = 1.0;
+
+    onMount(async () => {
+        updateScales();
+    });
+
+    const updateScales = () => {
+        sheetScale =  window.innerWidth < 300 ? 0.35 : window.innerWidth < 350 ? 0.4 : window.innerWidth < 375 ? 0.45 : window.innerWidth < 550 ? 0.5 : window.innerWidth < 800 ? 0.75 : 1.0;
+        skillCardScale = window.innerWidth < 450 ? 0.4 : window.innerWidth < 800 ? 0.5 : window.innerWidth < 1400 ? 0.7 : 1.0;
     }
     
     const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
@@ -140,6 +153,11 @@
             grid-template-columns: 1fr;
         }
     }
+    @media (max-width: 800px) {
+        .hero-form-container>div {
+            display: grid !important;
+        }
+    }
     :global(.ability-container *), :global(.hero-attribute-container *), :global(.hero-action-dice-container *) {
         z-index: 3;
     }
@@ -178,6 +196,8 @@
     }
 </style>
 
+<svelte:window on:resize={updateScales} />
+
 <div class="grid gap-5 hero-editor-container justify-center">
     <PageButtonContainer>
         {#if hero.isValid() && isDirty() && $page.data.session}
@@ -190,7 +210,7 @@
     </PageButtonContainer>
     <div class="hero-editor m-auto flex gap-5 flex-wrap pl-5 pr-5 justify-center">
         <div class="grid gap-5">
-            <HeroEditorSheet bind:hero={hero} bind:template={template}></HeroEditorSheet>
+            <HeroEditorSheet bind:hero={hero} bind:template={template} scale={sheetScale}></HeroEditorSheet>
             {#if !$page.data.session}
                 <PigeonPeteSays>
                     <p>You must be logged in to save a Hero!</p>
@@ -211,7 +231,7 @@
             <header>
                 <h1>Customize your Hero</h1>
             </header>
-            <div class="comic-body grid gap-5">
+            <div class="comic-body grid gap-5 hero-form-container">
                 <div>
                     <label class="">
                         <h1>Theme</h1>
@@ -310,7 +330,7 @@
             {#each hero.skillCards as skillCard, index}
                 <div class="relative" in:slide="{{ delay: 0, duration: 300, easing: quintOut }}">
                     <iconify-icon class="absolute z-10 cursor-pointer mr-1 mt-1 hidden context-button top-0 right-0 p-1" style:font-size="1.2rem" icon="material-symbols:delete" on:click={() => handleRemoveSkillCard(index)} on:keydown={() =>  handleRemoveSkillCard(index)}></iconify-icon>
-                    <SkillCardEditor scale={1} backgroundColor={hero.sheetBackgroundColor} bind:skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
+                    <SkillCardEditor scale={skillCardScale} backgroundColor={hero.sheetBackgroundColor} bind:skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
                 </div>
             {/each}
             {/if}
