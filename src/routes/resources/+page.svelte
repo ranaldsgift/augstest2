@@ -4,18 +4,18 @@
     const tmntPdfs = pdfs.filter(pdf => pdf.toLocaleLowerCase().includes("tmnt"));
 </script>
 
-<svelte:head><title>Assets - augs.tools</title></svelte:head>
+<svelte:head><title>Resources - augs.tools</title></svelte:head>
 
 <ol class="breadcrumb-nonresponsive">
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-	<li class="crumb">Assets</li>
+	<li class="crumb">Resources</li>
 </ol>
 
 <div class="comic-form max-w-7xl grid gap-5">
     <div>
         <header>
-            <h1>Assets</h1>
+            <h1>Resources</h1>
         </header>
         <div class="comic-body">
             <p>Below you can find a list of different assets available for download.</p>

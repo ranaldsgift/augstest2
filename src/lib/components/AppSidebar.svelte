@@ -21,7 +21,7 @@
     <AppRailTile label="AUGS Assistant" title="AUGS Assistant" tag="a" href="/assistant" value="Assistant">
         <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="material-symbols:play-circle"></iconify-icon>
     </AppRailTile>
-    <AppRailTile label="Assets" title="Assets" tag="a" href="/assets" value="Assets">
+    <AppRailTile label="Resources" title="Resources" tag="a" href="/resources" value="Resources">
         <iconify-icon style:font-size="3rem" style:margin-bottom="-10px" icon="entypo:folder-images"></iconify-icon>
     </AppRailTile>
     <svelte:fragment slot="trail">

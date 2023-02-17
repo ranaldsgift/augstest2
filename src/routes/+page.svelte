@@ -30,7 +30,7 @@
         {
             "title": "Resources",
             "icon": "entypo:folder-images",
-            "url": "/assets",
+            "url": "/resources",
             "description": "Homebrew assets, rules, unreleased content and more.",
             "shadowColor": "#ff6347d9"
         },
