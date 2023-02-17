@@ -65,7 +65,7 @@ export class DateHelper {
                 return `${minutes} mins ago`;
         }
         if (seconds && seconds > 0) {
-            if (hours == 1)
+            if (seconds == 1)
                 return `${seconds} sec ago`;
             else
                 return `${seconds} secs ago`;
