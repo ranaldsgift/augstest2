@@ -136,7 +136,7 @@
 		<h1>Privacy Policy</h1>
 	</header>
 	<div class="comic-body">
-		<p>You can find our Privacy Policy <a href="/policy">here</a>.</p>
+		<p>You can find our Privacy Policy <a href="/privacy">here</a>.</p>
 	</div>
 </div>
 
