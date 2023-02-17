@@ -45,12 +45,11 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         name: {
             font: 'bangersregular',
             fontSize: 50, 
-            fontColor: 'black', 
-            lineHeight: 0.7, 
+            fontColor: 'black',
             classList: 'skew-x-[1.7deg] skew-y-[-1.7deg] tracking-[2px]' 
         },
         nameContainer: {
-            size: { width: '240px', height: '64px' }, 
+            size: { width: '240px', height: '70px' }, 
             position: { left: '100px', top: '0px' },
         },
         keywords:  {
@@ -105,12 +104,11 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         name: { 
             font: 'BebasNeueBold', 
             fontSize: 58,
-            fontColor: 'white', 
-            lineHeight: 0.84, 
-            classList: 'transform scale-y-[120%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[4px]' 
+            fontColor: 'white',
+            classList: 'transform scale-y-[140%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '240px', height: '72px' },
+            size: { width: '240px', height: '78px' },
             position: { left: '100px', top: '0px' } 
         },
         keywords:  {
@@ -127,7 +125,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             classList: ' w-[120%] ml-[-10%] transform !scale-x-[80%] tracking-[3px] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
         ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 19, fontColor: 'white',
-            classList: '!text-left !leading-[calc(var(--fontSize)+1px)]'
+            classList: '!text-left !leading-[calc(calc(var(--fontSize)+4px)*var(--scale))]'
         },
         action_dice: [
             { size: { width: '50px', height: '50px' }, position: { left: '342px', top: '490px' } },

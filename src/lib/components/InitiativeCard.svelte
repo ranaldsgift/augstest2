@@ -93,7 +93,7 @@
         letter-spacing: 2px;
     }
     .halftone-container {
-	    --size: 0.55rem;
+	    --size: calc(0.55rem * var(--scale));
 	    --mask: radial-gradient(circle at center, rgb(0 0 0), rgb(0 0 0 / 0.2));
         --dotsColor: 255 255 255;
         --bg: radial-gradient(circle at center, rgb(var(--dotsColor)) 20%, rgb(var(--dotsColor) / 0.4) var(--dotRadius, 115%));

@@ -271,9 +271,9 @@
         z-index: 3;
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container :global(.positioned-container) {
-        border: 2px solid transparent;
+        border: calc(2px * var(--scale)) solid transparent;
         background: linear-gradient(#777777 0%, #fff 25%, #fff 75%, #777777 100%) border-box;
-        border-radius: 4px;
+        border-radius: calc(4px * var(--scale));
     }
     .hero-sheet-container[data-theme="BTAS"] .ability-container p {
         letter-spacing: 1px;
@@ -287,17 +287,17 @@
         margin-bottom: 4px;
     }    
     .hero-sheet-container[data-theme="TMNT"] :global(.hero-action-dice-container svg) {
-        width: calc(100% - 8px);
-        height: calc(100% - 8px);
-        top: 4px;
-        left: 4px;
+        width: calc(100% - calc(8px * var(--scale)));
+        height: calc(100% - calc(8px * var(--scale)));
+        top: calc(4px * var(--scale));
+        left: calc(4px * var(--scale));
         position: relative;
     }    
     .hero-sheet-container[data-theme="BTAS"] :global(.hero-action-dice-container svg) {
-        width: calc(100% - 4px);
-        height: calc(100% - 4px);
-        top: 2px;
-        left: 2px;
+        width: calc(100% - calc(4px * var(--scale)));
+        height: calc(100% - calc(4px * var(--scale)));
+        top: calc(2px * var(--scale));
+        left: calc(2px * var(--scale));
         position: relative;
     }
     :global(.keywords-container *) {
@@ -451,11 +451,9 @@
         </button>
     </PositionedContainer>
     <div class="hero-action-dice-container" style:--iconColor={hero.actionDice.iconColor}>
-        <input type="hidden" name="actionDice" hidden bind:value={hero.actionDice}>
         {#if hero.actionDice}
             {#each hero.actionDice.dice as action_die, index}
-            <input type="hidden" name="dice" hidden bind:value={action_die}>
-            <PositionedContainer classList="!z-[60]" template={template.action_dice[index]}>
+            <PositionedContainer template={template.action_dice[index]}>
                 <button 
                     style:width={'100%'} 
                     style:height={'100%'} 

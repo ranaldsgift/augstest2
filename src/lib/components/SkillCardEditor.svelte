@@ -15,11 +15,11 @@
     import ImageEditor from "./ImageEditor.svelte";
     
     export let scale: number = 0.7;
-    export let theme: ThemeTemplatesEnum | null = null;
-    export let heroName: string | null = null;
+    export let theme: ThemeTemplatesEnum = ThemeTemplatesEnum.TMNT;
+    export let heroName: string = '';
     export let skillCard: SkillCard = new SkillCard();
     export let backgroundColor: string | null = null;
-    export let template: SkillCardTemplate | null = null;
+    export let template: SkillCardTemplate = SkillCardTemplates.TMNT;
 
     if (!theme) {
         if (skillCard.hero) {
@@ -36,7 +36,7 @@
         skillCard.theme = theme;
     }
 
-    if (!heroName) {
+    if (!heroName || heroName.length === 0) {
         if (skillCard.hero) {
             heroName = skillCard.hero.name;
         }

@@ -17,7 +17,7 @@
         line-height: calc(var(--fontSize) * var(--scale));
         color: var(--color);
         text-align: var(--textAlign);
-        line-height: calc(var(--lineHeight));
+        line-height: calc(var(--lineHeight, var(--fontSize)) * var(--scale));
         cursor: text;
     }
 </style>
