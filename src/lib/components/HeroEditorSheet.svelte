@@ -29,16 +29,6 @@
         template = ThemeTemplates[hero.theme].heroSheet;
     }
 
-    const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
-    themeSelection.subscribe(value => { 
-        var theme = value as ThemeTemplatesEnum;
-
-        if (hero.theme != theme) {
-            hero.theme = theme;
-            template = ThemeTemplates[theme].heroSheet;
-        }
-    });
-
     function handleActionDiceEdit(index: number) {
         const icon = hero.actionDice.dice ? hero.actionDice.dice[index] : DiceIconsEnum.Move;
 		const c: ModalComponent = { ref: HeroActionDiceForm, props: { "theme": hero.theme, "icon": icon } };
@@ -233,9 +223,6 @@
         display: flex;
         justify-content: center;
     }
-    .hero-sheet-container[data-theme="TMNT"] .hero-name {
-        letter-spacing: 2px;
-    }
     .hero-sheet-container[data-theme="TMNT"] .hero-action-dice-container, .hero-sheet-container[data-theme="TMNT"] :global(.positioned-text) {
         transform: skew(1.7deg, -1.7deg);
     }
@@ -245,9 +232,6 @@
     }
     .hero-action-dice-container button:hover {
         filter: contrast(1.5);
-    }
-    .hero-sheet-container[data-theme="TMNT"] .ability-container p {
-        transform: skew(1deg, -1deg);
     }
     .hero-overlay-image {
         width: 100%;
@@ -263,10 +247,6 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    .hero-sheet-container[data-theme="BTAS"] .hero-name {
-        text-shadow: 3px 3px 1px black;
-        margin-left: -2px;
-    }
     :global(.ability-container *), :global(.hero-attribute-container *), :global(.hero-action-dice-container *) {
         z-index: 3;
     }
@@ -275,17 +255,9 @@
         background: linear-gradient(#777777 0%, #fff 25%, #fff 75%, #777777 100%) border-box;
         border-radius: calc(4px * var(--scale));
     }
-    .hero-sheet-container[data-theme="BTAS"] .ability-container p {
-        letter-spacing: 1px;
-    }
     .hero-sheet-container[data-theme="BTAS"] .hero-attribute-container>:global(button) {
         text-shadow: -2px -2px 0px black, 2px 2px 0px black, -2px 2px 0px black, 2px -2px 0px black, 2px 0px 0px black, -2px 0px 0px black, 0px -2px 0px black, 0px -2px 0px black;
-    }
-    .hero-sheet-container[data-theme="BTAS"] p.hero-ability-name {
-        background: linear-gradient(to right, #77777700 5%, #ffffff70 25%, #ffffff70 75%, #77777700 95%)     left     bottom  no-repeat;
-        background-size: 100% 1px;
-        margin-bottom: 4px;
-    }    
+    } 
     .hero-sheet-container[data-theme="TMNT"] :global(.hero-action-dice-container svg) {
         width: calc(100% - calc(8px * var(--scale)));
         height: calc(100% - calc(8px * var(--scale)));
@@ -314,10 +286,7 @@
     :global(.hero-icon-image) {
         background-position: center !important;
         background-size: contain !important;
-    }
-    .hero-sheet-container[data-theme="BTAS"] .ability-container .hero-ability-effect {
-        text-align: left;
-    }       
+    }   
     .hero-sheet-container[data-theme="BTAS"] .noise-overlay {            
         background: #000000;
         filter: url(#noiseFilter);
@@ -345,10 +314,10 @@
     <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
     {/if}
     <PositionedContainer template={template.image} classList="!overflow-visible">
-        <ImageEditor bind:image={hero.heroImage} scale={scale} scaleAxis='height'></ImageEditor>
+        <ImageEditor bind:image={hero.heroImage} {scale} scaleAxis="height"></ImageEditor>
     </PositionedContainer>
     <PositionedContainer template={template.icon}>
-        <ImageEditor bind:image={hero.iconImage} scale={scale}></ImageEditor>
+        <ImageEditor bind:image={hero.iconImage} {scale}></ImageEditor>
     </PositionedContainer>
     <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>
         <TextEditor bind:text={hero.name} placeholder="Hero Name" classList={template.name.classList} template={template.name} bind:fontSize={hero.fontSizeHeroName}></TextEditor>

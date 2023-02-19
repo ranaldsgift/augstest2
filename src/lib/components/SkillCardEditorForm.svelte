@@ -15,11 +15,9 @@
     import SkillCardEditor from "./SkillCardEditor.svelte";
     import { SkillCard } from "$lib/entities/SkillCard";
     import PageButtonContainer from "./PageButtonContainer.svelte";
-    import type { Session } from "@supabase/supabase-js";
+    import { page } from "$app/stores";
+    import { SkillCards } from "$lib/stores/DataStores";
 
-    const storeTab: Writable<"theme" | "details" | "more"> = writable("theme");
-
-    export let session: Session | null;
     export let skillCard: SkillCard = new SkillCard();
     let savedSkillCard = instanceToInstance(skillCard);
     const skillCardTheme = skillCard.hero?.theme ?? skillCard.theme ?? ThemeTemplatesEnum.TMNT;
@@ -54,6 +52,7 @@
         }
 
         ToastHelper.create('Saved!');
+        SkillCards.invalidate(`userId=${skillCard.user.id}&heroId=null`);
 
         const savedId = result.data?.id;
 
@@ -96,7 +95,7 @@
 
 <div class="grid gap-5 hero-editor-container justify-center">
     <PageButtonContainer>
-        {#if skillCard.isValid() && isDirty() && session}
+        {#if skillCard.isValid() && isDirty() && $page.data.session}
             <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
         {:else}
             <div class="disabled-button">
@@ -107,7 +106,7 @@
     <div class="skill-card-editor m-auto flex gap-5 flex-wrap pl-5 pr-5 justify-center">
         <div class="grid gap-5">
             <SkillCardEditor bind:skillCard={skillCard} bind:template={template} bind:backgroundColor={skillCard.backgroundColor} bind:theme={skillCard.theme}></SkillCardEditor>
-            {#if !session}
+            {#if !$page.data.session}
                 <PigeonPeteSays>
                     <p>You must be logged in to save a Skill Card!</p>
                 </PigeonPeteSays>

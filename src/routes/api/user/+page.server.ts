@@ -84,13 +84,14 @@ export const actions: Actions = {
         }
         const user = locals.user;
 
+        let favorite: UserHomebrewFavorite | undefined;
         try {
             if (!user.homebrewFavorites) {
                 user.homebrewFavorites = [];
             }
 
             if (!user.homebrewFavorites.some(h => h.homebrewId === homebrewId)) {
-                await UserHomebrewFavorite.save({ homebrewId: homebrewId, userId: user.id });
+                favorite = await UserHomebrewFavorite.save({ homebrewId: homebrewId, userId: user.id });
             } else {
                 await UserHomebrewFavorite.delete({ homebrewId: homebrewId, userId: user.id });
             }
@@ -99,8 +100,7 @@ export const actions: Actions = {
             console.error(err);
             throw error(500, "Internal Server Error");
         }
-
-        await user.reload();
-        return { user: DataHelper.serialize(user) };
+        
+        return { favorite: DataHelper.serialize(favorite) };
     }
 };

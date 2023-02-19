@@ -25,7 +25,7 @@
 <span class="unstyled outline-none{classList.length > 0 ? ` ${classList}` : ''}{template.classList && template.classList.length > 0 ? ` ${template.classList}` : ''}" 
     style:--font={template.font}
     style:--fontSize="{!fontSize || fontSize === 0 ? template.fontSize : fontSize}px"
-    style:--lineHeight={template.lineHeight ?? `${template.fontSize}px`}
+    style:--lineHeight={fontSize && fontSize !== 0 ? `${fontSize}px` : template.lineHeight ?? `${template.fontSize}px`}
     style:--color={template.fontColor}
     contenteditable="true"
     placeholder={placeholder}

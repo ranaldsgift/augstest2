@@ -19,5 +19,5 @@
 </ol>
 
 <div class="page flex justify-center">
-    <SkillCardEditorForm {skillCard} session={data.session}></SkillCardEditorForm>
+    <SkillCardEditorForm {skillCard}></SkillCardEditorForm>
 </div>

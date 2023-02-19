@@ -3,15 +3,15 @@ import type { RequestHandler } from './$types';
 import { error } from "@sveltejs/kit";
 import { SkillCard } from '$lib/entities/SkillCard';
 
-export const GET: RequestHandler = async (event) => {
+export const GET: RequestHandler = async ({ url }) => {
 
-    let offset = Number(event.url.searchParams.get('offset'));
-    let limit = Number(event.url.searchParams.get('limit'));
-    let userId = event.url.searchParams.get('userId');
-    let heroId = event.url.searchParams.get('heroId');
-    let search = event.url.searchParams.get('search');
-    let sort = event.url.searchParams.get('sort');
-    let asc = event.url.searchParams.get('asc') === "true" ?? false;
+    let offset = Number(url.searchParams.get('offset'));
+    let limit = Number(url.searchParams.get('limit'));
+    let userId = url.searchParams.get('userId');
+    let heroId = url.searchParams.get('heroId');
+    let search = url.searchParams.get('search');
+    let sort = url.searchParams.get('sort');
+    let asc = url.searchParams.get('asc') === "true" ?? false;
 
     let data = null;
     let dataCount = null;
@@ -32,8 +32,16 @@ export const GET: RequestHandler = async (event) => {
         }
 
         if (heroId) {
-            query = query
-                .andWhere(`hero.id = :heroId`, { heroId: heroId })
+            if (!Number(heroId)) {
+                if (heroId === 'null') {
+                    query = query
+                        .andWhere(`hero.id IS NULL`)
+                }
+            }
+            else {
+                query = query
+                    .andWhere(`hero.id = :heroId`, { heroId: heroId })
+            }
         }
 
         if (sort) {
@@ -64,7 +72,6 @@ export const GET: RequestHandler = async (event) => {
     const response = DataHelper.serialize({
         items: data,
         count: dataCount
-    })
-    const jsonData = DataHelper.serialize(data);
-    return new Response(response);
+    });
+    return  new Response(response);
 };

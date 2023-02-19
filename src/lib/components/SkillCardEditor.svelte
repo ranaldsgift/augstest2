@@ -1,25 +1,21 @@
 <script lang="ts">
-    import { Image } from "$lib/entities/Image";
     import { SkillCard } from "$lib/entities/SkillCard";
     import { SkillCardTemplates, type SkillCardTemplate } from "$lib/interfaces/templates/SkillCardTemplate";
     import { modalStore, toastStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
     import PositionedContainer from "./PositionedContainer.svelte";
-    import { draggable } from "@neodrag/svelte";
-    import { ToastHelper } from "$lib/helpers/ToastHelper";
     import { SkillCardIconsEnum } from "$lib/enums/Enums";
     import SkillCardIconForm from "./SkillCardIconForm.svelte";
     import SkillCardIcon from "./SkillCardIcon.svelte";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
-    import PositionedTextContainer from "./PositionedTextContainer.svelte";
     import TextEditor from "./TextEditor.svelte";
     import ImageEditor from "./ImageEditor.svelte";
     
     export let scale: number = 0.7;
-    export let theme: ThemeTemplatesEnum = ThemeTemplatesEnum.TMNT;
+    export let theme: ThemeTemplatesEnum | null = null;
     export let heroName: string = '';
     export let skillCard: SkillCard = new SkillCard();
     export let backgroundColor: string | null = null;
-    export let template: SkillCardTemplate = SkillCardTemplates.TMNT;
+    export let template: SkillCardTemplate | null = null;
 
     if (!theme) {
         if (skillCard.hero) {
@@ -66,34 +62,6 @@
         }
     }
 
-/*     if (skillCard.backgroundColor && skillCard.backgroundColor.length > 0) {
-        backgroundColor = skillCard.backgroundColor;
-    }
-
-    if (skillCard.hero) {
-        theme = skillCard.hero.theme;
-        template = SkillCardTemplates[skillCard.hero.theme];
-        heroName = skillCard.hero.name;
-        backgroundColor = skillCard.hero.sheetBackgroundColor;
-    } */
-
-    function handleEditImage() {
-        const prompt: ModalSettings = {
-            type: 'prompt',
-            title: 'Skill Card Image',
-            body: 'Provide an image URL. The image host will affect if the image is rendered correctly when the Hero sheet PNG is generated. Approved hosts: https://imgur.com',
-            // Populates the initial input value
-            value: skillCard.image.url && skillCard.image.url.length > 0 ? skillCard.image.url : '',
-            // Returns the updated response value
-            response: (heroImage: string) => {
-                if (heroImage && heroImage.length > 0) {
-                    skillCard.image.url = heroImage;
-                }
-            }
-        };
-        modalStore.trigger(prompt);
-    }
-
     function handleAddCost() {
         if (!skillCard.iconCost) {
             skillCard.iconCost = [];
@@ -126,37 +94,6 @@
 		modalStore.trigger(d);
 
     }
-
-    function handleScaleImage(event: WheelEvent) {
-        if (!scaleAndDrag) return;
-
-        event.preventDefault();
-
-        if (event.deltaY > 0) {
-            skillCard.image.scale -= (1 * scaleMultiplier);
-        } else {
-            skillCard.image.scale += (1 * scaleMultiplier);
-        }
-        skillCard = skillCard;
-    }
-
-    function toggleScalable() {
-        if (!localStorage.getItem('image-scaling-alert')) {
-            toastStore.trigger({
-                preset: 'secondary',
-                message: `Image scaling enabled.<br/>Use scrollwheel to scale image.<br/>Press again to disable`,
-                autohide: false
-            });
-            localStorage.setItem('image-scaling-alert', 'true');
-        }
-
-        scalable = !scalable;
-        scaleAndDrag = !scaleAndDrag;
-    }
-
-    let scaleAndDrag = false;
-    let scalable = false;
-    let scaleMultiplier = 1;
 </script>
 
 <style lang="scss">
@@ -235,7 +172,7 @@
             font-size: var(--font-size);
             font-family: bangersregular;
             top: calc(393px * var(--scale));
-            color: #fff;
+            color: #ffffff;
             left: calc(75px * var(--scale));
             width: 100%;
             text-align: center;
@@ -594,6 +531,8 @@
             height: 100%;
             background: linear-gradient(180deg, #3e3e3e, #222222 45%, #3e3e3e);
             position: absolute;
+            top: 0;
+            left: 0;
         }
         .skill-card-overlay-container {
             left: calc(65px * var(--scale));
@@ -608,16 +547,7 @@
     }
 </style>
 
-<svelte:window
-on:keydown={(e) => {
-    if (e.key === 'Shift') {
-        scaleMultiplier = 10; 
-    }
-}} 
-on:keyup={(e) => { 
-    scaleMultiplier = 1;
-}}/>
-
+{#if template && theme}
 <div class="skill-card-container" style:--scale={scale} data-theme={theme}>
     <div class="skill-card-background absolute w-full h-full  hidden" style:background="url('{template.background_image}') no-repeat center / cover, {backgroundColor}" style:background-size="cover"></div>
     <div class="skill-card-background-css w-full h-full hidden" style:--backgroundColor={backgroundColor}></div>
@@ -654,3 +584,4 @@ on:keyup={(e) => {
         <TextEditor text={heroName} placeholder="Character Name" template={template.characterName} classList="read-only"></TextEditor>
     </PositionedContainer>
 </div>
+{/if}

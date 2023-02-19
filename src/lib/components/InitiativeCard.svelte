@@ -59,6 +59,10 @@
     .initiative-card-container[data-theme='TMNT'] .initiative-card-name {
         letter-spacing: -1px;
     }
+    .initiative-card-container[data-theme='BTAS'] .initiative-card-name p {
+        transform: scaleX(80%) scaleY(110%);
+        letter-spacing: calc(4px * var(--scale));
+    }
     .initiative-card-image {
         top: 15px;
         position: absolute;

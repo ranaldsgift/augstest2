@@ -2,6 +2,7 @@
     import type { SkillCard } from "$lib/entities/SkillCard";
     import { SkillCardTemplates } from "$lib/interfaces/templates/SkillCardTemplate";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
+    import { SkillCards } from "$lib/stores/DataStores";
     import { createDataTableStore, dataTableHandler, Paginator, tableInteraction } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
@@ -13,7 +14,23 @@
     export let heroId: string | null = null;
 
     const loadData = async () => {
-        let apiQuery = `/api/skills?limit=${$dataTableStore.pagination?.limit}&offset=${$dataTableStore.pagination?.offset}&sort=${$dataTableStore.sort}&asc=${$dataTableStore.sortState?.asc}`;
+        let data = SkillCards.loadData(getApiQuery());
+        let skills = await data;
+
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.size = skills.count;
+            
+            if ($dataTableStore.pagination.offset * $dataTableStore.pagination.limit > skills.count) {
+                $dataTableStore.pagination.offset = skills.count / $dataTableStore.pagination.limit;
+            }
+        }
+
+        dataTableStore.updateSource(skills.items);
+    }
+
+    const getApiQuery = () => {
+    
+        let apiQuery = `limit=${$dataTableStore.pagination?.limit}&offset=${$dataTableStore.pagination?.offset}&sort=${$dataTableStore.sort}&asc=${$dataTableStore.sortState?.asc}`;
 
         if ($dataTableStore.search && $dataTableStore.search.length > 0) {
             apiQuery += `&search=${$dataTableStore.search}`;
@@ -24,18 +41,8 @@
         if (userId) {
             apiQuery += `&userId=${userId}`;
         }
-        
-        const response = await fetch(apiQuery);
-        const data = await response.json();
-        if ($dataTableStore.pagination) {
-            $dataTableStore.pagination.size = data.count;
-            
-            if ($dataTableStore.pagination.offset * $dataTableStore.pagination.limit > data.count) {
-                $dataTableStore.pagination.offset = data.count / $dataTableStore.pagination.limit;
-            }
-        }
 
-        dataTableStore.updateSource(data.items);  
+        return apiQuery;
     }
     
     let searchInput: HTMLInputElement;
@@ -54,7 +61,6 @@
             pagination: { offset: 0, limit: 12, size: 0, amounts: [12, 24, 36] }
         }
     );
-    dataTableStore.subscribe((model) => { console.log('data table changed') });
 
     $dataTableStore.sort = 'dateModified';
     $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };

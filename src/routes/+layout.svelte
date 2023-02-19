@@ -14,20 +14,17 @@
     import ComicButton from '$lib/components/ComicButton.svelte';
     import {  enhance, type SubmitFunction } from '$app/forms';
     import { ToastHelper } from '$lib/helpers/ToastHelper';
-    import { QueryClientProvider, QueryClient } from '@tanstack/svelte-query'
     import { writable, type Writable } from 'svelte/store';
     import { storeTheme } from '$lib/stores/ThemeStore';
     import { browser } from '$app/environment';
-    import type { LayoutServerData } from './$types';
+    import type { LayoutData, LayoutServerData } from './$types';
     import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
     import AppSidebar from '$lib/components/AppSidebar.svelte';
 
-	export let data: LayoutServerData;
+	export let data: LayoutData;
     $: ({ currentTheme } = data);
 
     const sidebarStore: Writable<string> = writable("Home");
-    
-    const queryClient = new QueryClient()
 
     let email = '';
 
@@ -68,15 +65,13 @@
     
     const drawerOpen: any = () => { drawerStore.open({ id: 'login', position: 'left' }); };
     const drawerClose: any = () => { drawerStore.close(); };
+
 </script>
 
 <svelte:head>
 	<!-- Select Preset Theme CSS DO NOT REMOVE ESCAPES-->
 	{@html `\<style\>${currentTheme}}\</style\>`}
 </svelte:head>
-
-<QueryClientProvider client={queryClient}>
-</QueryClientProvider>
 
 <Modal/>
 
@@ -176,7 +171,7 @@
         <AppSidebar classList="hidden sm:grid" selected={sidebarStore}></AppSidebar>
     </svelte:fragment>
     <!-- Page Content Slot -->
-    <slot />
+        <slot />
 	<svelte:fragment slot="pageFooter">
         <div class="max-w-4xl m-auto text-sm text-center p-4">This site is not in any way affiliated with IDW Games. The look and design of the AUGS assets are a trademark of IDW Games. The assets on this site may not be used for commercial purposes.</div>
     </svelte:fragment>

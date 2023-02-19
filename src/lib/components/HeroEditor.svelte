@@ -109,7 +109,7 @@
             component: c,
             modalClasses: '!max-w-[1200px]',
             response: (skillCards: SkillCard[]) => {
-                if (!skillCards || skillCards.length === 0)
+                if (!skillCards)
                     return
                 
                 hero.skillCards = skillCards;
@@ -127,26 +127,6 @@
     }
     label input {
         width: 100%;
-    }
-    .form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-    div[data-tab] {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-    div[data-tab]>div {
-        display: flex;
-        gap: 1rem;
-    }
-    div[data-tab]>div {
-        display: flex;
-    }
-    div[data-tab]>div>:global(span) {
-        flex: 1 100%;
     }
     @media (max-width: 1250px) {
         .hero-editor {
@@ -166,22 +146,6 @@
     }
     .theme-fields-container input {
         pointer-events: all;
-    }
-    .page-button-container {
-        position: fixed;
-        top: 90px;
-        right: 20px;
-        z-index: 100;
-    }
-    .tab-buttons button {
-        flex: 1 100%;
-        filter: grayscale(1);
-    }
-    .tab-buttons button[data-selected='true'] {
-        filter: grayscale(0);
-    }
-    .tab-buttons button h1 {
-        margin-left: 0;
     }
     .comic-body>div {
         display: flex;

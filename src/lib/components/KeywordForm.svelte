@@ -2,7 +2,7 @@
 	import { modalStore, ProgressRadial } from '@skeletonlabs/skeleton';
     import ComicButton from './ComicButton.svelte';
 	import InputChip from '@skeletonlabs/skeleton/components/InputChip/InputChip.svelte'
-    import { loadData } from '$lib/stores/KeywordsStore';
+    import { Keywords } from '$lib/stores/DataStores';
 
 	export let parent: any;
 	export let keywords: string[] = [];
@@ -14,7 +14,7 @@
 
 	keywords = keywords.map(k => k.toLowerCase());
 
-	const keywordsStore = loadData();
+	const keywordsStore = Keywords.loadData();
 </script>
 
 <style>
@@ -35,12 +35,12 @@
 		</header>
 		<InputChip name="keywords" placeholder="Add keyword..." class="h-full" bind:value={keywords} allowDuplicates={false}></InputChip>
 	</form>
-	{#await $keywordsStore}
+	{#await keywordsStore}
 		<div style:height="40px" style:width="40px"><ProgressRadial></ProgressRadial></div>
 	{:then data}
 		<p>Choose from existing Keywords:</p>
 		<div class="flex flex-wrap gap-2 items-stretch">
-		{#each data as keyword, index}
+		{#each data.items as keyword, index}
 		<button class="{keywords.includes(keyword) ? 'checked' : ''}" on:click={() => {
 			if(!keywords.includes(keyword)) {
 				keywords.push(keyword)
@@ -49,11 +49,11 @@
 				keywords = keywords.filter(k => k !== keyword)
 			}
 		}}>
-		<span class="chip variant-filled-primary capitalize h-full {keywords.includes(keyword) ? 'chip-active' : ''}">
+		<span class="chip variant-filled-primary capitalize h-[40px] {keywords.includes(keyword) ? 'chip-active' : ''}">
 			{#if keywords.includes(keyword)}
-			<span class="chip-check"><iconify-icon icon="material-symbols:check"></iconify-icon></span>
+			<span class="chip-check grid justify-center"><iconify-icon icon="material-symbols:check"></iconify-icon></span>
 			{/if}
-			<span>{keyword}</span>
+			<span class="p-[2px]">{keyword}</span>
 		</span>
 		</button>
 		{/each}

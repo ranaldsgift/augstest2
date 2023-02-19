@@ -3,33 +3,43 @@
     import { DiceIconsEnum } from "$lib/enums/Enums";
     import { DateHelper } from "$lib/helpers/DateHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
+    import { Heroes } from "$lib/stores/DataStores";
     import { createDataTableStore, dataTableHandler, Paginator, ProgressRadial, tableInteraction } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
-
-    const loadData = async () => {
-        let apiQuery = `/api/heroes?limit=${$dataTableStore.pagination?.limit}&offset=${$dataTableStore.pagination?.offset}&sort=${$dataTableStore.sort}&search=${$dataTableStore.search}&asc=${$dataTableStore.sortState?.asc}`;
-
-        if (userFavorites) {
-            apiQuery += `&userFavorites=${userFavorites}`;
-        }
-        if (userId) {
-            apiQuery += `&userId=${userId}`;
-        }
-
-        const response = await fetch(apiQuery);
-        const data = await response.json();
-        dataTableStore.updateSource(data.items);
-        if ($dataTableStore.pagination) {
-            $dataTableStore.pagination.size = data.count;
-        }
-    }
     
     export let title: string = 'Heroes';        
     export let heroes: Hero[] = [];
     export let userId: string | null = null;
     export let userFavorites: string | null = null;
+
+    const loadData = async () => {
+        let promise = Heroes.loadData(getApiQuery());
+        let data = await promise;
+
+        dataTableStore.updateSource(data.items);
+        if ($dataTableStore.pagination) {
+            $dataTableStore.pagination.size = data.count;
+        }
+    }
+
+    const getApiQuery = () => {
+
+        let apiQuery = `limit=${$dataTableStore.pagination?.limit}&offset=${$dataTableStore.pagination?.offset}&sort=${$dataTableStore.sort}&asc=${$dataTableStore.sortState?.asc}`;
+
+        if ($dataTableStore.search && $dataTableStore.search.length > 0) {
+            apiQuery += `&search=${$dataTableStore.search}`;
+        }
+        if (userId) {
+            apiQuery += `&userId=${userId}`;
+        }
+        if (userFavorites) {
+            apiQuery += `&userFavorites=${userFavorites}`;
+        }
+
+        return apiQuery;
+    }
     
     let searchInput: HTMLInputElement;
     let sortKey: keyof Hero = 'dateModified';

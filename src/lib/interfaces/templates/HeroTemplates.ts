@@ -46,7 +46,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             font: 'bangersregular',
             fontSize: 50, 
             fontColor: 'black',
-            classList: 'skew-x-[1.7deg] skew-y-[-1.7deg] tracking-[2px]' 
+            classList: 'skew-x-[1.7deg] skew-y-[-1.7deg] tracking-[calc(2px*var(--scal))]' 
         },
         nameContainer: {
             size: { width: '240px', height: '70px' }, 
@@ -122,7 +122,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         },
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
         ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 32, fontColor: 'white',
-            classList: ' w-[120%] ml-[-10%] transform !scale-x-[80%] tracking-[3px] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
+            classList: ' w-[120%] ml-[-10%] transform !scale-x-[80%] tracking-[calc(3px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
         ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 19, fontColor: 'white',
             classList: '!text-left !leading-[calc(calc(var(--fontSize)+4px)*var(--scale))]'

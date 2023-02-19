@@ -2,14 +2,25 @@
     import { Image } from "$lib/entities/Image";
     import { toastStore } from "@skeletonlabs/skeleton";
     import { draggable } from "@neodrag/svelte";
+    import { onDestroy } from "svelte";
+    import { browser } from "$app/environment";
 
     export let image: Image = new Image();
-    export let scale: number = 1;
     export let scaleAxis: 'height' | 'width' =  'width';
     export let inputContainerClassList: string = '';
     export let classList: string = '';
+    export let scale: number = 1;
     let scaleAndDrag = false;
     let imageScaleMultiplier = 1;
+    if (!image.scale) {
+        image.scale = 100;
+    }
+    if (!image.positionLeft) {
+        image.positionLeft = 0;
+    }
+    if (!image.positionTop) {
+        image.positionTop = 0;
+    }
 
     function handleScaleImage(event: WheelEvent) {
         if (!scaleAndDrag) return;
@@ -25,19 +36,25 @@
     }
 
     function toggleScalable() {
-        /* if (!localStorage.getItem('image-scaling-alert')) {
-        } */
-
         if (scaleAndDrag) {
             toastStore.clear();
         }
         else {
+            if (browser) {
+                document.addEventListener('wheel', handleScaleImage, { passive: false });
+            }
             toastStore.trigger({
                 preset: 'secondary',
                 message: `Drag your image to move it.<br/>Use scrollwheel to scale the image.`,
                 action: {
-                    label: 'Disable',
-                    response: () => { scaleAndDrag = false; }
+                    label: 'Disable&nbsp;<iconify-icon icon="mdi:arrow-expand-all"></iconify-icon>',
+                    response: () => { 
+                        scaleAndDrag = false; 
+                        if (browser) {
+                            document.removeEventListener('wheel', handleScaleImage);
+                        }
+                        close(); 
+                    }
                 },
                 classes: `hide-close-button `,
                 autohide: false
@@ -46,11 +63,21 @@
 
         scaleAndDrag = !scaleAndDrag;
     }
+
+    onDestroy(() => {        
+        if (browser) {
+            document.removeEventListener('wheel', handleScaleImage);
+        }
+        toastStore.clear();
+    });
 </script>
 
 <style>
     input:focus {
         outline: none;
+    }
+    div[data-scaling='true'] {
+        cursor: move;
     }
 </style>
 
@@ -62,12 +89,13 @@ on:keydown={(e) => {
 }} 
 on:keyup={(e) => { 
     imageScaleMultiplier = 1;
-}}/>
+}}
+/>
 
 <div class="image-container">   
-    <div class="w-full h-full absolute flex context-button-container {scaleAndDrag ? 'scale-and-drag' : ''}">
+    <div data-scaling={scaleAndDrag} class="w-full h-full absolute flex context-button-container {scaleAndDrag ? 'scale-and-drag' : ''}">
         <div class="show-on-hover z-20 absolute left-1 bottom-2 w-full{inputContainerClassList.length > 0 ? ` ${inputContainerClassList}` : ''}" style:display={scaleAndDrag ? 'none' : ''}>
-            <input class="card-image-url h-10 border-black border-2 grid content-center bg-primary-900 text-primary-900-100-token overflow-hidden cursor-text text-center !rounded-none" 
+            <input class="card-image-url h-10 border-black border-2 grid content-center !bg-primary-50-900-token !text-primary-900-50-token overflow-hidden cursor-text text-center !rounded-none" 
                 style:width="calc(100% - 8px)"
                 placeholder="URL" 
                 contenteditable="true" 
@@ -75,7 +103,7 @@ on:keyup={(e) => {
             >
         </div>     
         {#if image && image.url.length > 0}
-        <iconify-icon icon="mdi:arrow-expand-all" class="context-button p-1 absolute right-1 top-1 {scaleAndDrag ? 'active' : ''}" 
+        <iconify-icon icon="mdi:arrow-expand-all" class="context-button p-1 absolute right-1 top-1 {scaleAndDrag ? '!hidden' : ''}" 
             on:click={toggleScalable} 
             on:keydown={toggleScalable}
         ></iconify-icon>
@@ -83,13 +111,12 @@ on:keyup={(e) => {
             style:width="{scaleAxis === 'width' ? `${image.scale}%` : ''}" 
             style:height="{scaleAxis === 'height' ? `${image.scale}%` : ''}"
             src={image.url} alt="Card" 
-            on:wheel|nonpassive={handleScaleImage}
             use:draggable={{
                 disabled: !scaleAndDrag,
                 position: { x: image.positionLeft * scale, y: image.positionTop * scale },
                 onDrag: ({ offsetX, offsetY }) => {
-                    image.positionLeft = offsetX;
-                    image.positionTop = offsetY;
+                    image.positionLeft = offsetX * (1 / scale);
+                    image.positionTop = offsetY * (1 / scale);
                 },
             }}
         >

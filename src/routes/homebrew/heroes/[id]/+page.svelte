@@ -21,6 +21,8 @@
     import { Drawer, drawerStore, ProgressRadial, RangeSlider } from '@skeletonlabs/skeleton';
     import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
     import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
+    import { UserHomebrewFavorite } from '$lib/entities/UserHomebrewFavorite';
+    import { plainToInstance } from 'class-transformer';
 
     export let data: PageData;
     export let heroPage: HTMLElement;
@@ -85,14 +87,21 @@
     }
 
     async function updateUserData(json: string) {
-        const user = DataHelper.deserialize<User>(User, json);
-        authUser = user;
-        
-        if (authUser.homebrewFavorites.some(x => x.homebrewId == hero.id)) {
-            ToastHelper.create(`Added ${hero.name} to your favorites!`);
-        } else {
-            ToastHelper.create(`Removed ${hero.name} from your favorites!`);
-        }        
+        const favorite =  json ? DataHelper.deserialize(UserHomebrewFavorite, json) : null;
+
+        if (authUser) {
+            if (favorite) {
+                if (!authUser.homebrewFavorites) {
+                    authUser.homebrewFavorites = [];
+                }
+                authUser.homebrewFavorites.push(favorite);
+                ToastHelper.create(`Added ${hero.name} to your favorites!`);
+            } else {
+                authUser.homebrewFavorites = authUser.homebrewFavorites.filter(x => x.homebrewId != hero.id);
+                ToastHelper.create(`Removed ${hero.name} from your favorites!`);
+            }
+            authUser = authUser;
+        }      
     }
 </script>
 
@@ -140,12 +149,12 @@
                         return;
                     }
 
-                    updateUserData(result.data?.user);
+                    updateUserData(result.data?.favorite);
                 };
             }}>
-            <div title={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
+            <div title={authUser.homebrewFavorites && authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
                 <ComicButton icon="material-symbols:favorite"
-                    background={authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }>
+                    background={authUser.homebrewFavorites && authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }>
                 </ComicButton>
             </div>
             </form>

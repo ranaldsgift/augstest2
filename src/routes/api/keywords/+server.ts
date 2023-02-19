@@ -13,6 +13,6 @@ export const GET: RequestHandler = async () => {
         throw error(500, "Internal Server Error");
     }
     const keywords = data.map((item: any) => item.keyword);
-    const jsonData = DataHelper.serialize(keywords);
+    const jsonData = DataHelper.serialize({ items: keywords, count: keywords.length });
     return new Response(jsonData);
 };
