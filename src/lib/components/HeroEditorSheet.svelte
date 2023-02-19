@@ -129,8 +129,8 @@
                     return;
                 }
 
-                var abilityName = fields.find(field => field.name == 'ability_name')?.value;
-                var abilityEffect = fields.find(field => field.name == 'ability_effect')?.value;
+                const abilityName = fields.find(field => field.name == 'ability_name')?.value;
+                const abilityEffect = fields.find(field => field.name == 'ability_effect')?.value;
 
                 if (!abilityName || !abilityEffect) {
                     return;

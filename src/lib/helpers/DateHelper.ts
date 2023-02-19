@@ -1,7 +1,7 @@
 export class DateHelper {
     public static dateDifference(date1: Date, date2: Date, interval: string) {
-        var second=1000, minute=second*60, hour=minute*60, day=hour*24, week=day*7;
-        var timediff = date2.getTime() - date1.getTime();
+        const second=1000, minute=second*60, hour=minute*60, day=hour*24, week=day*7;
+        const timediff = date2.getTime() - date1.getTime();
         if (isNaN(timediff)) return NaN;
         switch (interval) {
             case "years": return date2.getFullYear() - date1.getFullYear();
@@ -84,17 +84,17 @@ export class DateHelper {
 }
 
 Date.prototype.toJSON = function () {
-    var timezoneOffsetInHours = -(this.getTimezoneOffset() / 60); //UTC minus local time
-    var sign = timezoneOffsetInHours >= 0 ? '+' : '-';
-    var leadingZero = (Math.abs(timezoneOffsetInHours) < 10) ? '0' : '';
+    const timezoneOffsetInHours = -(this.getTimezoneOffset() / 60); //UTC minus local time
+    const sign = timezoneOffsetInHours >= 0 ? '+' : '-';
+    const leadingZero = (Math.abs(timezoneOffsetInHours) < 10) ? '0' : '';
   
     //It's a bit unfortunate that we need to construct a new Date instance 
     //(we don't want _this_ Date instance to be modified)
-    var correctedDate = new Date(this.getFullYear(), this.getMonth(), 
+    const correctedDate = new Date(this.getFullYear(), this.getMonth(), 
         this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds(), 
         this.getMilliseconds());
     correctedDate.setHours(this.getHours() + timezoneOffsetInHours);
-    var iso = correctedDate.toISOString().replace('Z', '');
+    const iso = correctedDate.toISOString().replace('Z', '');
   
     return iso + sign + leadingZero + Math.abs(timezoneOffsetInHours).toString() + ':00';
 }

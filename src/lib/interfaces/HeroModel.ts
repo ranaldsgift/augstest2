@@ -87,7 +87,7 @@ export class HeroModel extends HomebrewModel {
             return '';
         }
 
-        var errors = [];
+        const errors = [];
 
         if (!this.name) {
             errors.push('Hero Name');

@@ -10,7 +10,7 @@ export class HomebrewModel extends BaseModel {
         this.userId = userId;
         this.augsLicense = AugsLicensesEnum.Homebrew;
         this.homebrewCategory = category;
-        var currDate = new Date().toISOString();
+        const currDate = new Date().toISOString();
         this.dateCreated = currDate;
         this.dateModified = currDate;
         this.isDeleted = false;

@@ -8,10 +8,10 @@ export class StringHelper {
     }
 
     public static capitalize(str: string) {
-        var words = str.split(" ");
-        for (var i = 0; i < words.length; i++) {
-            var firstLetter = words[i].substring(0, 1);
-            var restOfWord = words[i].substring(1);
+        const words = str.split(" ");
+        for (let i = 0; i < words.length; i++) {
+            const firstLetter = words[i].substring(0, 1);
+            const restOfWord = words[i].substring(1);
             words[i] = firstLetter.toUpperCase() + restOfWord.toLowerCase();
         }
         return words.join(" ");

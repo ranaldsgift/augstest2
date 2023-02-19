@@ -5,7 +5,7 @@
 
     export let fields: string;
 
-    var parsedFields = JSON.parse(fields);
+    const parsedFields = JSON.parse(fields);
 
 	// We've created a custom submit function to pass the response and close the modal.
 	function onFormSubmit(): void {

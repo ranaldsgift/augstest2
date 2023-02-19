@@ -56,9 +56,9 @@
         initiativeCardScale = 1;
 
         drawerStore.open({ id: 'download', width: 'w-full' });
-        var heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
-        var initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
-        var figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
+        const heroSheetContainer = heroSheet.querySelector('.hero-sheet-container') as HTMLElement;
+        const initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
+        const figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
 
         const heroSheetPng = await htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } });
         const initiativeCardPng = await htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } });

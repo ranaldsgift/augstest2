@@ -61,7 +61,7 @@ export class SkillCard extends Homebrew {
             return '';
         }
 
-        var errors = [];
+        const errors = [];
 
         if (!this.name || this.name.length === 0) {
             errors.push('Skill Card Name');

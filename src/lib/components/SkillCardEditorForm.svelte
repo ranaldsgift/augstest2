@@ -26,7 +26,7 @@
     
     const themeSelection: Writable<string> = writable(skillCardTheme);
     themeSelection.subscribe(value => { 
-        var theme = value as ThemeTemplatesEnum;
+        const theme = value as ThemeTemplatesEnum;
 
         if (skillCard.theme != theme) {
             skillCard.theme = theme;

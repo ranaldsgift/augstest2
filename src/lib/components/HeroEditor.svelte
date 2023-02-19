@@ -47,7 +47,7 @@
     
     const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
     themeSelection.subscribe(value => { 
-        var theme = value as ThemeTemplatesEnum;
+        const theme = value as ThemeTemplatesEnum;
 
         if (hero.theme != theme) {
             hero.theme = theme;

@@ -110,7 +110,7 @@ export class Hero extends Homebrew {
             return '';
         }
 
-        var errors = [];
+        const errors = [];
 
         if (!this.name) {
             errors.push('Hero Name');
