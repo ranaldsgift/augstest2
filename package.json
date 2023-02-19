@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"prepare": "svelte-kit sync",
 		"postbuild": "npx svelte-sitemap --out-dir .vercel/output/static --domain https://www.augstools.vercel.app",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
