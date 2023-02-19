@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "vite build",		
+		"postbuild": "npx svelte-sitemap --out-dir .vercel/output/static --domain https://www.augstools.vercel.app",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -24,6 +25,7 @@
 		"svelte": "^3.55.1",
 		"svelte-check": "^3.0.3",
 		"svelte-preprocess": "^5.0.1",
+		"svelte-sitemap": "^2.6.0",
 		"tailwindcss": "^3.2.6",
 		"tslib": "^2.5.0",
 		"typescript": "^4.9.5",
