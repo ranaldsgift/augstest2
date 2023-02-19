@@ -99,26 +99,26 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         template_name: 'BTAS',
         background_image: '/images/homebrew%20templates/BTAS/hero_background.png',
         overlay_image: '/images/homebrew%20templates/BTAS/hero_overlay.png',
-        icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
+        icon: { size: { width: '100px', height: '116px' }, position: { left: '0px', top: '0px' } },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: { 
             font: 'BebasNeueBold', 
             fontSize: 58,
             fontColor: 'white',
-            classList: 'transform scale-y-[140%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
+            classList: 'transform scale-y-[118%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '240px', height: '78px' },
+            size: { width: '240px', height: '82px' },
             position: { left: '100px', top: '0px' } 
         },
         keywords:  {
             font: 'BebasNeueLight',
-            fontSize: 20,
+            fontSize: 18,
             fontColor: 'white' 
         },
         keywordsContainer: { 
             size: { width: '240px', height: '40px' },
-            position: { left: '100px', top: '76px' }
+            position: { left: '100px', top: '79px' }
         },
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
         ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 32, fontColor: 'white',

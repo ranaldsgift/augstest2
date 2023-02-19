@@ -79,53 +79,6 @@
         };
         modalStore.trigger(d);
     }
-
-/*     function handleAddAbility() {
-        const formFields: FormField[] = [
-            {
-                name: 'ability_name',
-                type: 'text',
-                value: ''
-            },
-            {
-                name: 'ability_effect',
-                type: 'textarea',
-                value: ''
-            }
-        ]
-
-
-		const c: ModalComponent = { ref: ModalFormEditor, props: { fields: JSON.stringify(formFields) } };
-		const d: ModalSettings = {
-			type: 'component',
-			title: 'Add a Hero Ability',
-			component: c,
-			response: (fields: FormField[]) => {
-				if (!fields)
-                    return;
-                
-                var abilityName = fields.find(field => field.name == 'ability_name')?.value;
-                var abilityEffect = fields.find(field => field.name == 'ability_effect')?.value;
-
-                if (!abilityName || !abilityEffect) {
-                    return;
-                }
-                
-                if (!hero.abilities) {
-                    hero.abilities = [];
-                }
-
-                const ability = new HeroAbility();
-                ability.name = abilityName;
-                ability.effect = abilityEffect;
-                hero.abilities.push(ability);
-
-                hero = hero;
-			}
-		};
-		modalStore.trigger(d);
-    } */
-
     
     function handleAddAbility() {
         const ability = new HeroAbility();
@@ -308,7 +261,20 @@
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
     {#if hero.theme === ThemeTemplatesEnum.BTAS}
-    <div class="noise-overlay"></div>
+    <svg class="w-full h-full opacity-20 absolute">
+        <filter id='noiseFilter'>
+            <feTurbulence 
+            type='fractalNoise' 
+            baseFrequency='0.98' 
+            numOctaves='6' 
+            stitchTiles='stitch'/>
+        </filter>
+
+        <rect
+            width='100%' 
+            height='100%' 
+            filter='url(#noiseFilter)' />
+    </svg>
     {/if}
     {#if template.overlay_image}
     <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
@@ -439,13 +405,4 @@
             {/each}
         {/if}
     </div>
-    <svg>
-        <filter id='noiseFilter'>
-            <feTurbulence 
-            type='fractalNoise' 
-            baseFrequency='0.98' 
-            numOctaves='6' 
-            stitchTiles='stitch'/>
-        </filter>
-    </svg>
 </div>
