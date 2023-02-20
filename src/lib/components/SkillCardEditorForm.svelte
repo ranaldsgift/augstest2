@@ -113,12 +113,12 @@
             {:else if !skillCard.isValid()}
                 <PigeonPeteSays>
                     <p>To save your Skill Card, please complete the following fields:</p>
-                    <p class="text-warning-800 unstyled">{skillCard.validityErrors()}</p>
+                    <p class="text-warning-700-200-token unstyled">{skillCard.validityErrors()}</p>
                 </PigeonPeteSays>
             {:else if skillCard.id && isDirty()}        
                 <PigeonPeteSays>
                     <p>You have unsaved changes! Don't forget to save!</p>
-                    <p class="text-warning-800 unstyled">{skillCard.validityErrors()}</p>
+                    <p class="text-warning-700-200-token unstyled">{skillCard.validityErrors()}</p>
                 </PigeonPeteSays>
             {/if}
         </div>

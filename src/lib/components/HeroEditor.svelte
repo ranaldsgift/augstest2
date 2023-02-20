@@ -6,7 +6,7 @@
     import { writable, type Writable } from "svelte/store";
     import PigeonPeteSays from "./PigeonPeteSays.svelte";
     import HeroEditorSheet from "./HeroEditorSheet.svelte";
-    import type { Hero } from "$lib/entities/Hero";
+    import { Hero } from "$lib/entities/Hero";
     import { FormHelper } from "$lib/helpers/FormHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
@@ -110,7 +110,7 @@
             modalClasses: '!max-w-[1200px]',
             response: (skillCards: SkillCard[]) => {
                 if (!skillCards)
-                    return
+                    return;
                 
                 hero.skillCards = skillCards;
                 hero = hero;
@@ -164,7 +164,7 @@
 
 <div class="grid gap-5 hero-editor-container justify-center">
     <PageButtonContainer>
-        {#if hero.isValid() && isDirty() && $page.data.session}
+        {#if hero.isValid() && isDirty() && $page.data.session && hero.user.userName.length > 0}
             <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
         {:else}
             <div class="disabled-button">
@@ -173,21 +173,26 @@
         {/if}        
     </PageButtonContainer>
     <div class="hero-editor m-auto flex gap-5 flex-wrap pl-5 pr-5 justify-center">
-        <div class="grid gap-5">
+        <div class="grid gap-5 justify-items-center">
             <HeroEditorSheet bind:hero={hero} bind:template={template} scale={sheetScale}></HeroEditorSheet>
-            {#if !$page.data.session}
+            {#if !$page.data.session || !hero.user}
                 <PigeonPeteSays>
                     <p>You must be logged in to save a Hero!</p>
+                </PigeonPeteSays>
+            {:else if !hero.user.userName || hero.user.userName.length === 0}
+            {hero.user.id}
+                <PigeonPeteSays>
+                    <p>Please <a href={`/user/${hero.user.id}/edit`}>edit</a> your profile before creating a Hero!</p>
                 </PigeonPeteSays>
             {:else if !hero.isValid()}
                 <PigeonPeteSays>
                     <p>To save your Hero, please complete or fix the following fields:</p>
-                    <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
+                    <p class="text-warning-700-200-token unstyled">{hero.validityErrors()}</p>
                 </PigeonPeteSays>
             {:else if hero.id && isDirty()}        
                 <PigeonPeteSays>
                     <p>You have unsaved changes! Don't forget to save!</p>
-                    <p class="text-warning-800 unstyled">{hero.validityErrors()}</p>
+                    <p class="text-warning-700-200-token unstyled">{hero.validityErrors()}</p>
                 </PigeonPeteSays>
             {/if}
         </div>

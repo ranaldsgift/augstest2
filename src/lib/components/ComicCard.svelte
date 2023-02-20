@@ -13,7 +13,6 @@
     .comic-card {
         border-color: black;
         border-width: 3px;
-        transform: skew(-1deg);
         position: relative;
         overflow: hidden;
         background-size: cover;

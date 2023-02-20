@@ -1,7 +1,7 @@
 import { SkillCardIconsEnum } from "$lib/enums/Enums"
 import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum"
 import { Type } from "class-transformer"
-import { Column, ChildEntity, ManyToOne, OneToOne, JoinColumn } from "typeorm"
+import { Column, ChildEntity, ManyToOne, OneToOne, JoinColumn, AfterLoad } from "typeorm"
 import { Hero } from "./Hero"
 import { Homebrew } from "./Homebrew"
 import { Image } from "./Image"
@@ -45,7 +45,7 @@ export class SkillCard extends Homebrew {
     
     @Type(() => Hero)
     @ManyToOne(type => Hero, hero => hero.skillCards, { nullable: true })
-    hero: Hero
+    hero: Hero | undefined
 
     public isValid(): boolean {
         if (!this.name || !this.effect || this.name.length == 0 || this.effect.length == 0 

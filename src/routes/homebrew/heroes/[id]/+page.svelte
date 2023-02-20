@@ -42,8 +42,8 @@
 
     const updateScales = () => {
         sheetScale =  window.innerWidth < 300 ? 0.35 : window.innerWidth < 350 ? 0.4 : window.innerWidth < 375 ? 0.45 : window.innerWidth < 550 ? 0.5 : window.innerWidth < 800 ? 0.75 : 1.0;
-        skillCardScale = window.innerWidth < 550 ? 0.3 : window.innerWidth < 800 ? 0.5 : 0.75;
-        initiativeCardScale = window.innerWidth < 550 ? 0.4 : window.innerWidth < 800 ? 0.6 : 0.8;
+        skillCardScale = window.innerWidth < 350 ? 0.3 : window.innerWidth < 500 ? 0.4 : window.innerWidth < 800 ? 0.6 : 0.75;
+        initiativeCardScale = window.innerWidth < 350 ? 0.4 : window.innerWidth < 550 ? 0.6 : window.innerWidth < 800 ? 0.6 : 0.8;
     }
 
     const handleDownload = async () => {

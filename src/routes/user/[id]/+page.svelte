@@ -12,7 +12,6 @@
     export let data: PageData;
 
     const userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
-    const favorites = userModel?.getFavoriteHeroes();
 </script>
 
 <style>
@@ -56,8 +55,10 @@
 {:else}
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
+    {#if userModel && userModel.userName}
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">{userModel.userName}</li>
+    {/if}
 </ol>
 
 <div class="user-page grow max-w-7xl m-auto relative">
@@ -74,7 +75,14 @@
     </PageButtonContainer>
     {/if}
     {#if !userModel?.userName && data.session?.user.id == $page.params.id}
-        <p class="p-8">Please create your user profile by clicking the Edit button below.</p>
+    <div>
+        <header class="comic-header">
+            <h1>Your Profile</h1>
+        </header>
+        <div class="comic-body">
+            <p>Please edit your profile before you begin brewing!</p>
+        </div>
+    </div>
     {:else if !userModel?.userName}
         <p>This user hasn't completed their user profile, or this user does not exist.</p>
     {:else if userModel}

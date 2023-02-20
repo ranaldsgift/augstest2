@@ -208,28 +208,6 @@ input:not(:focus, :hover) {
     margin-left: 30px;
     display: flex;
 }
-.speech-bubble {
-    position: relative;
-    background: rgba(var(--color-warning-300));
-    padding: 1rem;
-    border-radius: 0.75rem;
-    box-shadow: -1px 1px 2px 0 black;
-}
-.speech-bubble *:not(.unstyled) {
-    color: rgba(var(--color-surface-900));
-}
-.speech-bubble::after {
-    content: "";
-    position: absolute;
-    bottom: -20px;
-    left: 165px;
-    border-width: 20px 20px 0 0;
-    border-style: solid;
-    border-color: rgba(var(--color-warning-300)) transparent;
-    display: block;
-    width: 0;
-    box-shadow: -3px 0px 0px -1px black;
-}
 .toast {
     border-radius: 5px;
     border: 2px solid black;

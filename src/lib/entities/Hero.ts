@@ -1,6 +1,6 @@
 import { AugsLicensesEnum } from "$lib/enums/Enums"
 import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum"
-import { Transform, Type } from "class-transformer"
+import { Type } from "class-transformer"
 import { Column, ChildEntity, OneToOne, JoinColumn, OneToMany } from "typeorm"
 import { HeroAbility } from "./HeroAbility"
 import { HeroActionDice } from "./HeroActionDice"
@@ -10,7 +10,6 @@ import { Image } from "./Image"
 import { SkillCard } from "./SkillCard"
 import { Token } from "./Token"
 import { User } from "./User"
-import { UserHomebrewFavorite } from "./UserHomebrewFavorite"
 
 @ChildEntity()
 export class Hero extends Homebrew {

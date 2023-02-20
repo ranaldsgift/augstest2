@@ -9,6 +9,7 @@
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import TextEditor from "./TextEditor.svelte";
     import ImageEditor from "./ImageEditor.svelte";
+    import TextViewer from "./TextViewer.svelte";
     
     export let scale: number = 0.7;
     export let theme: ThemeTemplatesEnum | null = null;
@@ -262,7 +263,7 @@
             display: inherit;
         }
         .halftone-container.top {
-            --bgSize: 1rem;
+            --bgSize: calc(1rem * var(--scale));
             --bgPosition: calc(var(--bgSize) / 2);
             --stops: rgb(var(--dotsColor)) 10%, rgb(var(--dotsColor) / 0.15) 60%;
             --bg: radial-gradient(circle at center, rgb(var(--dotsColor)) 20%, rgb(var(--dotsColor) / 0.4) var(--dotRadius, 105%));
@@ -581,7 +582,7 @@
         <TextEditor bind:text={skillCard.effect} placeholder="Skill Effect" template={template.ability}></TextEditor>
     </PositionedContainer>
     <PositionedContainer template={template.characterNameContainer}>
-        <TextEditor text={heroName} placeholder="Character Name" template={template.characterName} classList="read-only"></TextEditor>
+        <TextViewer text={heroName && heroName.length > 0 ? heroName : 'Character Name'} template={template.characterName}></TextViewer>
     </PositionedContainer>
 </div>
 {/if}

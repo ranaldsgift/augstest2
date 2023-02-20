@@ -395,8 +395,8 @@
                     style:background-color={hero.actionDice.backgroundColor}
                     style:background-repeat="none"
                     style:background-size="contain"
-                    style:border="2px solid {hero.actionDice.iconColor}"
-                    style:border-radius="5px"
+                    style:border="calc(2px * var(--scale)) solid {hero.actionDice.iconColor}"
+                    style:border-radius="calc(5px * var(--scale))"
                     on:click|preventDefault={() => { handleActionDiceEdit(index) }}
                 >
                     <ActionDiceIcon theme={hero.theme ?? ThemeTemplatesEnum.TMNT} icon={DiceIconsEnum[action_die]} bind:color={hero.actionDice.iconColor}></ActionDiceIcon>

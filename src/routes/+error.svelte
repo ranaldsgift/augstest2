@@ -5,9 +5,9 @@
   
 <svelte:head><title>For Pete's Sake! - augs.tools</title></svelte:head>
 
-<div class="!pt-5">
+<div class="h-full w-full grid">
     <PigeonPeteSays>
-        <h2 class="!text-warning-800 text-2xl">For Pete's Sake!</h2>
+        <h2 class="!text-warning-700-200-token text-2xl">For Pete's Sake!</h2>
         <p>{$page.status} - {$page.error?.message}</p>
     </PigeonPeteSays>
 </div>

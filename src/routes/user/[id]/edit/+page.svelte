@@ -16,8 +16,13 @@
             body: FormHelper.serializeFormData(userModel)
         });
 
+        const data = await response.json();
+
         if (response.ok) {
             ToastHelper.create('Saved!');
+        }
+        else {
+            ToastHelper.create(data.error.message, 'error', 5000);
         }
     }
 </script>

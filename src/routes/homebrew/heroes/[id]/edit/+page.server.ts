@@ -26,6 +26,10 @@ export const load: PageServerLoad = async ({ locals, params }) => {
         console.log(err);
         throw error(500, "Internal Server Error");
     }
+
+    if (!hero) {
+        throw error(404, 'Hero not found');
+    }
     
     return {
         heroModel: DataHelper.serialize(hero)

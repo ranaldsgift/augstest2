@@ -26,7 +26,9 @@
 			skillCards = skillCards.filter(sc => sc.id !== skillCard.id);
 			event.currentTarget.classList.remove('active');
 		} else {
-			skillCards.push(plainToInstance(SkillCard, skillCard));
+			let instance = plainToInstance(SkillCard, skillCard);
+			instance.hero = undefined;
+			skillCards.push(instance);
 			event.currentTarget.classList.add('active');
 		}
 	}

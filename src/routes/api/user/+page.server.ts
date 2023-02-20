@@ -5,6 +5,7 @@ import { FormHelper } from "$lib/helpers/FormHelper";
 import { User } from "$lib/entities/User";
 import { UserHomebrewFavorite } from "$lib/entities/UserHomebrewFavorite";
 import { DataHelper } from "$lib/helpers/DataHelper";
+import type { QueryFailedError } from "typeorm";
 
 export const actions: Actions = {
     login: async ({ request, url, locals }) => {
@@ -65,8 +66,8 @@ export const actions: Actions = {
             await user.save({ data: { session: locals.session } });
         }
         catch (err) {
-            console.error(err);
-            throw error(500, "Internal Server Error");
+            let qfe = err as QueryFailedError;
+            throw error(500, qfe.driverError.severity + ' - ' + qfe.driverError.detail);
         }
 
         return { id: user?.id };
