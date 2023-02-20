@@ -23,7 +23,7 @@
 </script>
 
 {#if userModel && userModel.id == data.session?.user.id}
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb"><a href="/user/{userModel.id}">{userModel.userName ?? 'Profile'}</a></li>

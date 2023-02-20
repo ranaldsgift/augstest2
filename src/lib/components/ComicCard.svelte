@@ -26,13 +26,10 @@
     }
 
     .comic-card .card-header {
-        border: 3px solid black;
-        transform: skew(-15deg);
-        padding-left: 20px;
+        border-color: black;
         padding-top: 10px;
         letter-spacing: 0.15rem;
         position: relative;
-        left: -10px;
         top: -3px;
     }
 
@@ -65,7 +62,7 @@
         background-position: bottom;
         opacity: 0.25;
     }
-    .card-footer p, .card-header h3 {
+    .card-footer p {
         transform: skew(15deg);
     }
 </style>
@@ -75,8 +72,8 @@
     <div class="comic-background"></div>
     {/if}
     {#if title.length > 0}
-    <header class="card-header bg-tertiary-600 text-black mr-4 sm:!w-auto" style:width="calc(100% - 10px)">
-        <h3 class="font-bold text-2xl pb-2">{title}</h3>
+    <header class="card-header bg-tertiary-600 border-b-[3px] text-center sm:text-left sm:border-[3px] sm:skew-x-[-15deg] text-black mr-4 sm:!w-auto w-full sm:left-[-10px] sm:pl-[20px]">
+        <h3 class="font-bold text-2xl pb-2 sm:skew-x-[15deg]">{title}</h3>
     </header>
     {/if}
     {#if icon.length > 0}

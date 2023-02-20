@@ -1,6 +1,6 @@
 import { Hero } from '$lib/entities/Hero';
 import { DataHelper } from '$lib/helpers/DataHelper';
-import type { RequestHandler } from './$types';
+import type { RequestHandler } from "@sveltejs/kit";
 import { error } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async (event) => {

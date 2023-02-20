@@ -54,7 +54,7 @@
 {#if !userModel}
 <p>The user does not exist. Either they never existed, or they existed at some point and then ceased to exist.</p>
 {:else}
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">{userModel.userName}</li>

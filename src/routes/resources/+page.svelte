@@ -1,4 +1,7 @@
-<script>
+<script lang="ts">
+    import type { PageData } from './$types';
+
+    export let data: PageData;
     const pdfs = Object.keys(import.meta.glob("/static/assets/*.pdf"));
     const btasPdfs = pdfs.filter(pdf => pdf.toLocaleLowerCase().includes("btas"));
     const tmntPdfs = pdfs.filter(pdf => pdf.toLocaleLowerCase().includes("tmnt"));
@@ -6,7 +9,7 @@
 
 <svelte:head><title>Resources - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">Resources</li>

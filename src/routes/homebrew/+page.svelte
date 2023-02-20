@@ -3,6 +3,9 @@
     import { EnumHelper } from '$lib/helpers/EnumHelper';
     import { HomebrewCategoriesEnum } from '$lib/enums/Enums';
     import { StringHelper } from '$lib/helpers/StringHelper';
+    import type { PageData } from './$types';
+
+    export let data: PageData;
 
     let navItems: {name: string, url: string }[] = [];
 
@@ -18,7 +21,7 @@
 
 <svelte:head><title>Browse Homebrews - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">Homebrew</li>

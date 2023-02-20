@@ -4,10 +4,13 @@
     import { localStorageStore } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+    import type { PageData } from './$types';
+
+    export let data: PageData;
 
     const homepageItems = [
         {
-            "title": "Homebrews",
+            "title": "Browse",
             "icon": "material-symbols:web",
             "url": "/homebrew",
             "description": "Browse the largest collection of AUGS homebrews.",
@@ -17,14 +20,14 @@
             "title": "Create",
             "icon": "mdi:create",
             "url": "/create",
-            "description": "Create your own AUGS content with this tool. Start homebrewing right now!",
+            "description": "Create your own AUGS content with this tool.",
             "shadowColor": "#00bfffd9"
         },
         {
             "title": "AUGS Assistant",
             "icon": "material-symbols:play-circle",
             "url": "/assistant",
-            "description": "Run your solo and cooperative games. Play with the AUGS Event Deck!",
+            "description": "Manage your games and try the AUGS Event Deck!",
             "shadowColor": "#9acd32d9"
         },
         {
@@ -79,9 +82,10 @@
 
 <svelte:head><title>Home - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb">Home</li>
 </ol>
+
 <div>
 {#if visible}
     <aside class="alert max-w-5xl m-auto mb-6 border-warning-500 border-2 bg-warning-200" transition:fade|local={{ duration: 200 }}>
@@ -95,7 +99,7 @@
     </aside>
 {/if}
 
-<div class="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-5 max-w-5xl m-auto px-8">
+<div class="grid grid-cols-2 justify-center gap-5 max-w-5xl m-auto px-8">
     {#each homepageItems as homepageItem}
         <a class="grid unstyled max-w-[420px] grow" href="{homepageItem.url}" target="{homepageItem.linkTarget}" rel="noreferrer">
             <ComicCard title={homepageItem.title} icon={homepageItem.icon} description={homepageItem.description} shadowColor={homepageItem.shadowColor}></ComicCard>

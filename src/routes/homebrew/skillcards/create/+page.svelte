@@ -10,7 +10,7 @@
 
 <svelte:head><title>Create Your Skill Card - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 <li class="crumb"><a href="/">Home</a></li>
 <li class="crumb-separator" aria-hidden>&rsaquo;</li>
 <li class="crumb"><a href="/create">Create</a></li>

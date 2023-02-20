@@ -21,7 +21,7 @@ body {
 #page-content>div {
     padding: 0 0.5rem;
 }
-#page-content ol.breadcrumb-nonresponsive {
+#page-content>ol {
     padding: 0.5rem 2rem;
     margin-bottom: 1rem;
     background: rgba(var(--color-secondary-800));
@@ -29,22 +29,22 @@ body {
     font-family: system-ui;
     z-index: 5;
 }
-@media (min-width: 500px) {    
-#page-content ol.breadcrumb-nonresponsive {
+@media (min-width: 750px) {    
+#page-content>ol {
     margin-bottom: 2rem;
 }
 #page-content>div {
     padding: 0 2rem;
 }
 }
-#page-content ol.breadcrumb-nonresponsive a {
+#page-content>ol a {
     color: rgba(var(--color-secondary-400));
     text-decoration: none;
 }
-#page-content ol.breadcrumb-nonresponsive a:hover {
+#page-content>ol a:hover {
     color: rgba(var(--color-surface-100));
 }
-#page-content>*:not(nav) {
+#page-content>*:not(ol) {
     margin: 0 auto;
 }
 

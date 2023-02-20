@@ -11,7 +11,7 @@
         right: 0px;
         z-index: 29;
     }
-    @media (min-width: 500px) {
+    @media (min-width: 750px) {
         .page-button-container {  
             position: fixed;
             top: 90px;

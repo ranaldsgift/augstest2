@@ -1,5 +1,7 @@
 <script lang="ts">
-    import ComicButton from "$lib/components/ComicButton.svelte";
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	const contributorsList: { name: string, userId?: string }[] = [
 		{
@@ -60,7 +62,7 @@
 
 <svelte:head><title>About - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">About</li>

@@ -1,13 +1,6 @@
 <script lang="ts">
-    import { DiceIconsEnum } from '$lib/enums/Enums';
-    import { createDataTableStore, dataTableHandler, tableInteraction, Avatar, Paginator } from '@skeletonlabs/skeleton';
-    import { DateHelper } from '$lib/helpers/DateHelper';
     import ComicButton from '$lib/components/ComicButton.svelte';
     import type { PageData } from './$types';
-    import type { Hero } from '$lib/entities/Hero';
-    import { ThemeTemplatesEnum } from '$lib/interfaces/templates/ThemeTemplatesEnum';
-    import ActionDiceIcon from '$lib/components/ActionDiceIcon.svelte';
-    import { DataHelper } from '$lib/helpers/DataHelper';
     import HeroTable from '$lib/components/HeroTable.svelte';
     import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
 
@@ -16,7 +9,7 @@
 
 <svelte:head><title>Browse Heroes - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb"><a href="/homebrew">Homebrew</a></li>

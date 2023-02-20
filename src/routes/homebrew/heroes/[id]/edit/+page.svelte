@@ -4,7 +4,6 @@
     import type { PageData } from './$types';
     import { Hero } from '$lib/entities/Hero';
     import { DataHelper } from '$lib/helpers/DataHelper';
-    import { onMount } from 'svelte';
 
     export let data: PageData;
     
@@ -18,7 +17,7 @@
     {#if !hero}
         <p>There is no data available for this Homebrew.</p>
     {:else}
-    <ol class="breadcrumb-nonresponsive">
+    <ol class={data.breadcrumbClass}>
         <li class="crumb"><a href="/">Home</a></li>
         <li class="crumb-separator" aria-hidden>&rsaquo;</li>
         <li class="crumb"><a href="/homebrew">Homebrew</a></li>

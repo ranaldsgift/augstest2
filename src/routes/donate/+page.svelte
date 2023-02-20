@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
     import { goto } from "$app/navigation";
     import ComicButton from "$lib/components/ComicButton.svelte";
     import PageButtonContainer from "$lib/components/PageButtonContainer.svelte";
+    import type { PageData } from './$types';
 
+    export let data: PageData;
 </script>
 
 <style>
@@ -21,7 +23,7 @@
 
 <svelte:head><title>Donate - augs.tools</title></svelte:head>
 
-<ol class="breadcrumb-nonresponsive">
+<ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">Donate</li>
