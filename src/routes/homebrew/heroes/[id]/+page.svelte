@@ -181,7 +181,6 @@
                 {/if}
             </div>
     </div>
-    <a href="/homebrew/heroes/537">test</a>
     {#if hero.description}
     <div class="flex gap-5 pb-5 justify-center">   
         <div class="comic-label max-w-7xl">

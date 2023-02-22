@@ -53,7 +53,6 @@
                         if (browser) {
                             document.removeEventListener('wheel', handleScaleImage);
                         }
-                        close(); 
                     }
                 },
                 classes: `hide-close-button `,
