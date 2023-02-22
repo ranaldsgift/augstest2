@@ -10,7 +10,12 @@ const config = {
 	  }),
 
 	kit: {
-		adapter: adapter({ runtime: 'edge' })
+		adapter: adapter({ runtime: 'edge' }),		
+        vite: {
+            define: {
+                global: {}
+            }
+        }
 	}
 };
 
