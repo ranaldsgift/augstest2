@@ -13,62 +13,62 @@ export const GET: RequestHandler = async (event) => {
           xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
         >
         <url>
-        <loc>https://augstools.vercel.app/</loc>
+        <loc>https://augstools.com/</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>1.00</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/donate</loc>
+        <loc>https://augstools.com/donate</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/homebrew</loc>
+        <loc>https://augstools.com/homebrew</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/create</loc>
+        <loc>https://augstools.com/create</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/assistant</loc>
+        <loc>https://augstools.com/assistant</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/resources</loc>
+        <loc>https://augstools.com/resources</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/about</loc>
+        <loc>https://augstools.com/about</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/homebrew/heroes</loc>
+        <loc>https://augstools.com/homebrew/heroes</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.64</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/homebrew/skillcards</loc>
+        <loc>https://augstools.com/homebrew/skillcards</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.64</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/homebrew/heroes/create</loc>
+        <loc>https://augstools.com/homebrew/heroes/create</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.64</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/homebrew/skillcards/create</loc>
+        <loc>https://augstools.com/homebrew/skillcards/create</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.64</priority>
     </url>
     <url>
-        <loc>https://augstools.vercel.app/privacy</loc>
+        <loc>https://augstools.com/privacy</loc>
         <lastmod>2023-02-19T19:45:13+00:00</lastmod>
         <priority>0.64</priority>
     </url>
