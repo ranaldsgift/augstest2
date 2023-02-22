@@ -7,7 +7,7 @@
     
     export let data: PageData;
     
-    const skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.json);
+    $: skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.json);
 </script>
 
 <svelte:head><title>{skillCard ? `Edit ${skillCard.name}` : `For Pete's Sake!`} - augs.tools</title></svelte:head>

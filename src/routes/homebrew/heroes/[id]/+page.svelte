@@ -27,7 +27,7 @@
     export let data: PageData;
     export let heroPage: HTMLElement;
 
-    const hero = DataHelper.deserialize<Hero>(Hero, data.heroModel);
+    $: hero = DataHelper.deserialize<Hero>(Hero, data.heroModel);
     let authUser = data.authUser ? DataHelper.deserialize<User>(User, data.authUser) : null;
 
     let heroSheet: HTMLElement;
@@ -181,6 +181,7 @@
                 {/if}
             </div>
     </div>
+    <a href="/homebrew/heroes/537">test</a>
     {#if hero.description}
     <div class="flex gap-5 pb-5 justify-center">   
         <div class="comic-label max-w-7xl">

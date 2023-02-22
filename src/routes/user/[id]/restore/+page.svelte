@@ -7,7 +7,7 @@
     
     export let data: PageData;
 
-    const user = DataHelper.deserialize<User>(User, data.json);
+    $: user = DataHelper.deserialize<User>(User, data.json);
 </script>
 
 <svelte:head><title>Restore Homebrews - augs.tools</title></svelte:head>

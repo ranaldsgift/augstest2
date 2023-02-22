@@ -30,7 +30,7 @@
 
     afterNavigate((nav) => {
         const page = document.getElementById('page');
-        if (page && nav.type === 'link') {
+        if (page && nav.type === 'link' && nav.from?.url.pathname !== nav.to?.url.pathname) {
             page.scrollTop = 0;
         }
     });

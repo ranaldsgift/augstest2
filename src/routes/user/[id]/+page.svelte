@@ -11,23 +11,18 @@
 
     export let data: PageData;
 
-    const userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
+    $: userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
+    $: userId = userModel?.id;
 </script>
 
 <style>
     .user-badge-container {
-        position: absolute;
-        top: 6px;
-        right: 85px;
-        padding: 5px 40px 15px 8px;
+        padding: 5px;
         background: rgba(var(--color-primary-100));
         box-shadow: 0px 0px 3px -1px black;
-        border-radius: 10px 10px 0px 0px;
+        border-radius: 20px 20px 0px 0px;
     }
-    .avatar-badge-container {
-        margin-bottom: -80px;
-    }
-    @media (max-width: 500px) {
+    @media (max-width: 639px) {
         .user-badge-container {
             position: relative;
             top: 0px;
@@ -35,6 +30,7 @@
             padding: 5px;
             background: rgba(var(--color-primary-100));
             box-shadow: 0px 0px 3px -1px black;
+            order: 1;
         }
         .avatar-badge-container {
             margin-top: 1rem;
@@ -43,6 +39,7 @@
             justify-content: center;
             justify-items: center;
             gap: 1rem;
+            order: 0;
         }
     }
     .user-page {
@@ -53,6 +50,7 @@
 
 <svelte:head><title>{userModel?.userName ?? 'User Page'} - augs.tools</title></svelte:head>
 
+{#key userModel?.id}
 {#if !userModel}
 <p>The user does not exist. Either they never existed, or they existed at some point and then ceased to exist.</p>
 {:else}
@@ -92,10 +90,8 @@
     {:else if !userModel?.userName}
         <p>This user hasn't completed their user profile, or this user does not exist.</p>
     {:else if userModel}
-    {#if userModel.avatar}
-    <div class="avatar-badge-container sm:mr-14 relative flex sm:justify-end">
-        <Avatar class="z-10" src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-black border-4"></Avatar>
-        <div class="user-badge-container shadow-2xl flex gap-1 z-0 relative sm:absolute">
+    <div class="avatar-badge-container relative flex sm:justify-end items-end">
+        <div class="user-badge-container shadow-2xl flex gap-1 z-0 relative {userModel.avatar ? 'sm:!pr-[35px]' : 'sm:mr-[50px]'}">
             {#each userModel.getBadges() as badge}
                 <span class="badge bg-primary-900 text-primary-100 flex gap-1">
                     <iconify-icon icon={badge.icon}></iconify-icon>
@@ -103,8 +99,10 @@
                 </span>
             {/each}
         </div>
+        {#if userModel.avatar}
+        <Avatar class="z-10 sm:mb-[-60px] sm:ml-[-30px] sm:mr-[50px]" src={userModel.avatar} shadow="shadow-md" width="w-32" border="border-primary-900 border-4"></Avatar>
+        {/if}
     </div>
-    {/if}
     <div class="comic-form grid gap-10">
         <div class="grid relative">
             <header>
@@ -131,15 +129,13 @@
             </div>
         </div>
         {#if data.session?.user.id === userModel.id && userModel.homebrewFavorites && userModel.homebrewFavorites.length > 0}
-            <hr class="divider">
-            <HeroTable title="Favorite Heroes" userFavorites={userModel.id} hideOnEmpty={true}></HeroTable>
+        <hr class="divider">
+        <HeroTable title="Favorite Heroes" userFavorites={userModel.id} hideOnEmpty={true}></HeroTable>
         {/if}
-
-        {#if userModel.heroes && userModel.heroes.length > 0}
-            <hr class="divider">
-            <HeroTable title="{data.session?.user.id == $page.params.id ? 'My Heroes' : `${userModel.userName}'s Heroes` }" userId={userModel.id}></HeroTable>
-        {/if}
+        <hr class="divider">
+        <HeroTable title="{data.session?.user.id == userId ? 'My Heroes' : `${userModel.userName}'s Heroes` }" userId={userModel.id}></HeroTable>
     </div>
     {/if}
 </div>
 {/if}
+{/key}

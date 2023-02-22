@@ -1,4 +1,3 @@
-import { Hero } from '$lib/entities/Hero';
 import { User } from '$lib/entities/User';
 import { DataHelper } from '$lib/helpers/DataHelper';
 import { error } from '@sveltejs/kit';
@@ -14,7 +13,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
     try {
         user = await User.findOne({
-            relations: { homebrewFavorites: { homebrew: true }, heroes: true },
+            relations: { homebrewFavorites: { homebrew: true } },
             where: {id: params.id } 
         });
     }

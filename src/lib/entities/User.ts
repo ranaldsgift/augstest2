@@ -27,6 +27,9 @@ export class User extends TimestampedEntity {
     @Column("varchar", { nullable: true })
     public boardgamegeek: string
 
+    @Column("boolean", { default: false })
+    public isSupporter: boolean
+
     @Type(() => UserHomebrewFavorite)
     @OneToMany(() => UserHomebrewFavorite, (save) => save.user)
     public homebrewFavorites: UserHomebrewFavorite[]
@@ -34,10 +37,6 @@ export class User extends TimestampedEntity {
     @Type(() => Homebrew)
     @OneToMany(() => Homebrew, (homebrew) => homebrew.user)
     public homebrews: Homebrew[]
-
-    @Type(() => Hero)
-    @OneToMany(() => Hero, (hero) => hero.user)
-    public heroes: Hero[]
 
     getFavorites(): Homebrew[] {
         return this.homebrewFavorites.map((favorite) => favorite.homebrew)
@@ -65,6 +64,10 @@ export class User extends TimestampedEntity {
             case "Member":
                 badges.push({ icon: "mdi:user", text: "Member" });
                 break;
+        }
+
+        if (this.isSupporter) {
+            badges.push({ icon: "mdi:donate", text: "Supporter" });
         }
 
         return badges;

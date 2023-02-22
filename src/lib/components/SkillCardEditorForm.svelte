@@ -45,9 +45,6 @@
     }
 
     async function saveSkillCard() {
-        console.log('saving skill card');
-        console.log(skillCard);
-
         const response = await fetch('/api/skillcard?/save', {
             method: 'POST',
             body: FormHelper.serializeFormData(skillCard)

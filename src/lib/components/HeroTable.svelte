@@ -6,15 +6,14 @@
     import { Heroes } from "$lib/stores/DataStores";
     import { createDataTableStore, dataTableHandler, Paginator, ProgressRadial, tableInteraction } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
-    import { fade } from "svelte/transition";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
     
-    export let title: string = 'Heroes';        
-    export let heroes: Hero[] = [];
+    export let title: string = 'Heroes';
     export let userId: string | null = null;
     export let userFavorites: string | null = null;
     export let isDeleted: boolean | null = null;
     export let hideOnEmpty: boolean | null = false;
+    let heroes: Hero[] = [];
 
     const loadData = async () => {
         let promise = Heroes.loadData(getApiQuery());

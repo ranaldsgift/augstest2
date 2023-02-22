@@ -9,7 +9,7 @@
 
     export let data: PageData;
 
-    const userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
+    $: userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
 
     async function handleSave() {
         const response = await fetch('/api/user?/save', {

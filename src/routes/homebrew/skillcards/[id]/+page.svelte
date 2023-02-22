@@ -13,7 +13,7 @@
 
     export let data: PageData;
 
-    const skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.skillCardJSON);
+    $: skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.skillCardJSON);
 
     let skillCardScale = 1;
     let skillCardPage: HTMLElement;

@@ -6,7 +6,7 @@
     import type { PageData } from './$types';
     
     export let data: PageData;
-    const skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.skillCard);
+    $: skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.skillCard);
 </script>
 
 <svelte:head><title>Create Your Skill Card - augs.tools</title></svelte:head>

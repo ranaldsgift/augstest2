@@ -6,7 +6,7 @@
 
     export let data : PageData;
 
-    const hero = DataHelper.deserialize<Hero>(Hero, data.hero);
+    $: hero = DataHelper.deserialize<Hero>(Hero, data.hero);
 </script>
 
 <svelte:head><title>Create Your Hero - augs.tools</title></svelte:head>
