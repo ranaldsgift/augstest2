@@ -28,6 +28,15 @@ export const load: PageServerLoad = async ({ locals, params }) => {
             console.log(err);
             throw error(500, "Internal Server Error");
         }
+
+        if (!skillCard || (skillCard.isDeleted && skillCard.user.id !== locals.session?.user.id)) {
+            throw error(404, 'Skill Card not found');
+        }
+
+        if (skillCard.isDeleted && locals.session && skillCard.user.id !== locals.session.user.id) {
+            throw error(404, 'Skill Card not found');                
+        }
+        
         return Promise.resolve(DataHelper.serialize(skillCard));
     }
   

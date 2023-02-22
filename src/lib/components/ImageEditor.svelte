@@ -115,8 +115,8 @@ on:keyup={(e) => {
                 disabled: !scaleAndDrag,
                 position: { x: image.positionLeft * scale, y: image.positionTop * scale },
                 onDrag: ({ offsetX, offsetY }) => {
-                    image.positionLeft = offsetX * (1 / scale);
-                    image.positionTop = offsetY * (1 / scale);
+                    image.positionLeft = Math.round(offsetX * (1 / scale));
+                    image.positionTop = Math.round(offsetY * (1 / scale));
                 },
             }}
         >

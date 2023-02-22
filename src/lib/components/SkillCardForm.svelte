@@ -77,5 +77,4 @@
 		</footer>
 		{/await}
 	</form>
-	<slot/>
 </div>

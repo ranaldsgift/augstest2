@@ -6,7 +6,7 @@ import { error } from "@sveltejs/kit";
 export const GET: RequestHandler = async () => {
     let data = null;
     try {
-        data = await Hero.createQueryBuilder('hero').select("distinct on (unnest(hero.keywords)) unnest(hero.keywords) as keyword").getRawMany();
+        data = await Hero.createQueryBuilder('hero').select("distinct on (upper(unnest(hero.keywords))) unnest(hero.keywords) as keyword").getRawMany();
     }
     catch (err) {
         console.error(err);

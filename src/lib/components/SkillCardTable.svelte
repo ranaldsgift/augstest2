@@ -12,6 +12,8 @@
     export let data: SkillCard[] = [];
     export let userId: string | null = null;
     export let heroId: string | null = null;
+    export let isDeleted: boolean | null = null;
+    export let hideOnEmpty: boolean | null = false;
 
     const loadData = async () => {
         let data = SkillCards.loadData(getApiQuery());
@@ -40,6 +42,9 @@
         }
         if (userId) {
             apiQuery += `&userId=${userId}`;
+        }
+        if (isDeleted) {
+            apiQuery += `&isDeleted=${isDeleted}`;
         }
 
         return apiQuery;
@@ -107,6 +112,7 @@
 <style>
 </style>
 
+{#if $dataTableStore.source.length > 0 || !hideOnEmpty}
 <div class="table-container grid mb-2">
     <header class="comic-header">
         <h1>{title}</h1>
@@ -152,3 +158,4 @@
     </div>
 </div>
 {#if $dataTableStore.pagination}<Paginator on:amount={handleAmountChange} on:page={handlePageChange} bind:settings={$dataTableStore.pagination} />{/if}
+{/if}

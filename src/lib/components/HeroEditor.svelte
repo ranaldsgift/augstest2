@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { applyAction, deserialize } from "$app/forms";
+    import { applyAction, deserialize, enhance } from "$app/forms";
     import { modalStore, RadioGroup, RadioItem, tooltip, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
     import { writable, type Writable } from "svelte/store";
     import PigeonPeteSays from "./PigeonPeteSays.svelte";
     import HeroEditorSheet from "./HeroEditorSheet.svelte";
-    import { Hero } from "$lib/entities/Hero";
+    import type { Hero } from "$lib/entities/Hero";
     import { FormHelper } from "$lib/helpers/FormHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
@@ -23,6 +23,7 @@
     import { SkillCardTemplates } from "$lib/interfaces/templates/SkillCardTemplate";
     import PageButtonContainer from "./PageButtonContainer.svelte";
     import { onMount } from "svelte";
+    import { Heroes, SkillCards } from "$lib/stores/DataStores";
 
     const storeTab: Writable<"theme" | "details" | "more"> = writable("theme");
 
@@ -61,6 +62,12 @@
     }
 
     async function handleSave() {
+        if (await saveHero()) {
+            ToastHelper.create('Saved!');
+        }
+    }
+
+    async function saveHero() {
         const response = await fetch('/api/hero?/save', {
             method: 'POST',
             body: FormHelper.serializeFormData(hero)
@@ -70,20 +77,33 @@
 
         if (result.type === 'error' || result.type === 'redirect') {
             await applyAction(result);
-            return;
+            return false;
         }
 
-        ToastHelper.create('Saved!');
-
+        Heroes.invalidateAll();
+        SkillCards.invalidateAll();
         const savedHeroId = result.data?.id;
 
         if (!hero.id && savedHeroId) {
             goto(`/homebrew/heroes/${savedHeroId}`);
-            return;
+            return true;
         }
             
         hero = hero;
         savedHero = instanceToInstance(hero);
+        return true;
+    }
+
+    async function handleRestoreHero() {
+        hero.isDeleted = false;
+        await saveHero();
+        ToastHelper.create('Restored!');
+    }
+
+    async function handleDeleteHero() {
+        hero.isDeleted = true;
+        await saveHero();
+        ToastHelper.create('Deleted!');
     }
 
     function handleAddSkillCard() {
@@ -170,7 +190,14 @@
             <div class="disabled-button">
                 <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
             </div>
-        {/if}        
+        {/if}
+        {#if hero.id}
+            {#if hero.isDeleted}
+            <ComicButton icon="material-symbols:restore-from-trash" callback={handleRestoreHero}></ComicButton>
+            {:else}
+            <ComicButton icon="material-symbols:delete" callback={handleDeleteHero}></ComicButton>
+            {/if}
+        {/if}
     </PageButtonContainer>
     <div class="hero-editor m-auto flex gap-5 flex-wrap pl-5 pr-5 justify-center">
         <div class="grid gap-5 justify-items-center">
@@ -180,7 +207,6 @@
                     <p>You must be logged in to save a Hero!</p>
                 </PigeonPeteSays>
             {:else if !hero.user.userName || hero.user.userName.length === 0}
-            {hero.user.id}
                 <PigeonPeteSays>
                     <p>Please <a href={`/user/${hero.user.id}/edit`}>edit</a> your profile before creating a Hero!</p>
                 </PigeonPeteSays>
@@ -198,7 +224,7 @@
         </div>
         <div class="comic-form grid flex-1">
             <header>
-                <h1>Customize your Hero</h1>
+                <h1>Edit your Hero</h1>
             </header>
             <div class="comic-body grid gap-5 hero-form-container">
                 <div>

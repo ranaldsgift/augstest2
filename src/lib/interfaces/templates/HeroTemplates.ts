@@ -125,7 +125,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             classList: ' w-[120%] ml-[-10%] transform !scale-x-[80%] tracking-[calc(3px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
         ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 19, fontColor: 'white',
-            classList: '!text-left !leading-[calc(calc(var(--fontSize)+4px)*var(--scale))]'
+            classList: '!text-left !leading-[calc(calc(var(--fontSize)+4px)*var(--scale))] !px-[1px]'
         },
         action_dice: [
             { size: { width: '50px', height: '50px' }, position: { left: '342px', top: '490px' } },

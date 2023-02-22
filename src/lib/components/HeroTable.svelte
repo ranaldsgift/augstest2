@@ -13,6 +13,8 @@
     export let heroes: Hero[] = [];
     export let userId: string | null = null;
     export let userFavorites: string | null = null;
+    export let isDeleted: boolean | null = null;
+    export let hideOnEmpty: boolean | null = false;
 
     const loadData = async () => {
         let promise = Heroes.loadData(getApiQuery());
@@ -36,6 +38,9 @@
         }
         if (userFavorites) {
             apiQuery += `&userFavorites=${userFavorites}`;
+        }
+        if (isDeleted) {
+            apiQuery += `&isDeleted=${isDeleted}`;
         }
 
         return apiQuery;
@@ -149,6 +154,7 @@
     }
 </style>
 
+{#if $dataTableStore.source.length > 0 || !hideOnEmpty}
 <div class="table-container grid">
     <header class="comic-header">
         <h1>{title}</h1>
@@ -188,7 +194,7 @@
                 {#each $dataTableStore.filtered as row, rowIndex}
                 {#key row.id}
                     <tr class="h-[50px] sm:h-[80px]"></tr>
-                    <tr in:fade class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
+                    <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
                         <td style:position="relative" class="w-[100px] sm:w-[180px]">
                             <div style:overflow="hidden" class="-mt-[32px] sm:-mt-[64px] h-[110px] sm:h-[135px]" style:min-width="100%">
                                 <img style:object-fit="cover" src={row.heroImage.url} alt="Hero" style:top="0px" class="w-full h-auto">    
@@ -217,3 +223,4 @@
     </div>
 </div>
 {#if $dataTableStore.pagination}<Paginator on:amount={handleAmountChange} on:page={handlePageChange} bind:settings={$dataTableStore.pagination} />{/if}
+{/if}

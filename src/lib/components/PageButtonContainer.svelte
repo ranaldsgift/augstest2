@@ -5,7 +5,8 @@
 <style>
     .page-button-container {    
         position: relative;
-        display: grid;
+        display: flex;
+        gap: 5px;
         justify-content: center;
         top: 0px;
         right: 0px;

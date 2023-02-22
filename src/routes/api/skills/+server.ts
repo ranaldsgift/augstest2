@@ -12,6 +12,7 @@ export const GET: RequestHandler = async ({ url }) => {
     let search = url.searchParams.get('search');
     let sort = url.searchParams.get('sort');
     let asc = url.searchParams.get('asc') === "true" ?? false;
+    let isDeleted = url.searchParams.get('isDeleted') === "true" ?? false;
 
     let data = null;
     let dataCount = null;
@@ -20,6 +21,7 @@ export const GET: RequestHandler = async ({ url }) => {
             .leftJoinAndSelect("skillCard.user", "user")
             .leftJoinAndSelect("skillCard.image", "image")
             .leftJoinAndSelect("skillCard.hero", "hero")
+            .andWhere(`skillCard.isDeleted = :isDeleted`, { isDeleted: isDeleted })
 
         if (userId) {
             query = query

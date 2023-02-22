@@ -2,10 +2,11 @@
     import SkillCardEditor from '$lib/components/SkillCardEditor.svelte';
     import SkillCardEditorForm from '$lib/components/SkillCardEditorForm.svelte';
     import { SkillCard } from '$lib/entities/SkillCard';
+    import { DataHelper } from '$lib/helpers/DataHelper';
     import type { PageData } from './$types';
     
     export let data: PageData;
-    const skillCard = new SkillCard(data.session?.user.id);
+    const skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.skillCard);
 </script>
 
 <svelte:head><title>Create Your Skill Card - augs.tools</title></svelte:head>

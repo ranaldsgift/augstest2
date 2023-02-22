@@ -139,7 +139,7 @@
         <div class="flex justify-center flex-wrap page-button-container gap-2">
             {#if $page.data.session?.user.id == hero.user.id}
             <a href={$page.url + "/edit"} class="unstyled">
-                <ComicButton icon="mdi:edit" text="Edit Your Hero"></ComicButton>
+                <ComicButton icon="mdi:edit" text="Edit"></ComicButton>
             </a>
             {:else if authUser}
             <form method="POST" action="/api/user?/favoriteHomebrew&id={hero.id}" use:enhance={() => {
@@ -152,16 +152,12 @@
                     updateUserData(result.data?.favorite);
                 };
             }}>
-            <div title={authUser.homebrewFavorites && authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? "Remove this Hero from your favorites" : "Favorite this Hero"}>
-                <ComicButton icon="material-symbols:favorite"
-                    background={authUser.homebrewFavorites && authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id) ? 'rgba(var(--color-tertiary-500)' : 'rgba(var(--color-surface-300)' }>
-                </ComicButton>
-            </div>
+            <ComicButton icon="material-symbols:favorite"
+                active={authUser.homebrewFavorites && authUser.homebrewFavorites.some(favorite => favorite.homebrewId === hero.id)}>
+            </ComicButton>
             </form>
             {/if}
-            <div title="Download ZIP">
-                <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
-            </div>
+            <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
         </div>
     </PageButtonContainer>
     <div class="flex gap-5 justify-center flex-wrap">

@@ -5,6 +5,7 @@
     import { FormHelper } from '$lib/helpers/FormHelper';
     import type { PageData } from './$types';
     import { DataHelper } from '$lib/helpers/DataHelper';
+    import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
 
     export let data: PageData;
 
@@ -35,42 +36,45 @@
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb">Edit</li>
 </ol>
-<form class="comic-form max-w-2xl m-auto grid gap-4" on:submit|preventDefault={handleSave}>
-    <div>
-        <header>
-            <h1>Edit your User Profile</h1>
-        </header>
-        <div class="px-8 py-4 grid gap-4">
-            <label class="comic-label">
-                <span>User Name</span>
-                <input type="text" name="userName" bind:value="{userModel.userName}" placeholder="Enter your user name">
-            </label>
-            <label class="comic-label">
-                <div class="flex gap-1">
-                    <iconify-icon icon="carbon:user-avatar-filled"></iconify-icon>
-                    Avatar Image URL
-                </div>
-                <input type="text" name="avatar" bind:value="{userModel.avatar}" placeholder="Enter an image URL for your avatar">
-                
-            </label>
-            <label class="comic-label">
-                <div class="flex gap-1">
-                    <iconify-icon icon="ic:baseline-discord"></iconify-icon>
-                    Discord
-                </div>
-                <input type="text" name="discord" bind:value="{userModel.discord}" placeholder="Enter your Discord user name">
-            </label>
-            <label class="comic-label">
-                <div class="flex gap-1">
-                    <iconify-icon icon="game-icons:meeple"></iconify-icon>
-                    BoardGameGeek
-                </div>
-                <input type="text" name="boardgamegeek" bind:value="{userModel.boardgamegeek}" placeholder="Enter your BGG user name">
-            </label>
+
+<div class="user-edit-page">
+    <form class="comic-form max-w-2xl m-auto grid gap-4" on:submit|preventDefault={handleSave}>
+        <PageButtonContainer>
+            <ComicButton text="Save Profile" icon="material-symbols:save"></ComicButton>
+        </PageButtonContainer>
+        <div>
+            <header>
+                <h1>Edit your User Profile</h1>
+            </header>
+            <div class="px-8 py-4 grid gap-4">
+                <label class="comic-label">
+                    <span>User Name</span>
+                    <input type="text" name="userName" bind:value="{userModel.userName}" placeholder="Enter your user name">
+                </label>
+                <label class="comic-label">
+                    <div class="flex gap-1 items-center">
+                        <iconify-icon icon="carbon:user-avatar-filled"></iconify-icon>
+                        Avatar Image URL
+                    </div>
+                    <input type="text" name="avatar" bind:value="{userModel.avatar}" placeholder="Enter an image URL for your avatar">
+                    
+                </label>
+                <label class="comic-label">
+                    <div class="flex gap-1 items-center">
+                        <iconify-icon icon="ic:baseline-discord"></iconify-icon>
+                        Discord
+                    </div>
+                    <input type="text" name="discord" bind:value="{userModel.discord}" placeholder="Enter your Discord user name">
+                </label>
+                <label class="comic-label">
+                    <div class="flex gap-1 items-center">
+                        <iconify-icon icon="game-icons:meeple"></iconify-icon>
+                        BoardGameGeek
+                    </div>
+                    <input type="text" name="boardgamegeek" bind:value="{userModel.boardgamegeek}" placeholder="Enter your BGG user name">
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="flex justify-center">
-        <ComicButton text="Save Profile" icon="material-symbols:save"></ComicButton>
-    </div>
-</form>
+    </form>
+</div>
 {/if}

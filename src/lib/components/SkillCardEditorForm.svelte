@@ -39,6 +39,15 @@
     }
 
     async function handleSave() {
+        if (await saveSkillCard()) {
+            ToastHelper.create('Saved!');
+        }
+    }
+
+    async function saveSkillCard() {
+        console.log('saving skill card');
+        console.log(skillCard);
+
         const response = await fetch('/api/skillcard?/save', {
             method: 'POST',
             body: FormHelper.serializeFormData(skillCard)
@@ -48,21 +57,33 @@
 
         if (result.type === 'error' || result.type === 'redirect') {
             await applyAction(result);
-            return;
+            return false;
         }
-
-        ToastHelper.create('Saved!');
-        SkillCards.invalidate(`userId=${skillCard.user.id}&heroId=null`);
+        
+        SkillCards.invalidateAll();
 
         const savedId = result.data?.id;
 
         if (!skillCard.id && savedId) {
             goto(`/homebrew/skillcards/${savedId}`);
-            return;
+            return true;
         }
             
         skillCard = skillCard;
         savedSkillCard = instanceToInstance(skillCard);
+        return true;
+    }
+
+    async function handleRestore() {
+        skillCard.isDeleted = false;
+        await saveSkillCard();
+        ToastHelper.create('Restored!');
+    }
+
+    async function handleDelete() {
+        skillCard.isDeleted = true;
+        await saveSkillCard();
+        ToastHelper.create('Deleted!');
     }
 </script>
 
@@ -93,22 +114,33 @@
     }
 </style>
 
-<div class="grid gap-5 hero-editor-container justify-center">
+<div class="grid gap-5 skill-card-editor-container justify-center">
     <PageButtonContainer>
-        {#if skillCard.isValid() && isDirty() && $page.data.session}
+        {#if skillCard.isValid() && isDirty() && $page.data.session && skillCard.user.userName.length > 0}
             <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
         {:else}
             <div class="disabled-button">
                 <ComicButton text="Save" icon="material-symbols:save"></ComicButton>
             </div>
-        {/if}        
+        {/if}
+        {#if skillCard.id}
+            {#if skillCard.isDeleted}
+            <ComicButton icon="material-symbols:restore-from-trash" callback={handleRestore}></ComicButton>
+            {:else}
+            <ComicButton icon="material-symbols:delete" callback={handleDelete}></ComicButton>
+            {/if}
+        {/if}
     </PageButtonContainer>
-    <div class="skill-card-editor m-auto flex gap-5 flex-wrap pl-5 pr-5 justify-center">
-        <div class="grid gap-5">
+    <div class="skill-card-editor m-auto grid gap-5 sm:grid-cols-2 pl-5 pr-5">
+        <div class="grid gap-5 justify-items-center">
             <SkillCardEditor bind:skillCard={skillCard} bind:template={template} bind:backgroundColor={skillCard.backgroundColor} bind:theme={skillCard.theme}></SkillCardEditor>
             {#if !$page.data.session}
                 <PigeonPeteSays>
                     <p>You must be logged in to save a Skill Card!</p>
+                </PigeonPeteSays>
+            {:else if !skillCard.user.userName || skillCard.user.userName.length === 0}
+                <PigeonPeteSays>
+                    <p>Please <a href={`/user/${skillCard.user.id}/edit`}>edit</a> your profile before creating a Skill Card!</p>
                 </PigeonPeteSays>
             {:else if !skillCard.isValid()}
                 <PigeonPeteSays>
@@ -124,7 +156,7 @@
         </div>
         <div class="comic-form flex flex-col flex-1">
             <header>
-                <h1>Customize your Skill Card</h1>
+                <h1>Edit your Skill Card</h1>
             </header>
             <div class="comic-body grid gap-5">
                 <div>

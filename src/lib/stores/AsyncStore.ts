@@ -45,7 +45,16 @@ export class AsyncStore<TModel> {
     invalidate(queryString: string) {
         this.cache.delete(queryString);
     }
-    invalidateAll() {
-        this.cache.clear();
+    invalidateAll(queryMatch?: string) {
+        if (queryMatch) {
+            for (const [key, value] of this.cache) {    
+                if (key.includes(queryMatch)) {
+                    this.cache.delete(key);
+                }
+            }
+        }
+        else {
+            this.cache.clear();
+        }
     }
 }

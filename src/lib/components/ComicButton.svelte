@@ -3,7 +3,7 @@
     export let icon = '';
     export let callback: any = null;
     export let disabled: boolean = false;
-    export let background: string = 'rgba(var(--color-tertiary-500))';
+    export let active: boolean = false;
 </script>
 
 <style>
@@ -12,16 +12,43 @@
         font-size: 1.5rem;
         padding: 0px;
         text-transform: uppercase;
-        color: black;
-        border: 3px solid black;
+        border: 3px solid rgba(var(--color-tertiary-600));
+        background: black;
+        color: rgba(var(--color-tertiary-600));
     }
     div.comic-icon {
         display: flex;
         padding: 10px;
         border-radius: 50px;
-        background: black;
         margin: -3px !important;
+        background: rgba(var(--color-tertiary-600));
+        color: black;
     }
+    button.active {
+        border: 3px solid rgba(var(--color-tertiary-50));
+        background: rgba(var(--color-tertiary-50));
+    }
+    button.active div.comic-icon {
+        background: rgba(var(--color-tertiary-50));
+    }
+
+    :global(.dark) button.comic {
+        border: 3px solid black;
+        background: rgba(var(--color-tertiary-600));
+        color: black;
+    }
+    :global(.dark) div.comic-icon {
+        background: black;
+        color: rgba(var(--color-tertiary-600));
+    }
+    :global(.dark) button.active {
+        border: 3px solid rgba(var(--color-tertiary-900));
+        background: rgba(var(--color-tertiary-900));
+    }
+    :global(.dark) button.active div.comic-icon {
+        background: rgba(var(--color-tertiary-900));
+    }
+
     span {
         padding: 2px 12px 0 10px;
     }
@@ -40,28 +67,19 @@
 </style>
 
 
-    {#if callback}
-    <button class="comic btn" aria-label={text.length > 0 ? text.split(' ')[0] : icon} {disabled} style:background={background} on:click|preventDefault={() => { callback() }}>
-        {#if text.length > 0}
-        <span>{text}</span>
-        {/if}
-        {#if icon.length > 0}
-        <div class="comic-icon" style:color={background}>
-        <iconify-icon {icon}></iconify-icon>
-        </div>
-        {/if}
-        <slot></slot>
-    </button>
-    {:else}
-    <button class="comic btn" aria-label={text.length > 0 ? text.split(' ')[0] : icon} style:background={background} {disabled}>
-        {#if text.length > 0}
-        <span>{text}</span>
-        {/if}
-        {#if icon.length > 0}
-        <div class="comic-icon" style:color={background}>
-        <iconify-icon {icon}></iconify-icon>
-        </div>
-        {/if}
-        <slot></slot>
-    </button>
+<button class="comic btn {active ? 'active' : ''}" aria-label={text.length > 0 ? text.split(' ')[0] : icon} {disabled} on:click={(e) => { 
+    if (callback) {
+        e.preventDefault();
+        callback();
+    }
+}}>
+    {#if text.length > 0}
+    <span>{text}</span>
     {/if}
+    {#if icon.length > 0}
+    <div class="comic-icon">
+    <iconify-icon {icon}></iconify-icon>
+    </div>
+    {/if}
+    <slot></slot>
+</button>

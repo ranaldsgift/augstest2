@@ -12,6 +12,7 @@ export const GET: RequestHandler = async (event) => {
     let search = event.url.searchParams.get('search');
     let sort = event.url.searchParams.get('sort');
     let asc = event.url.searchParams.get('asc') === "true" ?? false;
+    let isDeleted = event.url.searchParams.get('isDeleted') === "true" ?? false;
 
     let data = null;
     let dataCount = null;
@@ -24,6 +25,7 @@ export const GET: RequestHandler = async (event) => {
             .leftJoinAndSelect("hero.iconImage", "iconImage")
             .leftJoinAndSelect("hero.actionDice", "actionDice")
             .leftJoinAndSelect("hero.userFavorites", "userFavorites")
+            .andWhere(`hero.isDeleted = :isDeleted`, { isDeleted: isDeleted })
 
         if (userId) {
             query = query

@@ -88,7 +88,7 @@
 
 <div>
 {#if visible}
-    <aside class="alert max-w-5xl m-auto mb-6 border-warning-500 border-2 bg-warning-200" transition:fade|local={{ duration: 200 }}>
+    <aside class="alert max-w-5xl m-auto mb-6 border-warning-500 border-2 bg-warning-200-700-token" transition:fade|local={{ duration: 200 }}>
         <iconify-icon style:font-size="4rem" icon="material-symbols:warning-outline"></iconify-icon>
         <div class="alert-message">
             <p>This website is in BETA. It is currently undergoing major development. There is the risk of losing all your saved data at any time. Please be aware of this until we are ready for a full release!</p>

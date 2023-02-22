@@ -43,7 +43,7 @@
 			I don't want to charge anyone to use this website. I don't want to put any ads on here. The only ads you will ever see are the few curated ones listed below on this page. But the reality is that there <i>are</i> costs to building something like this. I do try to make it a point to ensure that I don't incur any significant recurring costs, because I'm just not in the position to do so, especially for a project that I'm building for free. For the most part, my only real expense is domain registration, and that isn't so expensive.
 		</p>
 		<p>
-			For now (and probably forever), the website will be using images hosted elsewhere on the web. You'll notice there are no file uploads for images, instead user's are prompted to provide a URL. This is done intentionally to reduce bandwidth, and in turn keep costs lower.
+			For now (and probably forever), the website will be using images hosted elsewhere on the web. You'll notice there are no file uploads for images, instead users are prompted to provide a URL. This is done intentionally to reduce bandwidth, and in turn keep costs lower.
 		</p>
 		<h1>Alright so you have no real expenses?</h1>
 		<hr>

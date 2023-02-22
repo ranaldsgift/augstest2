@@ -1,6 +1,6 @@
 import { Hero } from '$lib/entities/Hero';
 import { DataHelper } from '$lib/helpers/DataHelper';
-import { error, redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
@@ -27,6 +27,15 @@ export const load: PageServerLoad = async ({ locals, params }) => {
             console.log(err);
             throw error(500, "Internal Server Error");
         }
+
+        if (!hero || (hero.isDeleted && hero.user.id !== locals.session?.user.id)) {
+            throw error(404, 'Hero not found');
+        }
+
+        if (hero.isDeleted && locals.session && hero.user.id !== locals.session.user.id) {
+            throw error(404, 'Hero not found');                
+        }
+        
         return Promise.resolve(DataHelper.serialize(hero));
     }
   

@@ -582,7 +582,7 @@
         <TextEditor bind:text={skillCard.effect} placeholder="Skill Effect" template={template.ability}></TextEditor>
     </PositionedContainer>
     <PositionedContainer template={template.characterNameContainer}>
-        <TextViewer text={heroName && heroName.length > 0 ? heroName : 'Character Name'} template={template.characterName}></TextViewer>
+        <TextViewer text={heroName} template={template.characterName}></TextViewer>
     </PositionedContainer>
 </div>
 {/if}

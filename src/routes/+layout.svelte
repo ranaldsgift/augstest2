@@ -4,7 +4,7 @@
     import '../app.postcss';
     import "../app.css";
     import { onMount } from 'svelte'
-    import { invalidate } from '$app/navigation'
+    import { afterNavigate, invalidate } from '$app/navigation'
     import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
     import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch, ProgressRadial } from '@skeletonlabs/skeleton';
@@ -27,6 +27,13 @@
     const sidebarStore: Writable<string> = writable("Home");
 
     let email = '';
+
+    afterNavigate((nav) => {
+        const page = document.getElementById('page');
+        if (page && nav.type === 'link') {
+            page.scrollTop = 0;
+        }
+    });
 
     onMount(() => {
         const {

@@ -50,6 +50,9 @@
     }
 </style>
 
+
+<svelte:head><title>{userModel?.userName ?? 'User Page'} - augs.tools</title></svelte:head>
+
 {#if !userModel}
 <p>The user does not exist. Either they never existed, or they existed at some point and then ceased to exist.</p>
 {:else}
@@ -65,8 +68,11 @@
     {#if data.session?.user.id == $page.params.id}
     <PageButtonContainer>
         <div class="flex gap-2">
+            <a href="/user/{$page.params.id}/restore" class="unstyled">
+                <ComicButton text="Restore Homebrews" icon="material-symbols:restore-from-trash-outline"></ComicButton>
+            </a>
             <a href="/user/{$page.params.id}/edit" class="unstyled">
-                <ComicButton text="Edit Profile" icon="mdi:edit"></ComicButton>
+                <ComicButton text="Edit" icon="mdi:edit"></ComicButton>
             </a>
             <form action="/api/user?/logout" method="POST" use:enhance>
                 <ComicButton text="Logout" icon="mdi:logout"></ComicButton>
@@ -124,9 +130,9 @@
                 {/if}
             </div>
         </div>
-        {#if data.session?.user.id === userModel.id}
+        {#if data.session?.user.id === userModel.id && userModel.homebrewFavorites && userModel.homebrewFavorites.length > 0}
             <hr class="divider">
-            <HeroTable title="Favorite Heroes" userFavorites={userModel.id}></HeroTable>
+            <HeroTable title="Favorite Heroes" userFavorites={userModel.id} hideOnEmpty={true}></HeroTable>
         {/if}
 
         {#if userModel.heroes && userModel.heroes.length > 0}
