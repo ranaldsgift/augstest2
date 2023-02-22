@@ -93,22 +93,10 @@ export class Hero extends Homebrew {
     }
 
     public isValid(): boolean {
-        if (!this.name 
-            || !this.keywords || this.keywords.length == 0 
-            || !this.abilities || this.abilities.length == 0 
-            || !this.heroImage || this.heroImage.url?.length == 0 
-            || !this.iconImage || this.iconImage.url?.length == 0) {
-            return false;
-        }
-
-        return true;
+        return this.validityErrors().length == 0;
     }
 
     public validityErrors(): string {
-        if (this.isValid()) {
-            return '';
-        }
-
         const errors = [];
 
         if (!this.name) {
