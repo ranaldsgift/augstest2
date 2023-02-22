@@ -5,7 +5,6 @@ const config: UserConfig = {
 	plugins: [sveltekit()],
 	define: {
 			'process.env': process.env,
-			"global": {}
 	},
 	esbuild: {
 		keepNames: true, // typeorm migrations require timestamp in their names and this way it can be defined with name property
