@@ -27,18 +27,6 @@
 
 	const supportersList: { name: string, userId?: string }[] = [
 		{
-			name: "My Mom"
-		},
-		{
-			name: "My Dad"
-		},
-		{
-			name: "My Girlfriend"
-		},
-		{
-			name: "My Brother"
-		},
-		{
 			name: "Sharpiez"
 		},
 	];
