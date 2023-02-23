@@ -84,8 +84,9 @@
     <title>Home - augs.tools | Homebrews for Adventures Universal Game System</title>
     <meta 
         name="description"
-        content="Homebrews for Adventures Universal Game System. Browse creations from other users, and create your own. Play your TMNT and BTAS Board Games with these fan made creations!"
+        content="Homebrews for Adventures Universal Game System. Browse creations from other users, and create your own. Play your TMNT and BTAS Board Games with these fan made creations! Team up Batman and the Teenage Mutant Ninja Turtles with characters from other universes or even your own original creations!"
     >
+    <meta property="image" content="/meta_image.png">
 </svelte:head>
 
 <ol class={data.breadcrumbClass}>

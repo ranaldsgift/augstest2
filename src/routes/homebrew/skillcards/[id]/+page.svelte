@@ -76,4 +76,12 @@
             {/if}
         </div>
     </div>
+    {#if skillCard.description}
+    <div class="flex gap-5 pb-5 justify-center">   
+        <div class="comic-label max-w-7xl">
+            <h1>Designer Notes</h1>
+            <p>{skillCard.description}</p>
+        </div>
+    </div>
+    {/if}
 </div>
