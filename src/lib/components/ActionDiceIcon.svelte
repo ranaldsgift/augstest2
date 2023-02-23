@@ -6,6 +6,7 @@
     export let theme: ThemeTemplatesEnum;
     export let icon: DiceIconsEnum
     export let color: string = "#000000";
+    export let classList: string = '';
 </script>
 
 <style>
@@ -24,6 +25,6 @@
     }
 </style>
 
-<div style:--color={color}>
+<div class={classList.length > 0 ? classList : ''} style:--color={color}>
     {@html DiceIconTemplates[theme][icon]}
 </div>

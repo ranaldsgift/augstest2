@@ -211,7 +211,7 @@
                         <td class="hidden lg:table-cell" style:width="10px" style:position="relative"></td>
                         {#if row.actionDice && row.theme}
                             {#each row.actionDice.dice as dice}
-                                <td class="hidden lg:table-cell" height="20px"><ActionDiceIcon theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
+                                <td class="hidden lg:table-cell"><ActionDiceIcon classList="w-[40px] h-[40px]" theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
                             {/each}
                         {/if}
                     </tr>

@@ -80,7 +80,13 @@
     }
 </style>
 
-<svelte:head><title>Home - augs.tools</title></svelte:head>
+<svelte:head>
+    <title>Home - augs.tools | Homebrews for Adventures Universal Game System</title>
+    <meta 
+        name="description"
+        content="Homebrews for Adventures Universal Game System. Browse creations from other users, and create your own. Play your TMNT and BTAS Board Games with these fan made creations!"
+    >
+</svelte:head>
 
 <ol class={data.breadcrumbClass}>
 	<li class="crumb">Home</li>
