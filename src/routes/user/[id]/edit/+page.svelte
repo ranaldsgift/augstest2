@@ -9,7 +9,7 @@
 
     export let data: PageData;
 
-    $: userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
+    let userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
 
     async function handleSave() {
         const response = await fetch('/api/user?/save', {
@@ -28,6 +28,7 @@
     }
 </script>
 
+{#key userModel?.id}
 {#if userModel && userModel.id == data.session?.user.id}
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
@@ -78,3 +79,4 @@
     </form>
 </div>
 {/if}
+{/key}
