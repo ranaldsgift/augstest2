@@ -205,7 +205,7 @@
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container :global(.positioned-container) {
         border: calc(2px * var(--scale)) solid transparent;
-        background: linear-gradient(#777777 0%, #fff 25%, #fff 75%, #777777 100%) border-box;
+        background: linear-gradient(#777777 0%, #ffffff 25%, #ffffff 75%, #777777 100%) border-box;
         border-radius: calc(4px * var(--scale));
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-attribute-container>:global(button) {

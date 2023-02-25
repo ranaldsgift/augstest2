@@ -3,16 +3,20 @@
     import SkillCardEditorForm from '$lib/components/SkillCardEditorForm.svelte';
     import { SkillCard } from '$lib/entities/SkillCard';
     import { DataHelper } from '$lib/helpers/DataHelper';
+    import { SkillCardEditStore } from '$lib/stores/PageStores';
     import type { PageData } from './$types';
     
     export let data: PageData;
     
-    $: skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.json);
+    let skillCard = DataHelper.deserialize<SkillCard>(SkillCard, data.json);
+    if ($SkillCardEditStore.get(skillCard.id) === undefined) {
+        $SkillCardEditStore.set(skillCard.id, skillCard);
+    }
 </script>
 
 <svelte:head><title>{skillCard ? `Edit ${skillCard.name}` : `For Pete's Sake!`} - augs.tools</title></svelte:head>
 
-
+{#key skillCard.id}
 {#if data.session}
     {#if !skillCard}
         <p>There is no data available for this Homebrew.</p>
@@ -28,7 +32,7 @@
         <li class="crumb-separator" aria-hidden>&rsaquo;</li>
         <li>Edit</li>
     </ol>
-        <SkillCardEditorForm skillCard={skillCard}></SkillCardEditorForm>
+        <SkillCardEditorForm skillCard={$SkillCardEditStore.get(skillCard.id)}></SkillCardEditorForm>
     {/if}
 {:else}
 <div class="flex justify-center">
@@ -37,3 +41,4 @@
     </PigeonPeteSays>
 </div>
 {/if}
+{/key}

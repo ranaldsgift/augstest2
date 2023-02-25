@@ -6,12 +6,11 @@
     import { writable, type Writable } from "svelte/store";
     import PigeonPeteSays from "./PigeonPeteSays.svelte";
     import HeroEditorSheet from "./HeroEditorSheet.svelte";
-    import type { Hero } from "$lib/entities/Hero";
+    import { Hero } from "$lib/entities/Hero";
     import { FormHelper } from "$lib/helpers/FormHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
     import { goto } from "$app/navigation";
-    import { instanceToInstance } from "class-transformer";
     import { DataHelper } from "$lib/helpers/DataHelper";
     import { ToastHelper } from "$lib/helpers/ToastHelper";
     import { page } from "$app/stores";
@@ -24,15 +23,12 @@
     import PageButtonContainer from "./PageButtonContainer.svelte";
     import { onMount } from "svelte";
     import { Heroes, SkillCards } from "$lib/stores/DataStores";
+    import { HeroCreateStore } from "$lib/stores/PageStores";
 
-    const storeTab: Writable<"theme" | "details" | "more"> = writable("theme");
-
-    export let hero: Hero;
-    export let template = ThemeTemplates[hero.theme].heroSheet;
-    let savedHero = instanceToInstance(hero);
-    if (savedHero.abilities && savedHero.abilities.length > 0) {
-        savedHero.abilities = savedHero.abilities.sort((a, b) => a.id < b.id ? -1 : 1);
-    }
+    export let hero: Hero = new Hero();
+    const heroTheme = hero.theme ?? ThemeTemplatesEnum.TMNT;
+    export let template = ThemeTemplates[heroTheme].heroSheet;
+    hero.serializedSavedEntity = DataHelper.serialize(hero);
 
     let skillCardScale = 1.0;
     let sheetScale = 1.0;
@@ -46,7 +42,7 @@
         skillCardScale = window.innerWidth < 450 ? 0.4 : window.innerWidth < 800 ? 0.5 : window.innerWidth < 1400 ? 0.7 : 1.0;
     }
     
-    const themeSelection: Writable<string> = writable(hero.theme ?? ThemeTemplatesEnum.TMNT);
+    const themeSelection: Writable<string> = writable(heroTheme);
     themeSelection.subscribe(value => { 
         const theme = value as ThemeTemplatesEnum;
 
@@ -55,11 +51,6 @@
             template = ThemeTemplates[theme].heroSheet;
         }
     });
-
-    function isDirty() {
-        //return hero !== savedHero;
-        return DataHelper.serialize(hero) !== DataHelper.serialize(savedHero);
-    }
 
     async function handleSave() {
         if (await saveHero()) {
@@ -85,12 +76,14 @@
         const savedHeroId = result.data?.id;
 
         if (!hero.id && savedHeroId) {
-            goto(`/homebrew/heroes/${savedHeroId}`);
+            await goto(`/homebrew/heroes/${savedHeroId}`);
+            const newHero = new Hero();
+            newHero.user = hero.user;
+            HeroCreateStore.set(newHero);
             return true;
         }
             
-        hero = hero;
-        savedHero = instanceToInstance(hero);
+        hero.serializedSavedEntity = DataHelper.serialize(hero);
         return true;
     }
 
@@ -184,7 +177,7 @@
 
 <div class="grid gap-5 hero-editor-container justify-center">
     <PageButtonContainer>
-        {#if hero.isValid() && isDirty() && $page.data.session && hero.user.userName.length > 0}
+        {#if hero.isValid() && hero.isDirty() && $page.data.session && hero.user.userName.length > 0}
             <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
         {:else}
             <div class="disabled-button">
@@ -215,7 +208,7 @@
                     <p>To save your Hero, please complete or fix the following fields:</p>
                     <p class="text-warning-700-200-token unstyled">{hero.validityErrors()}</p>
                 </PigeonPeteSays>
-            {:else if hero.id && isDirty()}        
+            {:else if hero.id && hero.isDirty()}        
                 <PigeonPeteSays>
                     <p>You have unsaved changes! Don't forget to save!</p>
                     <p class="text-warning-700-200-token unstyled">{hero.validityErrors()}</p>

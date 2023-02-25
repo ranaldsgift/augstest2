@@ -90,6 +90,9 @@
                     drawerClose();
                     ToastHelper.create('Check your email for a magic link to login!', "success", 3000);
                 }
+                if (result.type === 'error') {
+                    ToastHelper.create(result.error.message, "error", 5000);
+                }
         };
       }}>
         <p class="text-center">Enter your e-mail to sign in with a Magic Link.</p><p class="text-center italic">You will be sent a link to authenticate yourself.</p>

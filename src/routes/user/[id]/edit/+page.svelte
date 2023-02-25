@@ -9,7 +9,7 @@
 
     export let data: PageData;
 
-    let userModel = data.json ? DataHelper.deserialize<User>(User, data.json) : undefined;
+    let userModel = DataHelper.deserialize<User>(User, data.json);
 
     async function handleSave() {
         const response = await fetch('/api/user?/save', {
@@ -28,7 +28,9 @@
     }
 </script>
 
-{#key userModel?.id}
+<svelte:head><title>Edit Your Profile - augs.tools</title></svelte:head>
+
+{#key userModel.id}
 {#if userModel && userModel.id == data.session?.user.id}
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>

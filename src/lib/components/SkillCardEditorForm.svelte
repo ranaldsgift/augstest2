@@ -17,9 +17,10 @@
     import PageButtonContainer from "./PageButtonContainer.svelte";
     import { page } from "$app/stores";
     import { SkillCards } from "$lib/stores/DataStores";
+    import { SkillCardCreateStore } from "$lib/stores/PageStores";
 
     export let skillCard: SkillCard = new SkillCard();
-    let savedSkillCard = instanceToInstance(skillCard);
+    skillCard.serializedSavedEntity = DataHelper.serialize(skillCard);
     const skillCardTheme = skillCard.hero?.theme ?? skillCard.theme ?? ThemeTemplatesEnum.TMNT;
 
     export let template = ThemeTemplates[skillCardTheme].skillCard;
@@ -33,10 +34,6 @@
             template = ThemeTemplates[theme].skillCard;
         }
     });
-
-    function isDirty() {
-        return DataHelper.serialize(skillCard) !== DataHelper.serialize(savedSkillCard);
-    }
 
     async function handleSave() {
         if (await saveSkillCard()) {
@@ -62,12 +59,14 @@
         const savedId = result.data?.id;
 
         if (!skillCard.id && savedId) {
-            goto(`/homebrew/skillcards/${savedId}`);
+            await goto(`/homebrew/skillcards/${savedId}`);
+            const newSkillCard = new SkillCard();
+            newSkillCard.user = skillCard.user;
+            SkillCardCreateStore.set(newSkillCard);
             return true;
         }
             
-        skillCard = skillCard;
-        savedSkillCard = instanceToInstance(skillCard);
+        skillCard.serializedSavedEntity = DataHelper.serialize(skillCard);
         return true;
     }
 
@@ -113,7 +112,7 @@
 
 <div class="grid gap-5 skill-card-editor-container justify-center">
     <PageButtonContainer>
-        {#if skillCard.isValid() && isDirty() && $page.data.session && skillCard.user.userName.length > 0}
+        {#if skillCard.isValid() && skillCard.isDirty() && $page.data.session && skillCard.user?.userName.length > 0}
             <ComicButton text="Save" icon="material-symbols:save" callback={handleSave}></ComicButton>
         {:else}
             <div class="disabled-button">
@@ -131,7 +130,7 @@
     <div class="skill-card-editor m-auto grid gap-5 sm:grid-cols-2 pl-5 pr-5">
         <div class="grid gap-5 justify-items-center">
             <SkillCardEditor bind:skillCard={skillCard} bind:template={template} bind:backgroundColor={skillCard.backgroundColor} bind:theme={skillCard.theme}></SkillCardEditor>
-            {#if !$page.data.session}
+            {#if !$page.data.session || !skillCard.user}
                 <PigeonPeteSays>
                     <p>You must be logged in to save a Skill Card!</p>
                 </PigeonPeteSays>
@@ -144,7 +143,7 @@
                     <p>To save your Skill Card, please complete the following fields:</p>
                     <p class="text-warning-700-200-token unstyled">{skillCard.validityErrors()}</p>
                 </PigeonPeteSays>
-            {:else if skillCard.id && isDirty()}        
+            {:else if skillCard.id && skillCard.isDirty()}        
                 <PigeonPeteSays>
                     <p>You have unsaved changes! Don't forget to save!</p>
                     <p class="text-warning-700-200-token unstyled">{skillCard.validityErrors()}</p>

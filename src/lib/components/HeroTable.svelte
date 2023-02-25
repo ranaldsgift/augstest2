@@ -13,7 +13,16 @@
     export let userFavorites: string | null = null;
     export let isDeleted: boolean | null = null;
     export let hideOnEmpty: boolean | null = false;
+
     let heroes: Hero[] = [];
+    export let dataTableStore = createDataTableStore(
+        heroes,
+        {
+            search: '',
+            sort: '',
+            pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50] }
+        }
+    );
 
     const loadData = async () => {
         let promise = Heroes.loadData(getApiQuery());
@@ -47,20 +56,19 @@
     
     let searchInput: HTMLInputElement;
     let sortKey: keyof Hero = 'dateModified';
+    let sortAsc: string = 'false';
+
+    if ($dataTableStore.sort.length === 0) {
+        $dataTableStore.sort = 'dateModified';
+        $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
+    }
+    else {
+        sortKey = $dataTableStore.sort as keyof Hero;
+        sortAsc = $dataTableStore.sortState?.asc ? 'true' : 'false';
+    }
+
     $: sortKeyState = sortKey;
-    $: sortAscState = 'false';
-
-    const dataTableStore = createDataTableStore(
-        heroes,
-        {
-            search: '',
-            sort: '',
-            pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50] }
-        }
-    );
-
-    $dataTableStore.sort = 'dateModified';
-    $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
+    $: sortAscState = sortAsc;
 
     onMount(() => {
         loadData();

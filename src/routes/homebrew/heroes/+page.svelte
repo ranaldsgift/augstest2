@@ -3,8 +3,23 @@
     import type { PageData } from './$types';
     import HeroTable from '$lib/components/HeroTable.svelte';
     import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
+    import { createDataTableStore } from '@skeletonlabs/skeleton';
+    import { HeroesPageStore } from '$lib/stores/PageStores';
+    import type { Hero } from '$lib/entities/Hero';
 
     export let data: PageData;
+    let heroes: Hero[] = [];
+    let dataTableStore = createDataTableStore(
+        heroes,
+        {
+            search: '',
+            sort: '',
+            pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50] }
+        }
+    );
+    if (!$HeroesPageStore) {
+        HeroesPageStore.set(dataTableStore);
+    }
 </script>
 
 <svelte:head><title>Browse Heroes - augs.tools</title></svelte:head>
@@ -18,7 +33,7 @@
 </ol>
 
 <div class="max-w-7xl grid gap-5">
-    <HeroTable></HeroTable>
+    <HeroTable dataTableStore={$HeroesPageStore}></HeroTable>
     {#if data.session}
     <PageButtonContainer>
         <a href="/homebrew/heroes/create/" class="unstyled">

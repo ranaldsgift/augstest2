@@ -1,12 +1,13 @@
 <script lang="ts">
     import HeroEditor from '$lib/components/HeroEditor.svelte';
-    import { Hero } from '$lib/entities/Hero';
-    import { DataHelper } from '$lib/helpers/DataHelper';
     import type { PageData } from './$types';
+    import { HeroCreateStore } from '$lib/stores/PageStores';
 
     export let data : PageData;
 
-    $: hero = DataHelper.deserialize<Hero>(Hero, data.hero);
+    if (!$HeroCreateStore || $HeroCreateStore.user?.id !== data.hero?.user?.id) {
+        HeroCreateStore.set(data.hero);
+    }
 </script>
 
 <svelte:head><title>Create Your Hero - augs.tools</title></svelte:head>
@@ -19,4 +20,4 @@
     <li>Heroes</li>
 </ol>
 
-<HeroEditor {hero}></HeroEditor>
+<HeroEditor hero={$HeroCreateStore}></HeroEditor>

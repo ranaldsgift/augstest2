@@ -7,12 +7,6 @@ import { UserHomebrewFavorite } from "./UserHomebrewFavorite";
 @Entity()
 @TableInheritance({ column: { type: "varchar", name: "type" } })
 export class Homebrew extends AuthoredEntity {
-    @BeforeUpdate()
-    updateTimestamp() {
-        this.dateModified = new Date();
-        return this;
-    }
-
     @PrimaryGeneratedColumn("increment")
     id: number
 

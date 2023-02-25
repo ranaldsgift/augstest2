@@ -20,7 +20,8 @@ export const load: PageServerLoad = async ({ locals, params }) => {
         try {
             hero = await Hero.findOne({
                 relations: { skillCards: true },
-                where: { id: id }
+                where: { id: id },
+                order: { abilities: { id: 'ASC' } }
             });
         }
         catch (err) {

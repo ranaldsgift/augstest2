@@ -7,11 +7,12 @@
     
     export let data: PageData;
 
-    $: user = DataHelper.deserialize<User>(User, data.json);
+    let user = DataHelper.deserialize<User>(User, data.json);
 </script>
 
 <svelte:head><title>Restore Homebrews - augs.tools</title></svelte:head>
 
+{#key user.id}
 <ol class={data.breadcrumbClass}>
     <li class="crumb"><a href="/">Home</a></li>
     <li class="crumb-separator" aria-hidden>&rsaquo;</li>
@@ -32,3 +33,4 @@
     <HeroTable title="Restore Heroes" isDeleted={true} userId={user.id} hideOnEmpty={true}></HeroTable>
     <SkillCardTable title="Restore Heroes" isDeleted={true} userId={user.id} hideOnEmpty={true}></SkillCardTable>
 </div>
+{/key}

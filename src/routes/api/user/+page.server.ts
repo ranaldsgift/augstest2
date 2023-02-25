@@ -6,6 +6,7 @@ import { User } from "$lib/entities/User";
 import { UserHomebrewFavorite } from "$lib/entities/UserHomebrewFavorite";
 import { DataHelper } from "$lib/helpers/DataHelper";
 import type { QueryFailedError } from "typeorm";
+import type { AuthError } from "@supabase/supabase-js";
 
 export const actions: Actions = {
     login: async ({ request, url, locals }) => {
@@ -23,13 +24,14 @@ export const actions: Actions = {
         try {
             const { error } = await locals.supabaseClient.auth.signInWithOtp({ email, 
                 options: {
-                    emailRedirectTo: url.searchParams.get('redirectTo') ?? undefined
+                    emailRedirectTo: url.origin ?? undefined
                 }
             });
             if (error) throw error
         } catch (err) {
             console.error(err);
-            throw error(500, "Internal Server Error");
+            let authError = err as AuthError;
+            throw error(500, `Internal Server Error - ${authError.message}`);
         }
 
         return { id: locals.session?.user.id };

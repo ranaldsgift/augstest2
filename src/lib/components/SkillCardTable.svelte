@@ -14,6 +14,14 @@
     export let heroId: string | null = null;
     export let isDeleted: boolean | null = null;
     export let hideOnEmpty: boolean | null = false;
+    export let dataTableStore = createDataTableStore(
+        data,
+        {
+            search: '',
+            sort: '',
+            pagination: { offset: 0, limit: 12, size: 0, amounts: [12, 24, 36] }
+        }
+    );
 
     const loadData = async () => {
         let data = SkillCards.loadData(getApiQuery());
@@ -52,23 +60,21 @@
     
     let searchInput: HTMLInputElement;
     let sortKey: keyof SkillCard = 'dateModified';
+    let sortAsc: string = 'false';
+
+    if ($dataTableStore.sort.length === 0) {
+        $dataTableStore.sort = 'dateModified';
+        $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
+    }
+    else {
+        sortKey = $dataTableStore.sort as keyof SkillCard;
+        sortAsc = $dataTableStore.sortState?.asc ? 'true' : 'false';
+    }
+
     $: sortKeyState = sortKey;
-    $: sortAscState = 'false';
+    $: sortAscState = sortAsc;
 
     let delayReload = false;
-
-
-    const dataTableStore = createDataTableStore(
-        data,
-        {
-            search: '',
-            sort: '',
-            pagination: { offset: 0, limit: 12, size: 0, amounts: [12, 24, 36] }
-        }
-    );
-
-    $dataTableStore.sort = 'dateModified';
-    $dataTableStore.sortState = { asc: false, lastKey: 'dateModified' };
 
     onMount(() => {
         loadData();

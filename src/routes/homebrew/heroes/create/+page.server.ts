@@ -1,8 +1,8 @@
-import type { PageServerLoad } from './$types';
 import { Hero } from '$lib/entities/Hero';
 import { DataHelper } from '$lib/helpers/DataHelper';
+import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals, params }) => {  
+export const load = (async ({ locals }) => {
     const hero = new Hero();
     if (locals.user) {
         hero.user = locals.user;
@@ -11,4 +11,4 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     return {
         hero: DataHelper.serialize(hero)
     };
-}
+}) satisfies PageServerLoad;
