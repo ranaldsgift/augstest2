@@ -117,4 +117,12 @@ export class Hero extends Homebrew {
         
         return errors.join(', ');
     }
+
+    static getOne(id: number): Promise<Hero | null> {
+        return this.findOne({
+            relations: { skillCards: true },
+            where: { id: id },
+            order: { abilities: { id: 'ASC' } }
+        });
+    }
 }

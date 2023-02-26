@@ -3,6 +3,7 @@ import type { Actions } from "./$types";
 import { FormHelper } from "$lib/helpers/FormHelper";
 import { Hero } from "$lib/entities/Hero";
 import { redirect, error } from "@sveltejs/kit";
+import { DataHelper } from "$lib/helpers/DataHelper";
 
 export const actions: Actions = {
     save: async ({ request, locals }) => {
@@ -23,8 +24,8 @@ export const actions: Actions = {
         catch (err: any) {
             console.error(err.message);
             throw error(500, err.message);
-        }  
+        }
         
-        return { id: hero?.id };
+        return { hero: DataHelper.serialize(hero) };
     }
 };

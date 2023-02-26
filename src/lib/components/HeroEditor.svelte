@@ -73,16 +73,17 @@
 
         Heroes.invalidateAll();
         SkillCards.invalidateAll();
-        const savedHeroId = result.data?.id;
+        const savedHero = DataHelper.deserialize(Hero, result.data?.hero);
 
-        if (!hero.id && savedHeroId) {
-            await goto(`/homebrew/heroes/${savedHeroId}`);
+        if (!hero.id && savedHero?.id) {
+            await goto(`/homebrew/heroes/${savedHero.id}`);
             const newHero = new Hero();
             newHero.user = hero.user;
             HeroCreateStore.set(newHero);
             return true;
         }
             
+        hero = savedHero;
         hero.serializedSavedEntity = DataHelper.serialize(hero);
         return true;
     }
