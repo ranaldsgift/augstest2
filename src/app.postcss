@@ -283,7 +283,7 @@ span.chip.chip-primary span:first-child {
 
 .text-stroke {
     -webkit-text-stroke: var(--strokeWidth, 2px);
-    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-color: var(--strokeColor, black);
 }
 .text-shadow {
     text-shadow: -2px -2px 0px black, 2px 2px 0px black, -2px 2px 0px black, 2px -2px 0px black, 2px 0px 0px black, -2px 0px 0px black, 0px -2px 0px black, 0px -2px 0px black;
@@ -298,19 +298,19 @@ span.chip.chip-primary span:first-child {
 .text-outline:before {
   content: attr(data-content);
   position: absolute;
-  -webkit-text-stroke: 0.15em black;
+  -webkit-text-stroke: 0.15em var(--strokeColor, black);
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
 }
 .text-outline-large:before {
-    -webkit-text-stroke: 0.2em black;
+    -webkit-text-stroke: 0.2em var(--strokeColor, black);
 }
 
 .text-stroke-1 {
     -webkit-text-stroke: 1px;
-    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-color: var(--strokeColor, black);
 }
 li.crumb-separator {
     color: white;

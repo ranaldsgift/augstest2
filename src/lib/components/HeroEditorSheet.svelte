@@ -169,7 +169,7 @@
         box-shadow: black 0 0 3px 1px;
         border-radius: 5px;
         position: relative;
-        background-size: contain;
+        background-size: 100% 100%;
         overflow: hidden;
     }
     :global(.positioned-container:hover .add-ability-button) {
@@ -205,7 +205,7 @@
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-action-dice-container :global(.positioned-container) {
         border: calc(2px * var(--scale)) solid transparent;
-        background: linear-gradient(#777777 0%, #ffffff 25%, #ffffff 75%, #777777 100%) border-box;
+        background: linear-gradient(#545454 0%, #b8b8b8 25%, #b8b8b8 75%, #545454 100%) border-box;
         border-radius: calc(4px * var(--scale));
     }
     .hero-sheet-container[data-theme="BTAS"] .hero-attribute-container>:global(button) {
@@ -236,32 +236,12 @@
         align-content: end;
         display: grid;
     }
-    :global(.hero-icon-image) {
-        background-position: center !important;
-        background-size: contain !important;
-    }   
-    .hero-sheet-container[data-theme="BTAS"] .noise-overlay {            
-        background: #000000;
-        filter: url(#noiseFilter);
-        position: absolute;
-        content: '';
-        left: -205px;
-        top: -72px;
-        width: calc(100% + 205px);
-        height: calc(100% + 72px);
-        z-index: 0;
-        mix-blend-mode: darken;
-        mix-blend-mode: difference;
-        mix-blend-mode: exclusion;
-        mix-blend-mode: multiply;
-        opacity: 0.35;
-    }
 </style>
 
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-image="url('{template.background_image}')" style:background-color={hero.sheetBackgroundColor}>
     {#if hero.theme === ThemeTemplatesEnum.BTAS}
-    <svg class="w-full h-full opacity-20 absolute">
+    <svg class="w-full h-full opacity-[5%] absolute">
         <filter id='noiseFilter'>
             <feTurbulence 
             type='fractalNoise' 
@@ -277,12 +257,12 @@
     </svg>
     {/if}
     {#if template.overlay_image}
-    <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="contain"></div>
+    <div class="hero-overlay-image" style:background-image="url('{template.overlay_image}')" style:background-size="100% 100%"></div>
     {/if}
     <PositionedContainer template={template.image} classList="!overflow-visible">
         <ImageEditor bind:image={hero.heroImage} {scale} scaleAxis="height"></ImageEditor>
     </PositionedContainer>
-    <PositionedContainer template={template.icon}>
+    <PositionedContainer template={template.icon} classList="!overflow-visible">
         <ImageEditor bind:image={hero.iconImage} {scale}></ImageEditor>
     </PositionedContainer>
     <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>
@@ -368,7 +348,7 @@
                     template={template.ability_effect} 
                     fontSize={hero.fontSizeAbilityEffect}
                     placeholder="Ability Effect"
-                    classList="pb-4"
+                    classList="pb-[calc(16px*var(--scale))]"
                     bind:text={ability.effect}>
                 </TextEditor>
                 <button class="absolute right-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      

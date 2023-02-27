@@ -39,7 +39,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
     TMNT: {
         theme_id: 1,
         template_name: 'TMNT',
-        background_image: '/images/homebrew%20templates/TMNT/hero_overlay.png',
+        background_image: '/images/homebrew%20templates/TMNT/hero_background.png',
         icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: {
@@ -99,16 +99,16 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         template_name: 'BTAS',
         background_image: '/images/homebrew%20templates/BTAS/hero_background.png',
         overlay_image: '/images/homebrew%20templates/BTAS/hero_overlay.png',
-        icon: { size: { width: '100px', height: '116px' }, position: { left: '0px', top: '0px' } },
+        icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: { 
             font: 'BebasNeueBold', 
             fontSize: 58,
             fontColor: 'white',
-            classList: 'transform scale-y-[118%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
+            classList: 'transform scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '240px', height: '82px' },
+            size: { width: '240px', height: '85px' },
             position: { left: '100px', top: '0px' } 
         },
         keywords:  {
@@ -118,38 +118,38 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         },
         keywordsContainer: { 
             size: { width: '240px', height: '40px' },
-            position: { left: '100px', top: '79px' }
+            position: { left: '100px', top: '84px' }
         },
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
-        ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 32, fontColor: 'white',
-            classList: ' w-[120%] ml-[-10%] transform !scale-x-[80%] tracking-[calc(3px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
+        ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 30, fontColor: '#ededed',
+            classList: 'w-[130%] ml-[-15%] transform !scale-x-[70%] tracking-[calc(4px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
-        ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 19, fontColor: 'white',
-            classList: '!text-left !leading-[calc(calc(var(--fontSize)+4px)*var(--scale))] !px-[1px]'
+        ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 20, fontColor: '#ededed',
+            classList: '!text-left !leading-[calc(calc(var(--fontSize)+calc(1px*var(--scale)))*var(--scale))] !px-[1px]'
         },
         action_dice: [
-            { size: { width: '50px', height: '50px' }, position: { left: '342px', top: '490px' } },
-            { size: { width: '50px', height: '50px' }, position: { left: '400px', top: '490px' } },
-            { size: { width: '50px', height: '50px' }, position: { left: '458px', top: '490px' } },
-            { size: { width: '50px', height: '50px' }, position: { left: '516px', top: '490px' } },
-            { size: { width: '50px', height: '50px' }, position: { left: '574px', top: '490px' } },
-            { size: { width: '50px', height: '50px' }, position: { left: '632px', top: '490px' } }
+            { size: { width: '48px', height: '48px' }, position: { left: '350px', top: '491px' } },
+            { size: { width: '48px', height: '48px' }, position: { left: '405px', top: '491px' } },
+            { size: { width: '48px', height: '48px' }, position: { left: '460px', top: '491px' } },
+            { size: { width: '48px', height: '48px' }, position: { left: '515px', top: '491px' } },
+            { size: { width: '48px', height: '48px' }, position: { left: '570px', top: '491px' } },
+            { size: { width: '48px', height: '48px' }, position: { left: '625px', top: '491px' } }
         ],
         attributes: {
-            move: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline' },
-            moveContainer: { size: { width: '40px', height: '52px' }, position: { left: '353px', top: '88px' }, classList: 'text-center' },
-            attack: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline' },
-            attackContainer: { size: { width: '40px', height: '52px' }, position: { left: '409px', top: '88px' }, classList: 'text-center' },
-            defend: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline' },
-            defendContainer: { size: { width: '40px', height: '52px' }, position: { left: '463px', top: '88px' }, classList: 'text-center' },
-            skill: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline' },
-            skillContainer: { size: { width: '40px', height: '52px' }, position: { left: '519px', top: '88px' }, classList: 'text-center' },
-            focus: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline' },
-            focusContainer: { size: { width: '40px', height: '52px' }, position: { left: '573px', top: '88px' }, classList: 'text-center' },
-            life: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline' },
-            lifeContainer: { size: { width: '40px', height: '52px' }, position: { left: '629px', top: '46px' }, classList: 'text-center' },
-            awakening: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline' },
-            awakeningContainer: { size: { width: '40px', height: '52px' }, position: { left: '629px', top: '105px' }, classList: 'text-center' }
+            move: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            moveContainer: { size: { width: '44px', height: '52px' }, position: { left: '350px', top: '88px' }, classList: 'text-center' },
+            attack: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            attackContainer: { size: { width: '44px', height: '52px' }, position: { left: '406px', top: '88px' }, classList: 'text-center' },
+            defend: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            defendContainer: { size: { width: '44px', height: '52px' }, position: { left: '462px', top: '88px' }, classList: 'text-center' },
+            skill: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            skillContainer: { size: { width: '44px', height: '52px' }, position: { left: '517px', top: '88px' }, classList: 'text-center' },
+            focus: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            focusContainer: { size: { width: '44px', height: '52px' }, position: { left: '572px', top: '88px' }, classList: 'text-center' },
+            life: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            lifeContainer: { size: { width: '44px', height: '52px' }, position: { left: '626px', top: '46px' }, classList: 'text-center' },
+            awakening: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
+            awakeningContainer: { size: { width: '44px', height: '52px' }, position: { left: '626px', top: '105px' }, classList: 'text-center' }
         }
     },
 }

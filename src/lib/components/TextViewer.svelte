@@ -23,6 +23,7 @@
     style:--font={template.font}
     style:--fontSize="{!fontSize || fontSize === 0 ? template.fontSize : fontSize}px"
     style:--lineHeight={template.lineHeight ?? `${template.fontSize}px`}
-    style:--color={template.fontColor}>
+    style:--color={template.fontColor}
+    style:--strokeColor={template.strokeColor ?? null}>
     {text}
 </span>
