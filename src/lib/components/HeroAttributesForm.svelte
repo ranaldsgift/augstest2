@@ -50,7 +50,7 @@
 
 <style>
 	.comic-label {
-		max-width: 150px;
+		max-width: 105px;
 	}
 </style>
 
@@ -60,7 +60,7 @@
 		<header class="comic-header">
 			<h1>Edit Attributes</h1>
 		</header>
-		<div class="comic-body !flex !flex-row flex-wrap gap-5 justify-center mb-2">
+		<div class="comic-body !flex !flex-row flex-wrap justify-center mb-2">
 			<label class="comic-label">
 				<span>Move</span>
 				<input bind:this={moveInput} type="number" bind:value={attributes.move} step="1" min="0">

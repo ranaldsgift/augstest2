@@ -137,7 +137,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         ],
         attributes: {
             move: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
-            moveContainer: { size: { width: '44px', height: '52px' }, position: { left: '350px', top: '88px' }, classList: 'text-center' },
+            moveContainer: { size: { width: '44px', height: '52px' }, position: { left: '351px', top: '88px' }, classList: 'text-center' },
             attack: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
             attackContainer: { size: { width: '44px', height: '52px' }, position: { left: '406px', top: '88px' }, classList: 'text-center' },
             defend: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
