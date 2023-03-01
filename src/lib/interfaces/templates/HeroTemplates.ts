@@ -2,7 +2,6 @@ import type { PositionedItem, PositionedTemplateContainer, PositionedTemplateTex
 import type { ThemeTemplatesEnum } from "./ThemeTemplatesEnum";
 
 export interface HeroSheetTemplate {
-    theme_id: number
     template_name: string
     background_image: string
     overlay_image?: string
@@ -37,7 +36,6 @@ export interface HeroSheetTemplate {
 
 export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> = {
     TMNT: {
-        theme_id: 1,
         template_name: 'TMNT',
         background_image: '/images/homebrew%20templates/TMNT/hero_background.png',
         icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
@@ -95,7 +93,6 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         }
     },
     BTAS: {
-        theme_id: 2,
         template_name: 'BTAS',
         background_image: '/images/homebrew%20templates/BTAS/hero_background.png',
         overlay_image: '/images/homebrew%20templates/BTAS/hero_overlay.png',
@@ -122,7 +119,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         },
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
         ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 30, fontColor: '#ededed',
-            classList: 'w-[130%] ml-[-15%] transform !scale-x-[70%] tracking-[calc(4px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
+            classList: 'w-[130%] ml-[-15%] transform !scale-x-[70%] tracking-[calc(4px*var(--scale))] !text-center mb-[calc(2px*var(--scale))] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
         ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 20, fontColor: '#ededed',
             classList: '!text-left !leading-[calc(calc(var(--fontSize)+calc(1px*var(--scale)))*var(--scale))] !px-[1px]'

@@ -23,6 +23,7 @@
     import PageButtonContainer from '$lib/components/PageButtonContainer.svelte';
     import { UserHomebrewFavorite } from '$lib/entities/UserHomebrewFavorite';
     import { plainToInstance } from 'class-transformer';
+    import type { Options } from 'html-to-image/lib/types';
 
     export let data: PageData;
     export let heroPage: HTMLElement;
@@ -60,22 +61,52 @@
         const initiativeCard = heroPage.querySelector('.initiative-card-container') as HTMLElement;
         const figureToken = heroPage.querySelector('.figure-token-container') as HTMLElement;
 
-        const heroSheetPng = await htmlToImage.toPng(heroSheetContainer, { style: { borderRadius: '0px' } });
-        const initiativeCardPng = await htmlToImage.toPng(initiativeCard, { style: { borderRadius: '0px' } });
-        const figureTokenPng = await htmlToImage.toPng(figureToken);
         const zip = new JSZip();
-        zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
-        zip.file(`${hero.name} by ${hero.user.userName}-Initiative Card.png`, initiativeCardPng.split(',')[1], { base64: true });
-        zip.file(`${hero.name} by ${hero.user.userName}-Figure Token.png`, figureTokenPng.split(',')[1], { base64: true });
+                
+        const heroSheetPng = await getImage(heroSheetContainer, { style: { borderRadius: '0px' }, fetchRequestInit: { mode: 'cors' } });
+        const initiativeCardPng = await getImage(initiativeCard, { style: { borderRadius: '0px' }, fetchRequestInit: { mode: 'cors' } });
+        const figureTokenPng = await getImage(figureToken, { fetchRequestInit: { mode: 'cors' } });
+        const imageErrors: string[] = [];
+
+        if (heroSheetPng) {
+            zip.file(`${hero.name} by ${hero.user.userName}-Hero Sheet.png`, heroSheetPng.split(',')[1], { base64: true });
+        }
+        else {
+            imageErrors.push('Hero Sheet');
+        }
+
+        if (initiativeCardPng) {
+            zip.file(`${hero.name} by ${hero.user.userName}-Initiative Card.png`, initiativeCardPng.split(',')[1], { base64: true });
+        }
+        else {
+            imageErrors.push('Initiative Card');
+        }
+
+        if (figureTokenPng) {
+            zip.file(`${hero.name} by ${hero.user.userName}-Figure Token.png`, figureTokenPng.split(',')[1], { base64: true });
+        }
+        else {
+            imageErrors.push('Figure Token');
+        }
 
         if (hero.skillCards && hero.skillCards.length > 0) {
             zip.folder('skills');
             const skillCards = heroPage.querySelectorAll('.skill-card-container') as NodeListOf<HTMLElement>;
             for (let i = 0; i < skillCards.length; i++) {
                 const skillCard = skillCards[i];
-                const skillCardPng = await htmlToImage.toPng(skillCard, { style: { borderRadius: '0px' } });
-                zip.file(`skills/${hero.name} by ${hero.user.userName}-Skill Card-${hero.skillCards[i].name}.png`, skillCardPng.split(',')[1], { base64: true });
+                const skillCardPng = await getImage(skillCard, { style: { borderRadius: '0px' }, fetchRequestInit: { mode: 'cors' } });
+
+                if (skillCardPng) {
+                    zip.file(`skills/${hero.name} by ${hero.user.userName}-Skill Card-${hero.skillCards[i].name}.png`, skillCardPng.split(',')[1], { base64: true });
+                }
+                else {
+                    imageErrors.push(`Skill Card - ${hero.skillCards[i].name}`);
+                }
             }
+        }
+
+        if (imageErrors.length > 0) {
+            ToastHelper.create(`The following items could not be downloaded:<br/><br/> ${imageErrors.join('<br/> ')}<br/><br/>These items are using an image host that is not approved. Contact the designer to resolve this issue.`, "error", 0, false);
         }
 
         const content = await zip.generateAsync({type:"blob"});
@@ -84,6 +115,19 @@
         skillCardScale = initialSkillCardScale;
         initiativeCardScale = initialInitiativeCardScale;
         drawerStore.close();
+    }
+
+    async function getImage(element: HTMLElement, options?: Options): Promise<string | undefined> {
+        let image;
+        try {            
+            image = await htmlToImage.toPng(element, options);
+        }
+        catch (err) {
+            console.log('Error generating image');
+            return;
+        }
+        
+        return image;
     }
 
     async function updateUserData(json: string) {
