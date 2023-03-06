@@ -304,7 +304,7 @@
         </button>
         {/if}
         {#if villain.cooperative.optimalStrikeRange <= 1}
-        <div style:width={template.cooperative.meleeStrikeRangeContainer.width} style:height={template.cooperative.meleeStrikeRangeContainer.height}>
+        <div style:width="calc({template.cooperative.meleeStrikeRangeContainer.width}*var(--scale))" style:height="calc({template.cooperative.meleeStrikeRangeContainer.height}*var(--scale))">
             <ActionDiceIcon icon={DiceIconsEnum.Melee} theme={villain.theme} color="white"></ActionDiceIcon>
         </div>
         {:else}
