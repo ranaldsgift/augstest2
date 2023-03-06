@@ -13,6 +13,14 @@ import { AuthoredEntitySubscriber } from '$lib/entities/subscribers/AuthoredEnti
 import { EntitySubscriber } from '$lib/entities/subscribers/EntitySubscriber';
 import { UserHomebrewFavorite } from '$lib/entities/UserHomebrewFavorite';
 import { SkillCard } from '$lib/entities/SkillCard';
+import { Villain } from '$lib/entities/Villain';
+import { VillainAbilityCard } from '$lib/entities/VillainAbilityCard';
+import { CompetitiveVillain } from '$lib/entities/CompetitiveVillain';
+import { CompetitiveVillainAbility } from '$lib/entities/CompetitiveVillainAbility';
+import { CompetitiveVillainAttributes } from '$lib/entities/CompetitiveVillainAttributes';
+import { CooperativeVillain } from '$lib/entities/CooperativeVillain';
+import { CooperativeVillainAbility } from '$lib/entities/CooperativeVillainAbility';
+import { CooperativeVillainAttributes } from '$lib/entities/CooperativeVillainAttributes';
 
 let PRIVATE_SUPABASE_HOST = env.PRIVATE_SUPABASE_HOST;
 let PRIVATE_SUPABASE_PASSWORD = env.PRIVATE_SUPABASE_PASSWORD;
@@ -29,7 +37,27 @@ export const AppDataSource = new DataSource({
     username: "postgres",
     password: PRIVATE_SUPABASE_PASSWORD,
     database: "postgres",
-    entities: [ UserHomebrewFavorite, UserRole, User, Homebrew, HeroAbility, HeroActionDice, HeroAttributes, Image, Token, Hero, SkillCard ],
+    entities: [ 
+        UserHomebrewFavorite, 
+        UserRole, 
+        User, 
+        Homebrew,
+        HeroAbility, 
+        HeroActionDice, 
+        HeroAttributes, 
+        CompetitiveVillainAbility,
+        CompetitiveVillainAttributes,
+        CooperativeVillainAbility,
+        CooperativeVillainAttributes,
+        Image, 
+        Token, 
+        Hero, 
+        SkillCard, 
+        CompetitiveVillain,
+        CooperativeVillain,
+        Villain, 
+        VillainAbilityCard, 
+    ],
     subscribers: [ EntitySubscriber, AuthoredEntitySubscriber ],
     // For development only
     //synchronize: true,

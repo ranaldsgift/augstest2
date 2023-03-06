@@ -27,7 +27,7 @@
             "title": "AUGS Assistant",
             "icon": "material-symbols:play-circle",
             "url": "/assistant",
-            "description": "Manage your games and try the AUGS Event Deck!",
+            "description": "Manage your solo/cooperative games and try the AUGS Event Deck!",
             "shadowColor": "#9acd32d9"
         },
         {

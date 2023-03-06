@@ -7,8 +7,7 @@
     import { afterNavigate, invalidate } from '$app/navigation'
     import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
-    import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch, ProgressRadial } from '@skeletonlabs/skeleton';
-    import { menu } from '@skeletonlabs/skeleton';
+    import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch, ProgressRadial, type PopupSettings, popup } from '@skeletonlabs/skeleton';
     import { Drawer } from '@skeletonlabs/skeleton';
     import { drawerStore } from '@skeletonlabs/skeleton';
     import ComicButton from '$lib/components/ComicButton.svelte';
@@ -20,6 +19,10 @@
     import type { LayoutData, LayoutServerData } from './$types';
     import PigeonPeteSays from '$lib/components/PigeonPeteSays.svelte';
     import AppSidebar from '$lib/components/AppSidebar.svelte';
+    import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+    import { storePopup } from '@skeletonlabs/skeleton';
+    import { autoModeWatcher } from '@skeletonlabs/skeleton';
+    storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	export let data: LayoutData;
     $: ({ currentTheme } = data);
@@ -73,9 +76,16 @@
     const drawerOpen: any = () => { drawerStore.open({ id: 'login', position: 'left' }); };
     const drawerClose: any = () => { drawerStore.close(); };
 
+    const themeMenuSettings: PopupSettings = {
+        // Set the event as: click | hover | hover-click
+        event: 'click',
+        // Provide a matching 'data-popup' value.
+        target: 'theme'
+    };
 </script>
 
 <svelte:head>
+    {@html `<script>${autoModeWatcher.toString()} autoModeWatcher();</script>`}
 	<!-- Select Preset Theme CSS DO NOT REMOVE ESCAPES-->
 	{@html `\<style\>${currentTheme}}\</style\>`}
 </svelte:head>
@@ -131,13 +141,13 @@
             </svelte:fragment>
             <svelte:fragment slot="trail">
                 <div class="relative">
-                    <button class="btn-icon" use:menu={{ menu: 'theme', fixed: true, interactive: true }}>
+                    <button class="btn-icon" use:popup={themeMenuSettings}>
                         <iconify-icon icon="material-symbols:palette"></iconify-icon>
                     </button>
                     <!-- <div class="card w-64 shadow-xl max-w-fit menu-tr sm:max-w-none" data-menu="theme"> -->
-                    <div class="card p-4 w-60 shadow-xl menu-tr " data-menu="theme">
-                        <section class="flex justify-between items-center">
-                            <p>Dark Mode</p>
+                    <div class="card p-4 w-60 shadow-xl menu-tr" data-popup="theme">
+                        <section class="flex justify-between">
+                            <p class="text-surface-900-50-token">Dark Mode</p>
                             <LightSwitch />
                         </section>
                         <hr class="my-4" />
@@ -147,7 +157,7 @@
                                     {#each themes as { icon, name, type }}
                                         <li>
                                             <!-- prettier-ignore -->
-                                            <button class="option w-full h-full" type="submit" name="theme" value={type} class:bg-primary-active-token={$storeTheme === type}>
+                                            <button class="option w-full h-full text-surface-900-50-token" type="submit" name="theme" value={type} class:bg-primary-active-token={$storeTheme === type}>
                                                 <span>{icon}</span>
                                                 <span>{name}</span>
                                             </button>
@@ -156,6 +166,7 @@
                                 </ul>
                             </form>
                         </nav>
+                        <div class="arrow variant-filled-secondary" />
                     </div>
                 </div>
                 <a class="btn-icon hidden sm:flex" href="https://github.com/ranaldsgift/augstools" aria-label="Github" target="_blank" rel="noreferrer">
@@ -183,7 +194,7 @@
     <!-- Page Content Slot -->
         <slot />
 	<svelte:fragment slot="pageFooter">
-        <div class="max-w-4xl m-auto text-sm text-center p-4">This site is not in any way affiliated with IDW Games. The look and design of the AUGS assets are a trademark of IDW Games. The assets on this site may not be used for commercial purposes.</div>
+        <div class="max-w-4xl mx-auto text-sm text-center my-8 px-4">This site is not in any way affiliated with IDW Games. The look and design of the AUGS assets are a trademark of IDW Games. The assets on this site may not be used for commercial purposes.</div>
     </svelte:fragment>
 </AppShell>
 

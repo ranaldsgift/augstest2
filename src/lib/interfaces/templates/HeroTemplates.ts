@@ -89,7 +89,7 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             life: { font: 'bangersregular', fontSize: 32, fontColor: 'black', classList: 'skew-x-[1.7deg] skew-y-[-1.7deg]' },
             lifeContainer: { size: { width: '40px', height: '40px' }, position: { left: '622px', top: '26px' }, classList: 'grid justify-center text-center' },
             awakening: { font: 'bangersregular', fontSize: 20, fontColor: 'white', classList: 'text-outline skew-x-[1.7deg] skew-y-[-1.7deg]' },
-            awakeningContainer: { size: { width: '30px', height: '30px' }, position: { left: '644px', top: '66px' }, classList: 'grid justify-center text-center' },
+            awakeningContainer: { size: { width: '30px', height: '30px' }, position: { left: '644px', top: '63px' }, classList: 'grid justify-center text-center' },
         }
     },
     BTAS: {
@@ -144,9 +144,9 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             focus: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
             focusContainer: { size: { width: '44px', height: '52px' }, position: { left: '572px', top: '88px' }, classList: 'text-center' },
             life: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
-            lifeContainer: { size: { width: '44px', height: '52px' }, position: { left: '626px', top: '46px' }, classList: 'text-center' },
+            lifeContainer: { size: { width: '44px', height: '52px' }, position: { left: '627px', top: '46px' }, classList: 'text-center' },
             awakening: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
-            awakeningContainer: { size: { width: '44px', height: '52px' }, position: { left: '626px', top: '105px' }, classList: 'text-center' }
+            awakeningContainer: { size: { width: '44px', height: '52px' }, position: { left: '627px', top: '105px' }, classList: 'text-center' }
         }
     },
 }

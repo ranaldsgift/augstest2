@@ -521,7 +521,7 @@
             height: calc(35px * var(--scale));
             overflow: hidden;
             border: calc(2px * var(--scale)) solid transparent;
-            background: linear-gradient(#777777 0%, #fff 25%, #fff 75%, #777777 100%) border-box;
+            background: linear-gradient(#777777 0%, #ffffff 25%, #ffffff 75%, #777777 100%) border-box;
         }
         .skill-card-footer-container::after {
             content: '';

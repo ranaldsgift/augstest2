@@ -55,7 +55,7 @@
                     <input type="text" name="userName" bind:value="{userModel.userName}" placeholder="Enter your user name">
                 </label>
                 <label class="comic-label">
-                    <div class="flex gap-1 items-center">
+                    <div class="flex gap-1 justify-center items-center">
                         <iconify-icon icon="carbon:user-avatar-filled"></iconify-icon>
                         Avatar Image URL
                     </div>
@@ -63,14 +63,14 @@
                     
                 </label>
                 <label class="comic-label">
-                    <div class="flex gap-1 items-center">
+                    <div class="flex gap-1 justify-center items-center">
                         <iconify-icon icon="ic:baseline-discord"></iconify-icon>
                         Discord
                     </div>
                     <input type="text" name="discord" bind:value="{userModel.discord}" placeholder="Enter your Discord user name">
                 </label>
                 <label class="comic-label">
-                    <div class="flex gap-1 items-center">
+                    <div class="flex gap-1 justify-center items-center">
                         <iconify-icon icon="game-icons:meeple"></iconify-icon>
                         BoardGameGeek
                     </div>

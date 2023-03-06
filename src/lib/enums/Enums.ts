@@ -1,8 +1,8 @@
 export enum HomebrewCategoriesEnum {
     Heroes = "Heroes",
     SkillCards = "SkillCards",
-/*     Villains = "Villains",
-    MapTiles = "MapTiles",
+    Villains = "Villains",
+/*    MapTiles = "MapTiles",
     Tokens = "Tokens",
     Scenarios = "Scenarios",
     EventDecks = "EventDecks",
@@ -42,4 +42,27 @@ export enum SkillCardIconsEnum {
     OneTimeUse = "OneTimeUse",
     Wild = "Wild",
     Wound = "Wound",
+}
+
+export enum VillainAbilityCardIconsEnum {
+    Melee = "Melee",
+    Range = "Range",
+    Move = "Move",
+    Defend = "Defend",
+    Focus = "Focus",
+    Persistent = "Persistent",
+    OneTimeUse = "OneTimeUse",
+    Wild = "Wild",
+    Wound = "Wound",
+}
+
+export enum VillainTargetPriorityEnum {
+    Lowest = "Lowest",
+    Highest = "Highest",
+}
+
+export enum VillainTargetAttributeEnum {
+    Life = "Life",
+    Focus = "Focus",
+    Skill = "Skill",
 }

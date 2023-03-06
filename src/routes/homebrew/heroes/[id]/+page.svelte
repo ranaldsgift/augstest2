@@ -123,7 +123,6 @@
             image = await htmlToImage.toPng(element, options);
         }
         catch (err) {
-            console.log('Error generating image');
             return;
         }
         
@@ -139,10 +138,10 @@
                     authUser.homebrewFavorites = [];
                 }
                 authUser.homebrewFavorites.push(favorite);
-                ToastHelper.create(`Added ${hero.name} to your favorites!`);
+                ToastHelper.create(`Added ${hero.name} to your favorites!`, 'success', 3000);
             } else {
                 authUser.homebrewFavorites = authUser.homebrewFavorites.filter(x => x.homebrewId != hero.id);
-                ToastHelper.create(`Removed ${hero.name} from your favorites!`);
+                ToastHelper.create(`Removed ${hero.name} from your favorites!`, 'success', 3000);
             }
             authUser = authUser;
         }      

@@ -70,11 +70,11 @@
 				</div>
 			</button>
 			{/each}
+			<footer class="modal-footer {parent.regionFooter}">
+				<ComicButton text="Cancel" callback={parent.onClose}></ComicButton>
+				<ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
+			</footer>
 		</div>
-		<footer class="modal-footer {parent.regionFooter}">
-			<ComicButton text="Cancel" callback={parent.onClose}></ComicButton>
-			<ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
-		</footer>
 		{/await}
 	</form>
 </div>
