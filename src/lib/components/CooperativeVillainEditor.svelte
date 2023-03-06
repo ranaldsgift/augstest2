@@ -197,10 +197,12 @@
     <PositionedContainer classList="keywords-container z-[2]" template={template.keywordsContainer}>
         <button on:click|preventDefault={handleEditKeywords}>
             <div
-                class="{template.keywords.classList} flex items-start"
-                style:text-align="left" 
-                style:--fontSize="{!villain.fontSizeKeywords || villain.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : villain.fontSizeKeywords * scale}px" 
-                style:--fontFamily={template.keywords.font} style:--color={template.keywords.fontColor}>
+                style:text-align="left"
+                style:font-size="{!villain.fontSizeKeywords || villain.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : villain.fontSizeKeywords * scale}px"
+                style:font-family={template.keywords.font}
+                style:color={template.keywords.fontColor}
+                style:line-height="{!villain.fontSizeKeywords || villain.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : villain.fontSizeKeywords * scale}px"
+                style:letter-spacing="calc(1px*var(--scale))">
                 
                 {#if villain.keywords && villain.keywords.length > 0}
                 {#each villain.keywords as keyword, index}
@@ -270,7 +272,7 @@
                     template={template.cooperative.ability_name} 
                     fontSize={villain.cooperative.fontSizeAbilityName}
                     placeholder="Ability Name"
-                    classList="pb-1"
+                    classList="pb-[calc(4px*var(--scale))]"
                     bind:text={ability.name}>
                 </TextEditor>
                 <TextEditor

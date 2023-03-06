@@ -252,13 +252,6 @@
         left: calc(2px * var(--scale));
         position: relative;
     }
-    :global(.keywords-container *) {
-        font-size: var(--fontSize);
-        line-height: var(--fontSize);
-        color: var(--color);
-        font-family: var(--fontFamily);
-        letter-spacing: 1px;
-    }
     .hero-sheet-container :global(input[name="name"] + button.positioned-text) {
         align-content: end;
         display: grid;
@@ -286,10 +279,12 @@
     <PositionedContainer classList="keywords-container z-[2]" template={template.keywordsContainer}>
         <button on:click|preventDefault={handleEditKeywords}>
             <div
-                style:text-align="left" 
-                style:--fontSize="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : hero.fontSizeKeywords * scale}px" 
-                style:--fontFamily={template.keywords.font} style:--color={template.keywords.fontColor}>
-                
+                style:text-align="left"
+                style:font-size="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : hero.fontSizeKeywords * scale}px"
+                style:font-family={template.keywords.font}
+                style:color={template.keywords.fontColor}
+                style:line-height="{!hero.fontSizeKeywords || hero.fontSizeKeywords === 0 ? template.keywords.fontSize * scale : hero.fontSizeKeywords * scale}px"
+                style:letter-spacing="calc(1px*var(--scale))">
                 {#if hero.keywords && hero.keywords.length > 0}
                 {#each hero.keywords as keyword, index}
                     <span>{keyword}</span>
@@ -391,7 +386,7 @@
                     template={template.ability_name} 
                     fontSize={hero.fontSizeAbilityName}
                     placeholder="Ability Name"
-                    classList="pb-1"
+                    classList="pb-[calc(4px*var(--scale))]"
                     bind:text={ability.name}>
                 </TextEditor>
                 <TextEditor
