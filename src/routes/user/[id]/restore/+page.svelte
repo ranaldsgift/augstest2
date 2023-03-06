@@ -31,6 +31,6 @@
         </div>
     </div>
     <HeroTable title="Restore Heroes" isDeleted={true} userId={user.id} hideOnEmpty={true}></HeroTable>
-    <SkillCardTable title="Restore Heroes" isDeleted={true} userId={user.id} hideOnEmpty={true}></SkillCardTable>
+    <SkillCardTable title="Restore Skill Cards" isDeleted={true} userId={user.id} hideOnEmpty={true}></SkillCardTable>
 </div>
 {/key}

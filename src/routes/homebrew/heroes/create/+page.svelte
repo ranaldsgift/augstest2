@@ -17,7 +17,7 @@
     <li class="crumb-separator" aria-hidden>&rsaquo;</li>
     <li class="crumb"><a href="/create">Create</a></li>
     <li class="crumb-separator" aria-hidden>&rsaquo;</li>
-    <li>Heroes</li>
+    <li>Hero</li>
 </ol>
 
 <HeroEditor hero={$HeroCreateStore}></HeroEditor>

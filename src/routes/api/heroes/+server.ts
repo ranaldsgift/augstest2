@@ -3,6 +3,8 @@ import { DataHelper } from '$lib/helpers/DataHelper';
 import type { RequestHandler } from "@sveltejs/kit";
 import { error } from "@sveltejs/kit";
 
+const hero = new Hero();
+
 export const GET: RequestHandler = async (event) => {
 
     let offset = Number(event.url.searchParams.get('offset'));
@@ -43,7 +45,7 @@ export const GET: RequestHandler = async (event) => {
                 .andWhere(`userFavorites.userId = :userFavorites`, { userFavorites: userFavorites })
         }
 
-        if (sort) {
+        if (sort && sort in hero) {
             query = query
                 .orderBy(`hero.${sort}`, asc ? 'ASC' : 'DESC')
         }

@@ -44,7 +44,7 @@
                 document.addEventListener('wheel', handleScaleImage, { passive: false });
             }
             toastStore.trigger({
-                preset: 'secondary',
+                background: 'bg-secondary-100-800-token',
                 message: `Drag your image to move it.<br/>Use scrollwheel to scale the image.`,
                 action: {
                     label: 'Disable&nbsp;<iconify-icon icon="mdi:arrow-expand-all"></iconify-icon>',

@@ -28,13 +28,13 @@
 </style>
 
 
-<div class="modal-example-form space-y-4">
-	<form class="grid gap-5">		
+<div class="max-w-3xl space-y-4">
+	<form class="grid">		
 		<header class="comic-header">
 			<h1>Add Keywords</h1>
 		</header>
-		<InputChip name="keywords" placeholder="Add keyword..." class="h-full" bind:value={keywords} allowDuplicates={false}></InputChip>
-	</form>
+	<div class="comic-body grid gap-2">
+		<InputChip name="keywords" placeholder="Add keyword..." bind:value={keywords} allowDuplicates={false}></InputChip>
 	{#await keywordsStore}
 		<div style:height="40px" style:width="40px"><ProgressRadial></ProgressRadial></div>
 	{:then data}
@@ -58,9 +58,11 @@
 		</button>
 		{/each}
 		</div>
-	<footer class="modal-footer {parent.regionFooter}">
+	<footer class="modal-footer mt-5 {parent.regionFooter}">
 		<ComicButton text="Cancel" callback={parent.onClose}></ComicButton>
 		<ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
 	</footer>
 	{/await}
+	</div>
+	</form>
 </div>

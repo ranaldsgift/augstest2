@@ -1,6 +1,6 @@
 <script lang="ts">
     import { applyAction, deserialize } from "$app/forms";
-    import { RadioGroup, RadioItem, tooltip } from '@skeletonlabs/skeleton';
+    import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
     import { writable, type Writable } from "svelte/store";
@@ -103,7 +103,6 @@
     .comic-body>div {
         display: flex;
         gap: 1rem;
-        align-items: flex-end;
     }
     .comic-body>div>:global(span) {
         flex: 1 100%;
@@ -181,7 +180,7 @@
                     <!-- TODO: Allow users to override the hero sheet image with their own
                     This would allow users to use their own themes and styles by loading the image specified here
                     instead of generating the hero sheet from the data provided -->
-                    <label use:tooltip={{ content: 'Use this to display a static image for this Hero Sheet instead of one generated from the saved Hero data.'}}>
+                    <label>
                         <span>Sheet Override</span>
                         <input type="text" name="originalImage" bind:value={skillCard.originalImage}>
                     </label>

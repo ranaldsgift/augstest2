@@ -1,6 +1,6 @@
 <script lang="ts">
     import { applyAction, deserialize, enhance } from "$app/forms";
-    import { modalStore, RadioGroup, RadioItem, tooltip, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
+    import { modalStore, RadioGroup, RadioItem, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
     import { writable, type Writable } from "svelte/store";
@@ -155,16 +155,9 @@
     :global(.ability-container *), :global(.hero-attribute-container *), :global(.hero-action-dice-container *) {
         z-index: 3;
     }
-    .theme-fields-container label {
-        pointer-events: none;
-    }
-    .theme-fields-container input {
-        pointer-events: all;
-    }
     .comic-body>div {
         display: flex;
         gap: 1rem;
-        align-items: flex-end;
     }
     .comic-body>div>:global(span) {
         flex: 1 100%;
@@ -216,13 +209,13 @@
                 </PigeonPeteSays>
             {/if}
         </div>
-        <div class="comic-form grid flex-1">
-            <header>
+        <div class="grid flex-1">
+            <header class="comic-header">
                 <h1>Edit your Hero</h1>
             </header>
             <div class="comic-body grid gap-5 hero-form-container">
                 <div>
-                    <label class="">
+                    <label class="comic-label grow">
                         <h1>Theme</h1>
                         <RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
                             {#each EnumHelper.getKeys(ThemeTemplatesEnum) as theme}
@@ -236,16 +229,16 @@
                         </select>
                     </label>
                 </div>
-                <div class="theme-fields-container">
-                    <label>
+                <div>
+                    <label class="comic-label grow">
                         <h1>Sheet Background Color</h1>
-                        <input class="unstyled" type="color" name="sheetBackgroundColor" bind:value={hero.sheetBackgroundColor}>
+                        <input type="color" name="sheetBackgroundColor1" bind:value={hero.sheetBackgroundColor}>
                     </label>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Dice Background Color</span>
                         <input class="unstyled" type="color" name="actionDice.backgroundColor" bind:value={hero.actionDice.backgroundColor}>
                     </label>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Dice Icon Color</span>
                         <input class="unstyled" type="color" name="actionDice.iconColor" bind:value={hero.actionDice.iconColor}>
                     </label>
@@ -255,54 +248,54 @@
                     <!-- TODO: Allow users to override the hero sheet image with their own
                     This would allow users to use their own themes and styles by loading the image specified here
                     instead of generating the hero sheet from the data provided -->
-                    <label use:tooltip={{ content: 'Use this to display a static image for this Hero Sheet instead of one generated from the saved Hero data.'}}>
+                    <label class="comic-label">
                         <span>Sheet Override</span>
                         <input type="text" name="originalImage" bind:value={hero.originalImage}>
                     </label>
                     {/if}
-                    <label class="w-full">
+                    <label class="w-full comic-label grow">
                         <span>Hero Description</span>
                         <textarea class="unstyled" name="description" rows="4" bind:value={hero.description} placeholder="Enter a description of your Hero here. Include details about any special mechanics related to your Hero. Feel free to leave details about the evolution of your Hero after playtesting and any other designer notes you may have. It's always interesting to learn about the designer's process and how the character came to be."></textarea>
                     </label>
                 </div>
                 <div>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Hero Image</span>
-                        <input class="unstyled" type="text" name="heroImage.url" bind:value={hero.heroImage.url}>
+                        <input class="unstyled" type="text" name="heroImage.url" placeholder="Image URL" bind:value={hero.heroImage.url}>
                     </label>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Icon Image</span>
-                        <input class="unstyled" type="text" name="heroIcon.url" bind:value={hero.iconImage.url}>
+                        <input class="unstyled" type="text" name="heroIcon.url" placeholder="Image URL" bind:value={hero.iconImage.url}>
                     </label>
                 </div>
                 <div class="image-fields-container">
-                    <label use:tooltip={{ content: 'Use scrollwheel up/down while hovering to scale your Hero image. Hold shift for larger scaling.' }}>
+                    <label class="comic-label grow">
                         <span>Hero Image Scale</span>
                         <input class="unstyled" type="number" name="heroImage.scale" bind:value={hero.heroImage.scale}>
                     </label>
-                    <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
+                    <label class="comic-label grow">
                         <span>Hero Image Position Left</span>
                         <input class="unstyled" type="number" name="heroImage.positionLeft" bind:value={hero.heroImage.positionLeft}>
                     </label>
-                    <label use:tooltip={{ content: 'Drag your Hero image to position it!' }}>
+                    <label class="comic-label grow">
                         <span>Hero Image Position Top</span>
                         <input class="unstyled" type="number" name="heroImage.positionTop" bind:value={hero.heroImage.positionTop}>
                     </label>
                 </div>
                 <div class="font-fields-container">
-                    <label>
+                    <label class="comic-label grow">
                         <span>Hero Name<br/>Font Size</span>
                         <input class="unstyled" type="number" min="0" step="1" name="fontSizeHeroName" bind:value={hero.fontSizeHeroName} placeholder={template.name.fontSize.toString()}>
                     </label>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Keywords<br/>Font Size</span>
                         <input class="unstyled" type="number" min="0" step="1" name="fontSizeKeywords" bind:value={hero.fontSizeKeywords} placeholder={template.keywords.fontSize.toString()}>
                     </label>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Ability Name<br/>Font Size</span>
                         <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityName" bind:value={hero.fontSizeAbilityName} placeholder={template.ability_name.fontSize.toString()}>
                     </label>
-                    <label>
+                    <label class="comic-label grow">
                         <span>Ability Effect<br/>Font Size</span>
                         <input class="unstyled" type="number" min="0" step="1" name="fontSizeAbilityEffect" bind:value={hero.fontSizeAbilityEffect} placeholder={template.ability_effect.fontSize.toString()}>
                     </label>

@@ -10,6 +10,8 @@
     import { drawerStore } from '@skeletonlabs/skeleton';
     import * as htmlToImage from 'html-to-image';
     import download from 'downloadjs';
+    import type { Options } from 'html-to-image/lib/types';
+    import { ToastHelper } from '$lib/helpers/ToastHelper';
 
     export let data: PageData;
 
@@ -24,11 +26,28 @@
         drawerStore.open({ id: 'download', width: 'w-full' });
         const skillCardContainer = skillCardPage.querySelector('.skill-card-container') as HTMLElement;
 
-        const skillCardPng = await htmlToImage.toPng(skillCardContainer, { style: { borderRadius: '0px' } });
-        download(skillCardPng, `${skillCard.name} by ${skillCard.user.userName}-${Date.now()}.png`);
+        const skillCardPng = await getImage(skillCardContainer, { style: { borderRadius: '0px' } });
+        if (!skillCardPng) {
+            ToastHelper.create(`The following items could not be downloaded:<br/><br/> ${skillCard.name}<br/><br/>These items are using an image host that is not approved. Contact the designer to resolve this issue.`, "error", 0, false);
+        }
+        else {
+            download(skillCardPng, `${skillCard.name} by ${skillCard.user.userName}-${Date.now()}.png`);
+        }
         
         skillCardScale = initialSkillCardScale;
         drawerStore.close();
+    }
+
+    async function getImage(element: HTMLElement, options?: Options): Promise<string | undefined> {
+        let image;
+        try {            
+            image = await htmlToImage.toPng(element, options);
+        }
+        catch (err) {
+            return;
+        }
+        
+        return image;
     }
 </script>
 

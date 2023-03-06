@@ -27,7 +27,7 @@
 	}
 </style>
 
-<div class="modal-example-form space-y-4">
+<div class="comic-body space-y-4 max-w-xl">
 	<RadioGroup active="variant-filled-primary" regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
 		{#each diceIconList as diceIcon}
 			<RadioItem bind:group={$actionDice} name={`radio-${diceIcon}`} value={diceIcon}>
