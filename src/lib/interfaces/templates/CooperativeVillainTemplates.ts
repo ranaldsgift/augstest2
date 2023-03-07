@@ -65,7 +65,7 @@ export const CooperativeVillainTemplates: Record<ThemeTemplatesEnum, Cooperative
         },
         targetPriorityContainer: { size: { width: '40px', height: '36px' }, position: { left: '505px', top: '490px' }, classList: 'z-[3]' },
         targetAttributeContainer: { size: { width: '30px', height: '30px' }, position: { left: '535px', top: '494px' }, classList: 'z-[3]' },
-        optimalStrikeRangeContainer: { size: { width: '128px', height: '68px' }, position: { left: '404px', top: '485px' }, classList: 'z-[3] !overflow-visible items-center' },
+        optimalStrikeRangeContainer: { size: { width: '128px', height: '68px' }, position: { left: '404px', top: '487px' }, classList: 'z-[3] !overflow-visible items-center' },
         optimalStrikeRangeText: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
         meleeStrikeRangeContainer: { width: '45px', height: '45px' },
         attributes: {
