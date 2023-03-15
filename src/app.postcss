@@ -84,12 +84,15 @@ iconify-icon.context-button.active {
     color: rgba(var(--color-primary-800));
     background: rgba(var(--color-primary-400));
 }
+.context-button iconify-icon {
+    font-size: calc(1.2rem * var(--scale, 1)) !important;
+}
 iconify-icon.context-button, .context-button {
     padding: 4px;
     background: rgba(var(--color-primary-900));
     color: #ffffff;
     border-radius: 4px;
-    font-size: 1.2rem;
+    font-size: calc(1.2rem * var(--scale, 1)) !important;
     cursor: pointer;
     display: none;
 }
@@ -303,7 +306,7 @@ span.chip.chip-primary span:first-child {
 .text-outline:before {
   content: attr(data-content);
   position: absolute;
-  -webkit-text-stroke: 0.15em var(--strokeColor, black);
+  -webkit-text-stroke: var(--strokeWidth, 0.15em) var(--strokeColor, black);
   left: 0;
   width: 100%;
   height: 100%;
@@ -328,7 +331,7 @@ li.crumb-separator {
     color: rgba(var(--color-surface-300));
 }
 .dark .comic-body {
-    background-color: rgb(var(--color-primary-500) / 0.2);
+    background-color: rgb(var(--color-primary-900) / 0.7);
 }
 .comic-body {
     padding: 42px 30px 30px;
@@ -422,4 +425,14 @@ label.slide-toggle-label {
     --tw-backdrop-blur: blur(16px);
     -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
     backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.comic-body *:not(label)>h1, .comic-body>h1 {
+    color: rgba(var(--color-tertiary-700)) !important;
+}
+
+.dark .comic-body *:not(label)>h1, .dark .comic-body>h1 {
+    color: rgba(var(--color-tertiary-200)) !important;
+}
+.dark a:not(.unstyled):is(:not(.prose *)):not(.btn):not(.btn-icon):not(.app-bar a):not(.logo-item):not(a.card):not(.list-nav a) {
+    color: rgba(var(--color-primary-300) / var(--tw-text-opacity));
 }

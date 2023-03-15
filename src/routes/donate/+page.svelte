@@ -57,9 +57,9 @@
 			The one thing that I will ask is to spread the word. Spread the love for this wonderful game system that continues to inspire us.
 		</p>
 		<div class="flex justify-center">
-			<ComicButton text="Donate" icon="mdi:donate"></ComicButton>
+			<ComicButton text="Donate" callback={() => goto(`https://www.paypal.com/donate/?hosted_button_id=MYJ9RA3FJAZQ6`)} icon="mdi:donate"></ComicButton>
 		</div>
-		<p class="pt-4">Check out the <a href="http://localhost:5173/about">about page</a> if you want to learn more about the creation and development of this website.</p>
+		<p class="pt-4">Check out the <a href="/about">about page</a> if you want to learn more about the creation and development of this website.</p>
 		<p>
 			Also I will eventually add a section that lists all the supporters if they wish to be listed. Supporters would also receive a custom profile badge, similar to the Founder badge for people who created accounts during the early stages of development and had to endure any issues related to that journey.
 		</p>

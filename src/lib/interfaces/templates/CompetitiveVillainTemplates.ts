@@ -4,6 +4,7 @@ import type { ThemeTemplatesEnum } from "./ThemeTemplatesEnum";
 export interface CompetitiveVillainTemplate {
     background_image: string
     overlay_image?: string
+    backBackgroundImage: string
     leaderBackgroundImage?: string
     leaderOverlayImage?: string
     flavorText: TemplateText
@@ -31,6 +32,7 @@ export const CompetitiveVillainTemplates: Record<ThemeTemplatesEnum, Competitive
     TMNT: {
         background_image: '/images/homebrew%20templates/TMNT/villain_competitive_background.png',
         leaderBackgroundImage: '/images/homebrew%20templates/TMNT/villain_competitive_leader_background.png',
+        backBackgroundImage: '/images/homebrew%20templates/TMNT/villain_competitive_back_background.png',
         flavorText: {
             font: 'smackattack_bbregular',
             fontSize: 16, 
@@ -68,6 +70,7 @@ export const CompetitiveVillainTemplates: Record<ThemeTemplatesEnum, Competitive
         overlay_image: '/images/homebrew%20templates/BTAS/villain_competitive_overlay.png',
         leaderBackgroundImage: '/images/homebrew%20templates/BTAS/villain_competitive_background.png',
         leaderOverlayImage: '/images/homebrew%20templates/BTAS/villain_competitive_leader_overlay.png',
+        backBackgroundImage: '/images/homebrew%20templates/BTAS/villain_competitive_back_background.png',
         flavorText: {
             font: 'DINCondensedLightRegular',
             fontSize: 18, 

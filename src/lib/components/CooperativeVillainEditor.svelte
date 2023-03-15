@@ -130,7 +130,7 @@
         width: calc(700px * var(--scale));
         height: calc(566px * var(--scale));
         box-shadow: black 0 0 3px 1px;
-        border-radius: 5px;
+        border-radius: 10px;
         position: relative;
         background-size: 100% 100%;
         overflow: hidden;
@@ -188,7 +188,7 @@
     <PositionedContainer template={template.image} classList="!overflow-visible">
         <ImageEditor bind:image={villain.image} {scale} scaleAxis="height"></ImageEditor>
     </PositionedContainer>
-    <PositionedContainer template={template.icon} classList="!overflow-visible">
+    <PositionedContainer template={template.icon}>
         <ImageEditor bind:image={villain.iconImage} {scale}></ImageEditor>
     </PositionedContainer>
     <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>

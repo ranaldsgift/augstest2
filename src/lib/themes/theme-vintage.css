@@ -2,8 +2,8 @@
 	/* =~= Theme Styles =~= */
 	--theme-font-family-heading: 'bangersregular';
 	--theme-font-family-base: 'Comic Sans MS';
-	--theme-font-color-base: 0 0 0;
-	--theme-font-color-dark: 255 255 255;
+	--theme-font-color-base: var(--color-surface-900);
+	--theme-font-color-dark: var(--color-surface-50);
 	--theme-rounded-base: 30px;
 	--theme-rounded-container: 0px;
 	--theme-border-base: 3px;

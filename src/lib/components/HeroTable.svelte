@@ -6,7 +6,9 @@
     import { Heroes } from "$lib/stores/DataStores";
     import { createDataTableStore, dataTableHandler, Paginator, ProgressRadial, tableInteraction } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
+    import HeroEditorSheet from "./HeroEditorSheet.svelte";
     
     export let title: string = 'Heroes';
     export let userId: string | null = null;
@@ -187,45 +189,16 @@
                 <input class="unstyled w-full" bind:this={searchInput} bind:value={$dataTableStore.search} on:input={handleSearch} type="search" placeholder="Search..." />
             </div>
         </div>
-        <table class="table table-hover" use:tableInteraction>
-            <thead style:display="none">
-                <tr>
-                    <th></th>
-                    <th data-sort="name">Name</th>
-                    <th>Designer</th>
-                    <th data-sort="dateModified">Last Updated</th>
-                    <th colspan="7" align="center">Action Dice</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each $dataTableStore.filtered as row, rowIndex}
-                {#key row.id}
-                    <tr class="h-[50px] sm:h-[80px]"></tr>
-                    <tr class="comic-shadow" style:--diceBackgroundColor={row.actionDice.backgroundColor}>
-                        <td style:position="relative" class="w-[100px] sm:w-[180px]">
-                            <div style:overflow="hidden" class="-mt-[32px] sm:-mt-[64px] h-[110px] sm:h-[135px]" style:min-width="100%">
-                                <img style:object-fit="cover" src={row.heroImage.url} alt="Hero" style:top="0px" class="w-full h-auto">    
-                            </div>
-                        </td>
-                        <td>
-                            <a class="pl-2" href={'/homebrew/heroes/' + row.id}>{row.name}</a>
-                        </td>
-                        <td class="hidden sm:table-cell">
-                            <a href={'/user/' + row.user.id}>{row.user.userName}</a>
-                        </td>
-                        <td class="hidden xl:table-cell">
-                            {DateHelper.timeSinceString(new Date(row.dateModified), new Date())}
-                        </td>
-                        <td class="hidden lg:table-cell" style:width="10px" style:position="relative"></td>
-                        {#if row.actionDice && row.theme}
-                            {#each row.actionDice.dice as dice}
-                                <td class="hidden lg:table-cell"><ActionDiceIcon classList="w-[40px] h-[40px]" theme={ThemeTemplatesEnum[row.theme]} icon={DiceIconsEnum[dice]} color={row.actionDice.iconColor}></ActionDiceIcon></td>   
-                            {/each}
-                        {/if}
-                    </tr>
-                {/key}
-                {/each}
-            </tbody>
+        <table class="mt-5 flex flex-wrap gap-5 justify-center" use:tableInteraction>
+            {#each $dataTableStore.filtered as row, rowIndex}
+            {#key row.id}
+            <a in:fade href="/homebrew/heroes/{row.id}" class="relative">
+                <div class="read-only">
+                    <HeroEditorSheet hero={row} scale={0.4}></HeroEditorSheet>
+                </div>
+            </a>
+            {/key}
+            {/each}
         </table>
     </div>
 </div>

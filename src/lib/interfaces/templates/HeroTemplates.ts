@@ -4,8 +4,9 @@ import type { ThemeTemplatesEnum } from "./ThemeTemplatesEnum";
 export interface HeroSheetTemplate {
     template_name: string
     background_image: string
+    backBackgroundImage: string
     overlay_image?: string
-    icon: PositionedItem
+    icon: PositionedTemplateContainer
     image: PositionedItem
     background_color?: string
     name: TemplateText
@@ -38,7 +39,8 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
     TMNT: {
         template_name: 'TMNT',
         background_image: '/images/homebrew%20templates/TMNT/hero_background.png',
-        icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
+        backBackgroundImage: '/images/homebrew%20templates/TMNT/hero_back_background.png',
+        icon: { size: { width: '66px', height: '66px' }, position: { left: '17px', top: '22px' }, classList: 'bg-black rounded-full box shadow-[0_0_0_calc(3px*var(--scale))_white,0_0_0_calc(6px*var(--scale))_black]' },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: {
             font: 'bangersregular',
@@ -96,7 +98,8 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
         template_name: 'BTAS',
         background_image: '/images/homebrew%20templates/BTAS/hero_background.png',
         overlay_image: '/images/homebrew%20templates/BTAS/hero_overlay.png',
-        icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
+        backBackgroundImage: '/images/homebrew%20templates/BTAS/hero_back_background.png',
+        icon: { size: { width: '68px', height: '68px' }, position: { left: '22px', top: '28px' }, classList: 'rounded-full' },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: { 
             font: 'BebasNeueBold', 
@@ -105,17 +108,18 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             classList: 'transform scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '240px', height: '85px' },
-            position: { left: '100px', top: '0px' } 
+            size: { width: '232px', height: '85px' },
+            position: { left: '108px', top: '0px' } 
         },
         keywords:  {
             font: 'BebasNeueLight',
             fontSize: 18,
-            fontColor: 'white' 
+            fontColor: 'white',
+            classList: 'tracking-[calc(1px*var(--scale))]'
         },
         keywordsContainer: { 
-            size: { width: '240px', height: '40px' },
-            position: { left: '100px', top: '84px' }
+            size: { width: '232px', height: '40px' },
+            position: { left: '110px', top: '84px' }
         },
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
         ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 30, fontColor: '#ededed',
@@ -144,9 +148,9 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             focus: { font: 'BebasNeueBold', fontSize: 52, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
             focusContainer: { size: { width: '44px', height: '52px' }, position: { left: '572px', top: '88px' }, classList: 'text-center' },
             life: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
-            lifeContainer: { size: { width: '44px', height: '52px' }, position: { left: '627px', top: '46px' }, classList: 'text-center' },
+            lifeContainer: { size: { width: '44px', height: '30px' }, position: { left: '627px', top: '46px' }, classList: 'text-center' },
             awakening: { font: 'BebasNeueBold', fontSize: 32, fontColor: 'white', classList: 'text-outline', strokeColor: '#231f20' },
-            awakeningContainer: { size: { width: '44px', height: '52px' }, position: { left: '627px', top: '105px' }, classList: 'text-center' }
+            awakeningContainer: { size: { width: '44px', height: '30px' }, position: { left: '627px', top: '105px' }, classList: 'text-center' }
         }
     },
 }

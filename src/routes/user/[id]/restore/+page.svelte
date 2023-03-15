@@ -1,6 +1,7 @@
 <script lang="ts">
     import HeroTable from '$lib/components/HeroTable.svelte';
     import SkillCardTable from '$lib/components/SkillCardTable.svelte';
+    import VillainTable from '$lib/components/VillainTable.svelte';
     import { User } from '$lib/entities/User';
     import { DataHelper } from '$lib/helpers/DataHelper';
     import type { PageData } from './$types';
@@ -32,5 +33,6 @@
     </div>
     <HeroTable title="Restore Heroes" isDeleted={true} userId={user.id} hideOnEmpty={true}></HeroTable>
     <SkillCardTable title="Restore Skill Cards" isDeleted={true} userId={user.id} hideOnEmpty={true}></SkillCardTable>
+    <VillainTable title="Restore Villains" isDeleted={true} userId={user.id} hideOnEmpty={true}></VillainTable>
 </div>
 {/key}

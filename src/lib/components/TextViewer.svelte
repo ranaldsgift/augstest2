@@ -24,6 +24,7 @@
     style:--fontSize="{!fontSize || fontSize === 0 ? template.fontSize : fontSize}px"
     style:--lineHeight={template.lineHeight ?? `${template.fontSize}px`}
     style:--color={template.fontColor}
-    style:--strokeColor={template.strokeColor ?? null}>
+    style:--strokeColor={template.strokeColor ?? null}
+    style:--strokeWidth={template.strokeWidth ?? null}>
     {text}
 </span>

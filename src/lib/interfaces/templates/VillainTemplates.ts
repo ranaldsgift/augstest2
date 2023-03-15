@@ -4,7 +4,7 @@ import type { PositionedItem, PositionedTemplateContainer, PositionedTemplateTex
 import type { ThemeTemplatesEnum } from "./ThemeTemplatesEnum";
 
 export interface VillainTemplate {
-    icon: PositionedItem
+    icon: PositionedTemplateContainer
     image: PositionedItem
     background_color?: string
     name: TemplateText
@@ -17,7 +17,7 @@ export interface VillainTemplate {
 
 export const VillainTemplates: Record<ThemeTemplatesEnum, VillainTemplate> = {
     TMNT: {
-        icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
+        icon: { size: { width: '66px', height: '66px' }, position: { left: '17px', top: '22px' }, classList: 'bg-black rounded-full box shadow-[0_0_0_calc(3px*var(--scale))_white,0_0_0_calc(6px*var(--scale))_black]' },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: {
             font: 'bangersregular',
@@ -43,7 +43,7 @@ export const VillainTemplates: Record<ThemeTemplatesEnum, VillainTemplate> = {
         cooperative: CooperativeVillainTemplates.TMNT
     },
     BTAS: {
-        icon: { size: { width: '80px', height: '80px' }, position: { left: '10px', top: '15px' } },
+        icon: { size: { width: '68px', height: '68px' }, position: { left: '22px', top: '28px' }, classList: 'rounded-full' },
         image: { size: { width: '350px', height: '454px' }, position: { left: '0px', top: '112px' } },
         name: { 
             font: 'BebasNeueBold', 
@@ -52,8 +52,8 @@ export const VillainTemplates: Record<ThemeTemplatesEnum, VillainTemplate> = {
             classList: 'transform scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '250px', height: '85px' },
-            position: { left: '98px', top: '0px' } 
+            size: { width: '232px', height: '85px' },
+            position: { left: '108px', top: '0px' } 
         },
         keywords:  {
             font: 'BebasNeueLight',
@@ -62,8 +62,8 @@ export const VillainTemplates: Record<ThemeTemplatesEnum, VillainTemplate> = {
             classList: 'tracking-[calc(1px*var(--scale))]'
         },
         keywordsContainer: { 
-            size: { width: '240px', height: '40px' },
-            position: { left: '100px', top: '84px' }
+            size: { width: '232px', height: '40px' },
+            position: { left: '110px', top: '84px' }
         },
         competitive: CompetitiveVillainTemplates.BTAS,
         cooperative: CooperativeVillainTemplates.BTAS

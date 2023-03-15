@@ -35,6 +35,13 @@
         image = image;
     }
 
+    function resetScaleAndPosition() {
+        image.scale = 100;
+        image.positionLeft = 0;
+        image.positionTop = 0;
+        image = image;
+    }
+
     function toggleScalable() {
         if (scaleAndDrag) {
             toastStore.clear();
@@ -102,11 +109,15 @@ on:keyup={(e) => {
             >
         </div>     
         {#if image && image.url.length > 0}
+        <iconify-icon icon="material-symbols:reset-image" class="context-button p-1 absolute right-9 top-1 {image.scale === 100 && image.positionLeft === 0 && image.positionTop === 0 ? '!hidden' : ''}" 
+            on:click={resetScaleAndPosition} 
+            on:keydown={resetScaleAndPosition}
+        ></iconify-icon>
         <iconify-icon icon="mdi:arrow-expand-all" class="context-button p-1 absolute right-1 top-1 {scaleAndDrag ? '!hidden' : ''}" 
             on:click={toggleScalable} 
             on:keydown={toggleScalable}
         ></iconify-icon>
-        <img class="card-image absolute object-cover max-w-none z-0"
+        <img class="card-image absolute object-contain max-w-none z-0"
             style:width="{scaleAxis === 'width' ? `${image.scale}%` : ''}" 
             style:height="{scaleAxis === 'height' ? `${image.scale}%` : ''}"
             src={image.url} alt="Card" 

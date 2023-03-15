@@ -194,7 +194,7 @@
         width: calc(700px * var(--scale));
         height: calc(566px * var(--scale));
         box-shadow: black 0 0 3px 1px;
-        border-radius: 5px;
+        border-radius: 10px;
         position: relative;
         background-size: 100% 100%;
         overflow: hidden;
@@ -260,9 +260,9 @@
 
 
 <div class="hero-sheet-container" style:--scale={scale} data-theme={template.template_name} style:background-color={hero.sheetBackgroundColor}>
-    <img class="absolute w-full h-full" src={template.background_image} alt="Background">
+    <img class="absolute w-full h-full pointer-events-none" src={template.background_image} alt="Background">
     {#if hero.theme === ThemeTemplatesEnum.BTAS}
-    <img class="absolute w-full h-full mix-blend-color-burn" src="/images/overlays/paper.png" alt="Paper Background Effect">
+    <img class="absolute w-full h-full mix-blend-color-burn pointer-events-none" src="/images/overlays/paper.png" alt="Paper Background Effect">
     {/if}
     {#if template.overlay_image}
     <img class="absolute w-full h-full z-[2] pointer-events-none" src={template.overlay_image} alt="Overlay">
@@ -270,7 +270,7 @@
     <PositionedContainer template={template.image} classList="!overflow-visible">
         <ImageEditor bind:image={hero.heroImage} {scale} scaleAxis="height"></ImageEditor>
     </PositionedContainer>
-    <PositionedContainer template={template.icon} classList="!overflow-visible">
+    <PositionedContainer template={template.icon}>
         <ImageEditor bind:image={hero.iconImage} {scale}></ImageEditor>
     </PositionedContainer>
     <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>
@@ -300,87 +300,115 @@
     </button>
     </PositionedContainer>
     <div class="hero-attribute-container absolute z-[3]">
-        <PositionedContainer template={template.attributes.moveContainer} classList="!overflow-visible">
-            <button class="p-1 absolute left-1 -top-8 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}>
-                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
-            </button>
-            {#if hero.attributes.move > 1}
-            <button class="p-1 absolute left-1 -bottom-8 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'move') }}>
-                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
-            </button>
-            {/if}
-            <TextViewer text={hero.attributes.move.toString()} template={template.attributes.move}></TextViewer>
-        </PositionedContainer>
-        <PositionedContainer template={template.attributes.attackContainer} classList="!overflow-visible">
-            <button class="p-1 absolute left-1 -top-8 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'attack')}>
-                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
-            </button>
-            {#if hero.attributes.attack > 1}
-            <button class="p-1 absolute left-1 -bottom-8 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'attack') }}>
-                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
-            </button>
-            {/if}
-            <TextViewer text={hero.attributes.attack.toString()} template={template.attributes.attack}></TextViewer>
-        </PositionedContainer>
-        <PositionedContainer template={template.attributes.defendContainer} classList="!overflow-visible">
-            <button class="p-1 absolute left-1 -top-8 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'defend')}>
-                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
-            </button>
-            {#if hero.attributes.defend > 1}
-            <button class="p-1 absolute left-1 -bottom-8 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'defend') }}>
-                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
-            </button>
-            {/if}
-            <TextViewer text={hero.attributes.defend.toString()} template={template.attributes.defend}></TextViewer>
-        </PositionedContainer>
-        <PositionedContainer template={template.attributes.skillContainer} classList="!overflow-visible">
-            <button class="p-1 absolute left-1 -top-8 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'skill')}>
-                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
-            </button>
-            {#if hero.attributes.skill > 1}
-            <button class="p-1 absolute left-1 -bottom-8 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'skill') }}>
-                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
-            </button>
-            {/if}
-            <TextViewer text={hero.attributes.skill.toString()} template={template.attributes.skill}></TextViewer>
-        </PositionedContainer>
-        <PositionedContainer template={template.attributes.focusContainer} classList="!overflow-visible">
-            <button class="p-1 absolute left-1 -top-8 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'focus')}>
-                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
-            </button>
-            {#if hero.attributes.focus > 1}
-            <button class="p-1 absolute left-1 -bottom-8 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'focus') }}>
-                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
-            </button>
-            {/if}
-            <TextViewer text={hero.attributes.focus.toString()} template={template.attributes.focus}></TextViewer>
-        </PositionedContainer>
-        <PositionedContainer template={template.attributes.lifeContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-6 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}>
-                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
-            </button>
-            {#if hero.attributes.life > 1}
-            <button class="p-1 absolute -right-8 top-2 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}>
-                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
-            </button>
-            {/if}
-            <TextViewer text={hero.attributes.life.toString()} template={template.attributes.life}></TextViewer>
-        </PositionedContainer>
         <PositionedContainer template={template.attributes.awakeningContainer} classList="!overflow-visible">
-            <button class="p-1 absolute left-1 -top-8 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'awakening')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'awakening')}
+                style:right="calc(-20px*var(--scale))"
+                style:top="calc(-12px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if hero.attributes.awakening > 0}
-            <button class="p-1 absolute left-1 -bottom-8 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'awakening') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'awakening') }}
+                style:right="calc(-20px*var(--scale))"
+                style:top="calc(16px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={hero.attributes.awakening.toString()} template={template.attributes.awakening}></TextViewer>
         </PositionedContainer>
+        <PositionedContainer template={template.attributes.lifeContainer} classList="!overflow-visible">
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-16px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
+            </button>
+            {#if hero.attributes.life > 1}
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(12px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
+            </button>
+            {/if}
+            <TextViewer text={hero.attributes.life.toString()} template={template.attributes.life}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.focusContainer} classList="!overflow-visible">
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'focus')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
+            </button>
+            {#if hero.attributes.focus > 1}
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'focus') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
+            </button>
+            {/if}
+            <TextViewer text={hero.attributes.focus.toString()} template={template.attributes.focus}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.skillContainer} classList="!overflow-visible">
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'skill')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc\(-4px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
+            </button>
+            {#if hero.attributes.skill > 1}
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'skill') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
+            </button>
+            {/if}
+            <TextViewer text={hero.attributes.skill.toString()} template={template.attributes.skill}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.defendContainer} classList="!overflow-visible">
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'defend')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc\(-4px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
+            </button>
+            {#if hero.attributes.defend > 1}
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'defend') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
+            </button>
+            {/if}
+            <TextViewer text={hero.attributes.defend.toString()} template={template.attributes.defend}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.attackContainer} classList="!overflow-visible">
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'attack')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc\(-4px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
+            </button>
+            {#if hero.attributes.attack > 1}
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'attack') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
+            </button>
+            {/if}
+            <TextViewer text={hero.attributes.attack.toString()} template={template.attributes.attack}></TextViewer>
+        </PositionedContainer>
+        <PositionedContainer template={template.attributes.moveContainer} classList="!overflow-visible">
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc\(-4px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
+            </button>
+            {#if hero.attributes.move > 1}
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'move') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
+                <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
+            </button>
+            {/if}
+            <TextViewer text={hero.attributes.move.toString()} template={template.attributes.move}></TextViewer>
+        </PositionedContainer>
     </div>
     <PositionedContainer classList="ability-container" template={template.ability_container}>
         {#if hero.abilities && hero.abilities.length > 0}
-            {#each hero.getAbilities() as ability, index}
+            {#each hero.abilities as ability, index}
             <div class="relative grid">
                 <TextEditor 
                     template={template.ability_name} 
@@ -396,7 +424,7 @@
                     classList="pb-[calc(16px*var(--scale))]"
                     bind:text={ability.effect}>
                 </TextEditor>
-                <button class="absolute right-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
+                <button class="absolute right-0 top-0 context-button content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
                     <iconify-icon icon="material-symbols:delete"></iconify-icon>
                 </button>
             </div>
@@ -406,7 +434,7 @@
                 <ComicButton text="Hero Ability" callback={handleAddAbility} icon="material-symbols:add-circle-rounded"></ComicButton>
             </div>
         {/if}
-        <button class="absolute left-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
+        <button class="absolute left-0 top-0 context-button content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
             <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon>
         </button>
     </PositionedContainer>
