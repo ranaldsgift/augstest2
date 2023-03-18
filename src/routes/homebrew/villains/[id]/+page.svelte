@@ -26,6 +26,8 @@
 
     let cooperativeVillainSheet: HTMLElement;
     let competitiveVillainSheet: HTMLElement;
+    let competitiveVillainBack: HTMLElement;
+    let cooperativeVillainBack: HTMLElement;
     let villainScale = 1;
     let villainPage: HTMLElement;
     let initiativeCardScale = 0.75;
@@ -73,6 +75,14 @@
                 else {
                     imageErrors.push('Cooperative Villain Sheet');
                 }
+
+                const villainBackPng = await getImage(cooperativeVillainBack, { style: { borderRadius: '0px' } });
+                if (villainBackPng) {
+                    zip.file(`${villain.name} by ${villain.user.userName}-Villain Cooperative Sheet-Back.png`, villainBackPng.split(',')[1], { base64: true });
+                }
+                else {
+                    imageErrors.push('Cooperative Villain Sheet Back');
+                }
             }
             if (villain.competitive) {
                 const villainPng = await getImage(competitiveVillainSheet, { style: { borderRadius: '0px' } });
@@ -81,6 +91,14 @@
                 }
                 else {
                     imageErrors.push('Competitive Villain Sheet');
+                }
+
+                const competitiveVillainBackPng = await getImage(competitiveVillainBack, { style: { borderRadius: '0px' } });
+                if (competitiveVillainBackPng) {
+                    zip.file(`${villain.name} by ${villain.user.userName}-Villain Competitive Sheet-Back.png`, competitiveVillainBackPng.split(',')[1], { base64: true });
+                }
+                else {
+                    imageErrors.push('Competitive Villain Sheet Back');
                 }
             }
 
@@ -116,6 +134,7 @@
             download(content, `${villain.name} by ${villain.user.userName}-${Date.now()}.zip`);        
             villainScale = initialVillainScale;
             drawerStore.close();
+            isDownloading = false;
         }
         setTimeout(downloadVillain, 150);
     }    
@@ -184,7 +203,7 @@
 	<li class="crumb">{villain.name}</li>
 </ol>
 
-<div class="villain-page" bind:this={villainPage}>    
+<div class="villain-page grid gap-5" bind:this={villainPage}>    
     <PageButtonContainer>
         <div class="flex justify-center flex-wrap page-button-container gap-2">
             {#if data.session?.user.id == villain.user.id}
@@ -196,7 +215,7 @@
         </div>
     </PageButtonContainer>
     <div class="grid gap-5">
-        <div class="flex justify-center gap-5">
+        <div class="flex flex-wrap justify-center gap-5">
             <div class="grid gap-5">
                 {#if villain.cooperative}
                 <div class="sheet-container {isCooperativeSheetFlipped ? 'flipped' : ''}">
@@ -206,10 +225,10 @@
                         <iconify-icon icon="mdi:arrow-u-right-top"></iconify-icon>
                     </button>
                     <div class="front sheet read-only" bind:this={cooperativeVillainSheet}>
-                        <CooperativeVillainEditor {villain} bind:cooperativeVillainSheet={cooperativeVillainSheet}></CooperativeVillainEditor>
+                        <CooperativeVillainEditor {villain} scale={villainScale} bind:cooperativeVillainSheet={cooperativeVillainSheet}></CooperativeVillainEditor>
                     </div>
                     <div class="sheet back">
-                        <CooperativeVillainSheetBack {villain} theme={villain.theme}></CooperativeVillainSheetBack>
+                        <CooperativeVillainSheetBack bind:container={cooperativeVillainBack} {villain} scale={villainScale} theme={villain.theme}></CooperativeVillainSheetBack>
                     </div>
                 </div>
                 {/if}
@@ -221,15 +240,15 @@
                         <iconify-icon icon="mdi:arrow-u-right-top"></iconify-icon>
                     </button>
                     <div class="front sheet read-only" bind:this={competitiveVillainSheet}>
-                        <CompetitiveVillainEditor {villain} bind:competitiveVillainSheet={competitiveVillainSheet}></CompetitiveVillainEditor>
+                        <CompetitiveVillainEditor {villain} scale={villainScale} bind:competitiveVillainSheet={competitiveVillainSheet}></CompetitiveVillainEditor>
                     </div>
                     <div class="sheet back">
-                        <CompetitiveVillainSheetBack {villain} theme={villain.theme}></CompetitiveVillainSheetBack>
+                        <CompetitiveVillainSheetBack bind:container={competitiveVillainBack} {villain} scale={villainScale} theme={villain.theme}></CompetitiveVillainSheetBack>
                     </div>
                 </div>
                 {/if}
             </div>
-            <div class="homebrew-details-container flex flex-col sm:flex-row lg:flex-col gap-5 pb-5">                
+            <div class="homebrew-details-container flex flex-wrap lg:flex-col gap-5 pb-5">                
                 <div class="comic-label">
                     <h1>Designer</h1>
                     <p><a href="/user/{villain.user.id}">{villain.user.userName}</a></p>

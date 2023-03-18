@@ -165,33 +165,45 @@
     </PositionedContainer>
     <div class="villain-attribute-container absolute z-[3]">
         <PositionedContainer template={template.competitive.attributes.moveContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.competitive.attributes.move > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'move') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'move') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={villain.competitive.attributes.move.toString()} template={template.competitive.attributes.move}></TextViewer>
         </PositionedContainer>
         <PositionedContainer template={template.competitive.attributes.attackContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'attack')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'attack')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.competitive.attributes.attack > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'attack') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'attack') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={villain.competitive.attributes.attack.toString()} template={template.competitive.attributes.attack}></TextViewer>
         </PositionedContainer>
         <PositionedContainer template={template.competitive.attributes.defendContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'defend')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'defend')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.competitive.attributes.defend > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'defend') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'defend') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
@@ -199,11 +211,15 @@
         </PositionedContainer>
         {#if villain.competitive.attributes.awakening === 0}        
         <PositionedContainer template={template.competitive.attributes.lifeContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.competitive.attributes.life > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
@@ -211,22 +227,30 @@
         </PositionedContainer>
         {:else}
         <PositionedContainer template={template.competitive.attributes.leaderLifeContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.competitive.attributes.life > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={villain.competitive.attributes.life.toString()} template={template.competitive.attributes.leaderLife}></TextViewer>
         </PositionedContainer>
         <PositionedContainer template={template.competitive.attributes.leaderAwakeningContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'awakening')}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'awakening')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.competitive.attributes.awakening > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'awakening') }}>
+            <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'awakening') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
@@ -253,7 +277,7 @@
                     classList="pb-[calc(16px*var(--scale))]"
                     bind:text={ability.effect}>
                 </TextEditor>
-                <button class="absolute right-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
+                <button class="absolute right-0 top-0 context-button z-50 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
                     <iconify-icon icon="material-symbols:delete"></iconify-icon>
                 </button>
             </div>
@@ -263,7 +287,7 @@
                 <ComicButton text="Ability" callback={handleAddAbility} icon="material-symbols:add-circle-rounded"></ComicButton>
             </div>
         {/if}
-        <button class="absolute left-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
+        <button class="absolute left-0 top-0 context-button z-50 content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
             <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon>
         </button>
     </PositionedContainer>

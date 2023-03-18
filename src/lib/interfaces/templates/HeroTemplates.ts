@@ -14,8 +14,8 @@ export interface HeroSheetTemplate {
     keywords: TemplateText
     keywordsContainer: PositionedTemplateContainer
     ability_container: PositionedTemplateContainer
-    ability_name: PositionedTemplateText
-    ability_effect: PositionedTemplateText
+    ability_name: TemplateText
+    ability_effect: TemplateText
     attributes: {
         move: TemplateText
         moveContainer: PositionedTemplateContainer
@@ -63,10 +63,10 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             classList: 'skew-x-[1.7deg] skew-y-[-1.7deg]' 
         },
         ability_container: { size: { width: '296px', height: '300px' }, position: { left: '395px', top: '144px' } },
-        ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'bangersregular', fontSize: 32, fontColor: 'black',
+        ability_name: { font: 'bangersregular', fontSize: 32, fontColor: 'black',
             classList: '!text-center skew-x-[1deg] skew-y-[-1deg]'
         },
-        ability_effect: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'smackattack_bbregular', fontSize: 16, fontColor: 'black',
+        ability_effect: { font: 'smackattack_bbregular', fontSize: 16, fontColor: 'black',
             classList: '!text-center skew-x-[1deg] skew-y-[-1deg]'
         },
         action_dice: [
@@ -105,10 +105,11 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             font: 'BebasNeueBold', 
             fontSize: 58,
             fontColor: 'white',
-            classList: 'transform scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
+            lineHeight: '0.85',
+            classList: 'transform grid content-end origin-bottom scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '232px', height: '85px' },
+            size: { width: '232px', height: '86px' },
             position: { left: '108px', top: '0px' } 
         },
         keywords:  {
@@ -122,10 +123,10 @@ export const HeroSheetTemplates: Record<ThemeTemplatesEnum, HeroSheetTemplate> =
             position: { left: '110px', top: '84px' }
         },
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' } },
-        ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 30, fontColor: '#ededed',
+        ability_name: { font: 'BebasNeueLight', fontSize: 30, fontColor: '#ededed',
             classList: 'w-[130%] ml-[-15%] transform !scale-x-[70%] tracking-[calc(4px*var(--scale))] !text-center mb-[calc(2px*var(--scale))] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
-        ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 20, fontColor: '#ededed',
+        ability_effect: { font: 'DINCondensedLightRegular', fontSize: 20, fontColor: '#ededed',
             classList: '!text-left !leading-[calc(calc(var(--fontSize)+calc(1px*var(--scale)))*var(--scale))] !px-[1px]'
         },
         action_dice: [

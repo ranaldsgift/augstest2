@@ -565,7 +565,7 @@
         <div class="skill-card-footer-container"></div>
     </div>
 
-    <button class="absolute left-1 top-1 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddCost}>
+    <button class="absolute left-1 top-1 context-button z-50 items-center" on:click|preventDefault={handleAddCost}>
         <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon> 
         <p class="unstyled text-white" style:line-height="24px">Cost</p>
     </button>

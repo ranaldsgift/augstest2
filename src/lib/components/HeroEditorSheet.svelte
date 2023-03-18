@@ -274,7 +274,7 @@
         <ImageEditor bind:image={hero.iconImage} {scale}></ImageEditor>
     </PositionedContainer>
     <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>
-        <TextEditor bind:text={hero.name} placeholder="Hero Name" classList={template.name.classList} template={template.name} bind:fontSize={hero.fontSizeHeroName}></TextEditor>
+        <TextEditor bind:text={hero.name} placeholder="Name" classList={template.name.classList} template={template.name} bind:fontSize={hero.fontSizeHeroName}></TextEditor>
     </PositionedContainer>
     <PositionedContainer classList="keywords-container z-[2]" template={template.keywordsContainer}>
         <button on:click|preventDefault={handleEditKeywords}>
@@ -348,7 +348,7 @@
         <PositionedContainer template={template.attributes.skillContainer} classList="!overflow-visible">
             <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'skill')}
                 style:right="calc(-24px*var(--scale))"
-                style:top="calc\(-4px*var(--scale))">
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if hero.attributes.skill > 1}
@@ -363,7 +363,7 @@
         <PositionedContainer template={template.attributes.defendContainer} classList="!overflow-visible">
             <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'defend')}
                 style:right="calc(-24px*var(--scale))"
-                style:top="calc\(-4px*var(--scale))">
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if hero.attributes.defend > 1}
@@ -378,7 +378,7 @@
         <PositionedContainer template={template.attributes.attackContainer} classList="!overflow-visible">
             <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'attack')}
                 style:right="calc(-24px*var(--scale))"
-                style:top="calc\(-4px*var(--scale))">
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if hero.attributes.attack > 1}
@@ -393,7 +393,7 @@
         <PositionedContainer template={template.attributes.moveContainer} classList="!overflow-visible">
             <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}
                 style:right="calc(-24px*var(--scale))"
-                style:top="calc\(-4px*var(--scale))">
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if hero.attributes.move > 1}

@@ -254,7 +254,7 @@
 
 <div bind:this={heroPage} class="hero-page flex justify-center gap-5 flex-col">
     <PageButtonContainer>
-        <div class="flex justify-center flex-wrap page-button-container gap-2">
+        <div class="flex justify-center flex-wrap gap-2">
             {#if $page.data.session?.user.id == hero.user.id}
             <a href={$page.url + "/edit"} class="unstyled">
                 <ComicButton icon="mdi:edit" text="Edit"></ComicButton>
@@ -292,7 +292,7 @@
                 <HeroSheetBack {hero} theme={hero.theme}></HeroSheetBack>
             </div>
         </div>
-            <div class="homebrew-details-container flex flex-col sm:flex-row lg:flex-col gap-5 pb-5">                
+            <div class="homebrew-details-container flex flex-wrap lg:flex-col gap-5 pb-5">                
                 <div class="comic-label">
                     <h1>Designer</h1>
                     <p><a href="/user/{hero.user.id}">{hero.user.userName}</a></p>

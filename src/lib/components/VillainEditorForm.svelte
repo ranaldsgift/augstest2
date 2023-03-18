@@ -205,7 +205,7 @@
                 <SlideToggle active="bg-primary-500" border="border-white border-2" name="Cooperative Villain Sheet Toggle" bind:checked={useAwakening} on:change={handleAwakeningToggle}>Awakening</SlideToggle>
                 {/if}
             </div>
-            <div class="flex gap-5">
+            <div class="grid 2xl:flex gap-5">
                 {#if villain.cooperative}
                 <div class="flex flex-wrap">
                     <CooperativeVillainEditor bind:villain={villain} scale={sheetScale}></CooperativeVillainEditor>

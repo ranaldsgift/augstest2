@@ -192,7 +192,7 @@
         <ImageEditor bind:image={villain.iconImage} {scale}></ImageEditor>
     </PositionedContainer>
     <PositionedContainer classList="flex justify-end !overflow-visible " template={template.nameContainer}>
-        <TextEditor bind:text={villain.name} placeholder="Name" classList={template.name.classList} template={template.name} bind:fontSize={villain.fontSizeVillainName}></TextEditor>
+        <TextEditor bind:text={villain.name} placeholder="Name" template={template.name} bind:fontSize={villain.fontSizeVillainName}></TextEditor>
     </PositionedContainer>
     <PositionedContainer classList="keywords-container z-[2]" template={template.keywordsContainer}>
         <button on:click|preventDefault={handleEditKeywords}>
@@ -220,44 +220,60 @@
     </PositionedContainer>
     <div class="villain-attribute-container absolute z-[3] context-button-container">
         <PositionedContainer template={template.cooperative.attributes.moveContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}>
+            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'move')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.cooperative.attributes.move > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'move') }}>
+            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'move') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={villain.cooperative.attributes.move.toString()} template={template.cooperative.attributes.move}></TextViewer>
         </PositionedContainer>
         <PositionedContainer template={template.cooperative.attributes.hitsContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'hits')}>
+            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'hits')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.cooperative.attributes.hits > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'hits') }}>
+            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'hits') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={villain.cooperative.attributes.hits.toString()} template={template.cooperative.attributes.hits}></TextViewer>
         </PositionedContainer>
         <PositionedContainer template={template.cooperative.attributes.blocksContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'blocks')}>
+            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'blocks')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.cooperative.attributes.blocks > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'blocks') }}>
+            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'blocks') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
             <TextViewer text={villain.cooperative.attributes.blocks.toString()} template={template.cooperative.attributes.blocks}></TextViewer>
         </PositionedContainer>
         <PositionedContainer template={template.cooperative.attributes.lifeContainer} classList="!overflow-visible">
-            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}>
+            <button class="p-1 absolute -right-8 -top-4 context-button" hidden on:click|preventDefault={() => handleChangeAttribute(1, 'life')}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(-4px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
             </button>
             {#if villain.cooperative.attributes.life > 1}
-            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}>
+            <button class="p-1 absolute -right-8 top-4 context-button" hidden on:click|preventDefault={() => { handleChangeAttribute(-1, 'life') }}
+                style:right="calc(-24px*var(--scale))"
+                style:top="calc(24px*var(--scale))">
                 <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
             </button>
             {/if}
@@ -282,7 +298,7 @@
                     classList="pb-[calc(16px*var(--scale))]"
                     bind:text={ability.effect}>
                 </TextEditor>
-                <button class="absolute right-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
+                <button class="absolute right-0 top-0 context-button z-50 content-center justify-center align-middle" on:click|preventDefault={() => handleRemoveAbility(index)}>      
                     <iconify-icon icon="material-symbols:delete"></iconify-icon>
                 </button>
             </div>
@@ -292,16 +308,20 @@
                 <ComicButton text="Ability" callback={handleAddAbility} icon="material-symbols:add-circle-rounded"></ComicButton>
             </div>
         {/if}
-        <button class="absolute left-0 top-0 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
+        <button class="absolute left-0 top-0 context-button z-50 content-center justify-center align-middle" on:click|preventDefault={handleAddAbility}>      
             <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon>
         </button>
     </PositionedContainer>
     <PositionedContainer template={template.cooperative.optimalStrikeRangeContainer}>
-        <button class="p-1 absolute left-1 -top-2 context-button" hidden on:click|preventDefault={() => handleChangeOSR(1)}>
+        <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => handleChangeOSR(1)}
+            style:left="calc(4px*var(--scale))"
+            style:top="calc(-4px*var(--scale))">
             <iconify-icon icon="material-symbols:arrow-upward"></iconify-icon>
         </button>
         {#if villain.cooperative.optimalStrikeRange > 1}
-        <button class="p-1 absolute left-1 top-6 context-button" hidden on:click|preventDefault={() => { handleChangeOSR(-1) }}>
+        <button class="p-1 absolute context-button" hidden on:click|preventDefault={() => { handleChangeOSR(-1) }}
+            style:left="calc(4px*var(--scale))"
+            style:top="calc(24px*var(--scale))">
             <iconify-icon icon="material-symbols:arrow-downward"></iconify-icon>
         </button>
         {/if}

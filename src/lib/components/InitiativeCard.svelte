@@ -1,7 +1,6 @@
 <script lang="ts">
     import { InitiativeCardTemplates } from "$lib/interfaces/templates/InitiativeCardTemplate";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
-    import { onMount } from "svelte";
     import PositionedContainer from "./PositionedContainer.svelte";
     import TextViewer from "./TextViewer.svelte";
     
@@ -133,51 +132,10 @@
     {#if template.overlay_image}
         <div style:background="url('{template.overlay_image}')" style:width="100%" style:height="100%" style:position="absolute" style:background-size="cover" style:opacity="0.9"></div>
     {/if}
-<!--     <div
-        class="initiative-card-name absolute flex justify-center items-end"
-        style:--top={template.name.position.top}
-        style:--left={template.name.position.left}
-        style:--width={template.name.size.width}
-        style:--height={template.name.size.height}
-    >
-        <p
-        data-content={name}
-        class="name {theme === ThemeTemplatesEnum.BTAS ? ' gradient-heading' : ' text-outline-large'}"
-        style:bottom="0px"
-        style:--fontSize="{template.name.fontSize}px"
-        style:--lineHeight="{template.name.fontSize - 14}px"
-        style:color={template.name.fontColor}
-        style:font-family={template.name.font}>{name}</p>
-    </div> -->
-    <PositionedContainer template={template.name}>
+    <PositionedContainer template={template.name} classList="!overflow-visible">
         <TextViewer template={template.nameText} text={name}></TextViewer>
     </PositionedContainer>
     <PositionedContainer template={template.ability}>
         <TextViewer template={template.abilityText} text={ability}></TextViewer>
     </PositionedContainer>
-    <!-- <svg
-    class="absolute"
-    style:--top={template.ability.position.top}
-    style:--left={template.ability.position.left}
-    style:--width={template.ability.size.width}
-    style:--height={template.ability.size.height}
-    style:--fontSize="{template.ability.fontSize}px"
-    style:--color={template.ability.fontColor}
-    style:--fontFamily={template.ability.font}>
-        <linearGradient id="gr-simple" x1="1" y1="0" x2="100%" y2="100%">
-          <stop stop-color="#ffffff" offset="10%"/>
-          <stop stop-color="#ffffff" offset="65%"/>
-          <stop stop-color="#7d7d7d" offset="80%"/>
-          <stop stop-color="#ffffff" offset="90%"/>
-        </linearGradient>
-        <text
-            text-anchor="middle"
-            x="50%"
-            y="28%"
-            dy=".35em"
-            class="ability-text text text-stroke"
-        >
-            {ability}
-        </text>
-      </svg> -->
 </div>

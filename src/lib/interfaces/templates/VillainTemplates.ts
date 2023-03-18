@@ -49,10 +49,11 @@ export const VillainTemplates: Record<ThemeTemplatesEnum, VillainTemplate> = {
             font: 'BebasNeueBold', 
             fontSize: 58,
             fontColor: 'white',
-            classList: 'transform scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
+            lineHeight: '0.85',
+            classList: 'transform grid content-end origin-bottom scale-y-[138%] [text-shadow:_6px_4px_5px_rgb(0_0_0_/_80%)] tracking-[calc(4px*var(--scale))]' 
         },
         nameContainer: {
-            size: { width: '232px', height: '85px' },
+            size: { width: '232px', height: '86px' },
             position: { left: '108px', top: '0px' } 
         },
         keywords:  {
