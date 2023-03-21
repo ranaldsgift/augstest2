@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { applyAction, deserialize, enhance } from "$app/forms";
+    import { applyAction, deserialize } from "$app/forms";
     import { modalStore, RadioGroup, RadioItem, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import ComicButton from "./ComicButton.svelte";
     import { EnumHelper } from "$lib/helpers/EnumHelper";
@@ -17,7 +17,7 @@
     import SkillCardEditor from "./SkillCardEditor.svelte";
     import { SkillCard } from "$lib/entities/SkillCard";
     import SkillCardForm from "./SkillCardForm.svelte";
-    import { fade, fly, slide } from 'svelte/transition'
+    import { slide } from 'svelte/transition'
 	import { quintOut } from 'svelte/easing';
     import { SkillCardTemplates } from "$lib/interfaces/templates/SkillCardTemplate";
     import PageButtonContainer from "./PageButtonContainer.svelte";

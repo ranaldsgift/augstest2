@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { StringHelper } from "$lib/helpers/StringHelper";
     import type { FormField, PositionedTemplateText } from "$lib/interfaces/templates/HtmlTemplates";
     import { modalStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
     import ModalFormEditor from "./ModalFormEditor.svelte";

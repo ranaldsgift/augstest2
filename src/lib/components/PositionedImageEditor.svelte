@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { FormField, Position, PositionedItem, Size } from "$lib/interfaces/templates/HtmlTemplates";
+    import type { FormField, PositionedItem, Size } from "$lib/interfaces/templates/HtmlTemplates";
     import { modalStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
     import ModalFormEditor from "./ModalFormEditor.svelte";
 

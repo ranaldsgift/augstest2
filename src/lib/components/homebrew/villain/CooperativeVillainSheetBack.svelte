@@ -3,7 +3,6 @@
     import type { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import type { Villain } from "$lib/entities/Villain";
 
-
     export let theme: ThemeTemplatesEnum;
     export let scale: number = 1;
     export let villain: Villain;

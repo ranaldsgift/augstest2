@@ -1,12 +1,10 @@
 <script lang="ts">
     import type { Villain } from "$lib/entities/Villain";
     import { CompetitiveVillainAbility } from "$lib/entities/CompetitiveVillainAbility";
-    import type { CompetitiveVillainAttributes } from "$lib/entities/CompetitiveVillainAttributes";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { VillainTemplates } from "$lib/interfaces/templates/VillainTemplates";
     import { modalStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
     import ComicButton from "./ComicButton.svelte";
-    import CompetitiveVillainAttributesForm from "./CompetitiveVillainAttributesForm.svelte";
     import ImageEditor from "./ImageEditor.svelte";
     import KeywordForm from "./KeywordForm.svelte";
     import PositionedContainer from "./PositionedContainer.svelte";
@@ -67,22 +65,6 @@
         }
 
         villain = villain;
-    }
-
-    function handleEditAttributes(event: any, focusedAttribute: string) {
-        const c: ModalComponent = { ref: CompetitiveVillainAttributesForm, props: { attributes: villain.competitive!.attributes, focus: focusedAttribute } };
-        const d: ModalSettings = {
-            type: 'component',
-            component: c,
-            response: (attributes: CompetitiveVillainAttributes) => {
-                if (!attributes || !villain.competitive)
-                    return
-                
-                villain.competitive.attributes = attributes;
-                villain = villain;
-            }
-        };
-        modalStore.trigger(d);
     }
     
     function handleAddAbility() {

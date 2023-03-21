@@ -9,7 +9,6 @@
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
     import { goto } from "$app/navigation";
-    import { instanceToInstance } from "class-transformer";
     import { DataHelper } from "$lib/helpers/DataHelper";
     import { ToastHelper } from "$lib/helpers/ToastHelper";
     import SkillCardEditor from "./SkillCardEditor.svelte";
