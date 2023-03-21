@@ -105,12 +105,6 @@ export class Hero extends Homebrew {
         if (!this.keywords || this.keywords.length == 0) {
             errors.push('Keywords');
         }
-        if (!this.heroImage || this.heroImage.url?.length == 0) {
-            errors.push('Hero Image')
-        }
-        if (!this.iconImage || this.iconImage.url?.length == 0) {
-            errors.push('Icon Image')
-        }
         if (!this.abilities || this.abilities.length == 0 || this.abilities.some(a => !a.isValid())) {
             errors.push('Hero Abilities');
         }

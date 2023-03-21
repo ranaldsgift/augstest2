@@ -84,12 +84,6 @@ export class Villain extends Homebrew {
         if (!this.keywords || this.keywords.length == 0) {
             missingFields.push('Keywords');
         }
-        if (!this.image || this.image.url?.length == 0) {
-            missingFields.push('Image')
-        }
-        if (!this.iconImage || this.iconImage.url?.length == 0) {
-            missingFields.push('Icon Image')
-        }
         missingFields.forEach((field, index) => {
             errors.push(`${field}${index < missingFields.length - 1 ? ', ' : ''}`);
         });
