@@ -13,9 +13,10 @@ export interface TemplateText {
     fontSize: number
     fontColor: string
     textShadow?: string
-    lineHeight?: number,
+    lineHeight?: string,
     classList?: string,
     strokeColor?: string,
+    strokeWidth?: string,
 }
 
 export interface TemplatePositionedText {

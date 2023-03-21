@@ -153,7 +153,7 @@
         }
     }
     :global(.ability-container *), :global(.hero-attribute-container *), :global(.hero-action-dice-container *) {
-        z-index: 3;
+        z-index: 2;
     }
     .comic-body>div {
         display: flex;

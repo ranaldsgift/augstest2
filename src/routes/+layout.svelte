@@ -71,6 +71,10 @@
 		{ type: 'default', name: 'Default', icon: '💫' },
 		{ type: 'hamlindigo', name: 'Hamlindigo', icon: '👔' },
 		{ type: 'vintage', name: 'Vintage', icon: '📺' },
+		{ type: 'modern', name: 'Modern', icon: '🤖' },
+		{ type: 'rocket', name: 'Rocket', icon: '🚀' },
+		{ type: 'gold-nouveau', name: 'Gold Nouveau', icon: '💫' },
+        { type: 'dc', name: 'DC Comics', icon: '🦇' }
 	];
     
     const drawerOpen: any = () => { drawerStore.open({ id: 'login', position: 'left' }); };

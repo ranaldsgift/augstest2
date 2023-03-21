@@ -1,7 +1,8 @@
 <script lang="ts">
     import { InitiativeCardTemplates } from "$lib/interfaces/templates/InitiativeCardTemplate";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
-    import { onMount } from "svelte";
+    import PositionedContainer from "./PositionedContainer.svelte";
+    import TextViewer from "./TextViewer.svelte";
     
     export let theme: ThemeTemplatesEnum = ThemeTemplatesEnum.TMNT;
     export let backgroundColor: string = '#000000';
@@ -9,20 +10,6 @@
     export let name: string = '';
     export let ability: string = '';
     export let scale: number = 1;
-
-    let wideImage = false;
-
-    onMount (() => {    
-        const checkWideImage = async () => {
-            const img = new Image();
-            img.src = image;
-            await img.decode()
-            if (img.naturalHeight / img.naturalWidth < 1.5) {
-                wideImage = true;
-            }
-        };
-        checkWideImage();
-    });
 
     const template = InitiativeCardTemplates[theme];
 </script>
@@ -64,7 +51,8 @@
         letter-spacing: calc(4px * var(--scale));
     }
     .initiative-card-image {
-        top: 15px;
+        padding-top: calc(15px*var(--scale));
+        padding-bottom: calc(15px*var(--scale));
         position: absolute;
         width: var(--width);
         height: var(--height);
@@ -140,49 +128,14 @@
     {#if theme === ThemeTemplatesEnum.TMNT}
         <div class="halftone-container"><div class="halftone"></div></div>
     {/if}
-    <img class="initiative-card-image" src={image} style:--width={wideImage ? undefined : '100%'} style:--height={wideImage ? '100%' : undefined} alt="Initiative Card" />
+    <img class="initiative-card-image" src={image} style:--height='100%' alt="Initiative Card" />
     {#if template.overlay_image}
         <div style:background="url('{template.overlay_image}')" style:width="100%" style:height="100%" style:position="absolute" style:background-size="cover" style:opacity="0.9"></div>
     {/if}
-    <div
-        class="initiative-card-name absolute flex justify-center items-end"
-        style:--top={template.name.position.top}
-        style:--left={template.name.position.left}
-        style:--width={template.name.size.width}
-        style:--height={template.name.size.height}
-    >
-        <p
-        data-content={name}
-        class="name {theme === ThemeTemplatesEnum.BTAS ? ' gradient-heading' : ' text-outline-large'}"
-        style:bottom="0px"
-        style:--fontSize="{template.name.fontSize}px"
-        style:--lineHeight="{template.name.fontSize - 14}px"
-        style:color={template.name.fontColor}
-        style:font-family={template.name.font}>{name}</p>
-    </div>
-    <svg
-    class="absolute"
-    style:--top={template.ability.position.top}
-    style:--left={template.ability.position.left}
-    style:--width={template.ability.size.width}
-    style:--height={template.ability.size.height}
-    style:--fontSize="{template.ability.fontSize}px"
-    style:--color={template.ability.fontColor}
-    style:--fontFamily={template.ability.font}>
-        <linearGradient id="gr-simple" x1="1" y1="0" x2="100%" y2="100%">
-          <stop stop-color="#ffffff" offset="10%"/>
-          <stop stop-color="#ffffff" offset="65%"/>
-          <stop stop-color="#7d7d7d" offset="80%"/>
-          <stop stop-color="#ffffff" offset="90%"/>
-        </linearGradient>
-        <text
-            text-anchor="middle"
-            x="50%"
-            y="28%"
-            dy=".35em"
-            class="ability-text text text-stroke"
-        >
-            {ability}
-        </text>
-      </svg>
+    <PositionedContainer template={template.name} classList="!overflow-visible">
+        <TextViewer template={template.nameText} text={name}></TextViewer>
+    </PositionedContainer>
+    <PositionedContainer template={template.ability}>
+        <TextViewer template={template.abilityText} text={ability}></TextViewer>
+    </PositionedContainer>
 </div>

@@ -14,7 +14,7 @@
         {
             search: '',
             sort: '',
-            pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50] }
+            pagination: { offset: 0, limit: 12, size: 0, amounts: [12, 24, 36] }
         }
     );
     if (!$HeroesPageStore) {
@@ -32,7 +32,7 @@
 	<li class="crumb">Heroes</li>   
 </ol>
 
-<div class="max-w-7xl grid gap-5">
+<div class="max-w-[1400px] grid gap-5">
     <HeroTable dataTableStore={$HeroesPageStore}></HeroTable>
     {#if data.session}
     <PageButtonContainer>

@@ -50,7 +50,7 @@
 </style>
 
 
-<div class="space-y-4">
+<div>
 	<form class="grid">		
 		<button class="context-button absolute right-10 top-3" on:click|preventDefault={handleReloadData}>
 			<iconify-icon icon="material-symbols:refresh"></iconify-icon>
@@ -61,16 +61,18 @@
 		{#await skills}
 			<div style:height="40px" style:width="40px"><ProgressRadial></ProgressRadial></div>
 		{:then data}
-		<div class="comic-body flex flex-wrap gap-5 justify-center mb-2">
-			{#each data.items as skillCard, index}
-			<button class="{skillCards && skillCards.some(sc => sc.id === skillCard.id) ? 'active' : ''}" on:click|preventDefault={event => handleToggleSelected(skillCard, event)}>			
-				<iconify-icon class="context-button absolute" icon="material-symbols:check"></iconify-icon>
-				<div class="read-only">
-					<SkillCardEditor skillCard={skillCard} scale={0.3}></SkillCardEditor>
-				</div>
-			</button>
-			{/each}
-			<footer class="modal-footer {parent.regionFooter}">
+		<div class="comic-body grid gap-5">
+			<div class="flex flex-wrap gap-5 justify-center">
+				{#each data.items as skillCard, index}
+				<button class="{skillCards && skillCards.some(sc => sc.id === skillCard.id) ? 'active' : ''}" on:click|preventDefault={event => handleToggleSelected(skillCard, event)}>			
+					<iconify-icon class="context-button absolute" icon="material-symbols:check"></iconify-icon>
+					<div class="read-only">
+						<SkillCardEditor skillCard={skillCard} scale={0.3}></SkillCardEditor>
+					</div>
+				</button>
+				{/each}
+			</div>
+			<footer class="{parent.regionFooter}">
 				<ComicButton text="Cancel" callback={parent.onClose}></ComicButton>
 				<ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
 			</footer>

@@ -4,10 +4,11 @@ import type { ThemeTemplatesEnum } from "./ThemeTemplatesEnum";
 export interface CooperativeVillainTemplate {
     background_image: string
     overlay_image?: string
+    backBackgroundImage: string
     targetPriorityArrow: string
     ability_container: PositionedTemplateContainer
-    ability_name: PositionedTemplateText
-    ability_effect: PositionedTemplateText
+    ability_name: TemplateText
+    ability_effect: TemplateText
     targetPriorityContainer: PositionedTemplateContainer
     targetAttributeContainer: PositionedTemplateContainer
     optimalStrikeRangeContainer: PositionedTemplateContainer
@@ -28,12 +29,13 @@ export interface CooperativeVillainTemplate {
 export const CooperativeVillainTemplates: Record<ThemeTemplatesEnum, CooperativeVillainTemplate> = {
     TMNT: {
         background_image: '/images/homebrew%20templates/TMNT/villain_cooperative_background.png',
+        backBackgroundImage: '/images/homebrew%20templates/TMNT/villain_cooperative_back_background.png',
         ability_container: { size: { width: '296px', height: '300px' }, position: { left: '395px', top: '144px' } },
         targetPriorityArrow: '/images/homebrew%20templates/TMNT/villain_target_priority_arrow.png',
-        ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'bangersregular', fontSize: 32, fontColor: 'black',
+        ability_name: { font: 'bangersregular', fontSize: 32, fontColor: 'black',
             classList: '!text-center skew-x-[1deg] skew-y-[-1deg]'
         },
-        ability_effect: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'smackattack_bbregular', fontSize: 16, fontColor: 'black',
+        ability_effect: { font: 'smackattack_bbregular', fontSize: 16, fontColor: 'black',
             classList: '!text-center skew-x-[1deg] skew-y-[-1deg]'
         },
         targetPriorityContainer: { size: { width: '40px', height: '28px' }, position: { left: '565px', top: '474px' } },
@@ -55,12 +57,13 @@ export const CooperativeVillainTemplates: Record<ThemeTemplatesEnum, Cooperative
     BTAS: {
         background_image: '/images/homebrew%20templates/BTAS/villain_cooperative_background.png',
         overlay_image: '/images/homebrew%20templates/BTAS/villain_cooperative_overlay.png',
+        backBackgroundImage: '/images/homebrew%20templates/BTAS/villain_cooperative_back_background.png',
         targetPriorityArrow: '/images/homebrew%20templates/BTAS/villain_target_priority_arrow.png',
         ability_container: { size: { width: '284px', height: '284px' }, position: { left: '370px', top: '162px' }, classList: 'z-[3]' },
-        ability_name: { size: { width: '200px', height: '20px' }, position: { left: '100px', top: '200px' }, font: 'BebasNeueLight', fontSize: 30, fontColor: 'black',
-            classList: 'font-bold w-[130%] ml-[-15%] transform !scale-x-[70%] tracking-[calc(4px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
+        ability_name: { font: 'BebasNeueLight', fontSize: 30, fontColor: 'black',
+            classList: 'w-[130%] ml-[-15%] transform !scale-x-[70%] tracking-[calc(4px*var(--scale))] !text-center mb-[1px] !bg-bottomline [background:_linear-gradient(to_right,_#77777700_5%,_#ffffff70_25%,_#ffffff70_75%,_#77777700_95%)_left_bottom_no-repeat]'
         },
-        ability_effect: { size: { width: '190px', height: '20px' }, position: { left: '105px', top: '200px' }, font: 'DINCondensedLightRegular', fontSize: 20, fontColor: 'black',
+        ability_effect: { font: 'DINCondensedLightRegular', fontSize: 20, fontColor: 'black',
             classList: '!text-left !leading-[calc(calc(var(--fontSize)+calc(1px*var(--scale)))*var(--scale))] !px-[1px]'
         },
         targetPriorityContainer: { size: { width: '40px', height: '36px' }, position: { left: '505px', top: '490px' }, classList: 'z-[3]' },

@@ -32,16 +32,21 @@
 	}
 </style>
 
-<div class="modal-example-form space-y-4">
-	<RadioGroup active="variant-filled-primary" regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
-		{#each iconList as i}
-			<RadioItem bind:group={$iconStore} name={`radio-${i}`} value={i}>
-				<SkillCardIcon {theme} icon={SkillCardIconsEnum[i]}></SkillCardIcon>
-			</RadioItem>
-		{/each}
-	</RadioGroup>
-	<footer class="modal-footer {parent.regionFooter}">
-        <ComicButton text="Remove" icon="material-symbols:delete" callback={removeIcon}></ComicButton>
-        <ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
-    </footer>
+<div>
+	<header class="comic-header">
+		<h1>Select Cost</h1>
+	</header>
+	<div class="comic-body grid gap-5">
+		<RadioGroup active="variant-filled-primary" regionList="border border-surface-500 p-4 rounded-container-token grid" class="grid">
+			{#each iconList as i}
+				<RadioItem bind:group={$iconStore} name={`radio-${i}`} value={i}>
+					<SkillCardIcon {theme} icon={SkillCardIconsEnum[i]}></SkillCardIcon>
+				</RadioItem>
+			{/each}
+		</RadioGroup>
+		<footer class="modal-footer {parent.regionFooter}">
+			<ComicButton text="Remove" icon="material-symbols:delete" callback={removeIcon}></ComicButton>
+			<ComicButton text="Save" icon="material-symbols:save" callback={onFormSubmit}></ComicButton>
+		</footer>
+	</div>
 </div>

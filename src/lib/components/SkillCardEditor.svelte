@@ -101,7 +101,7 @@
     position: relative;
     overflow: hidden;
     box-shadow: black 0 0 3px 1px;
-    border-radius: 5px;
+    border-radius: 10px;
     }
 
     .skill-card-character-name {
@@ -549,7 +549,12 @@
 <div class="skill-card-container" style:--scale={scale} data-theme={theme}>
     <div class="skill-card-background absolute w-full h-full  hidden" style:background="url('{template.background_image}') no-repeat center / cover, {backgroundColor}" style:background-size="cover"></div>
     <div class="skill-card-background-css w-full h-full hidden" style:--backgroundColor={backgroundColor}></div>
+    {#if theme === ThemeTemplatesEnum.TMNT}
     <div class="skill-card-halftone-background absolute h-full w-full hidden"><div class="halftone"></div></div>
+    {/if}
+    {#if theme === ThemeTemplatesEnum.BTAS}
+    <img class="absolute w-full h-full mix-blend-color-burn" src="/images/overlays/paper.png" alt="Paper Background Effect">
+    {/if}
     <div class="skill-card-image-container">
         <ImageEditor bind:image={skillCard.image} scale={scale} classList="bg-primary-200-700-token" inputContainerClassList="bottom-[calc(40px*var(--scale))]"></ImageEditor>
     </div>
@@ -560,7 +565,7 @@
         <div class="skill-card-footer-container"></div>
     </div>
 
-    <button class="absolute left-1 top-1 context-button z-50 h-8 content-center justify-center align-middle" on:click|preventDefault={handleAddCost}>
+    <button class="absolute left-1 top-1 context-button z-50 items-center" on:click|preventDefault={handleAddCost}>
         <iconify-icon icon="material-symbols:add-circle-rounded"></iconify-icon> 
         <p class="unstyled text-white" style:line-height="24px">Cost</p>
     </button>

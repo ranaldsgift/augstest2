@@ -63,7 +63,7 @@
 	<li class="crumb">{skillCard.name}</li>
 </ol>
 
-<div class="skill-card-page h-full" bind:this={skillCardPage}>    
+<div class="skill-card-page" bind:this={skillCardPage}>    
     <PageButtonContainer>
         <div class="flex justify-center flex-wrap page-button-container gap-2">
             {#if data.session?.user.id == skillCard.user.id}
@@ -74,7 +74,7 @@
             <ComicButton icon="material-symbols:download-rounded" callback={handleDownload}></ComicButton>
         </div>
     </PageButtonContainer>
-    <div class="flex h-full justify-center gap-5 mt-5">
+    <div class="flex justify-center gap-5 mt-5">
         <div class="read-only">
             <SkillCardEditor scale={skillCardScale} skillCard={skillCard}></SkillCardEditor>
         </div>

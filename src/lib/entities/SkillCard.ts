@@ -69,9 +69,6 @@ export class SkillCard extends Homebrew {
         if (!this.effect || this.effect.length === 0) {
             errors.push('Effect');
         }
-        if (!this.image || this.image.url?.length === 0) {
-            errors.push('Image')
-        }
         
         return errors.join(', ');
     }
