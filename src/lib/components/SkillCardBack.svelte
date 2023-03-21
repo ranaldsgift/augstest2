@@ -1,7 +1,6 @@
 <script lang="ts">
     import { SkillCardBackTemplates } from "$lib/interfaces/templates/SkillCardBackTemplates";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
-    import { onMount } from "svelte";
     
     export let theme: ThemeTemplatesEnum = ThemeTemplatesEnum.TMNT;
     export let backgroundColor: string = '#000000';
@@ -90,6 +89,5 @@
     </div>
     {#if template.overlayImage}
         <img class="absolute h-full w-full" src={template.overlayImage} alt="Overlay">
-        <!-- <div style:background="url('{template.overlayImage}')" style:width="100%" style:height="100%" style:position="absolute" style:background-size="cover" style:opacity="0.9"></div> -->
     {/if}
 </div>

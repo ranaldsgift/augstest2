@@ -1,6 +1,5 @@
 <script lang="ts">
     import { CooperativeVillainAbility } from "$lib/entities/CooperativeVillainAbility";
-    import type { CooperativeVillainAttributes } from "$lib/entities/CooperativeVillainAttributes";
     import type { Villain } from "$lib/entities/Villain";
     import { DiceIconsEnum, VillainTargetAttributeEnum, VillainTargetPriorityEnum } from "$lib/enums/Enums";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
@@ -8,7 +7,6 @@
     import { modalStore, popup, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
     import ComicButton from "./ComicButton.svelte";
-    import CooperativeVillainAttributesForm from "./CooperativeVilllainAttributesForm.svelte";
     import ImageEditor from "./ImageEditor.svelte";
     import KeywordForm from "./KeywordForm.svelte";
     import PositionedContainer from "./PositionedContainer.svelte";
@@ -73,22 +71,6 @@
         };
         modalStore.trigger(d);
     }
-
-    function handleEditAttributes(event: any, focusedAttribute: string) {
-        const c: ModalComponent = { ref: CooperativeVillainAttributesForm, props: { attributes: villain.cooperative!.attributes, focus: focusedAttribute } };
-        const d: ModalSettings = {
-            type: 'component',
-            component: c,
-            response: (attributes: CooperativeVillainAttributes) => {
-                if (!attributes)
-                    return
-                
-                villain.cooperative!.attributes = attributes;
-                villain = villain;
-            }
-        };
-        modalStore.trigger(d);
-    }
     
     function handleAddAbility() {
         const ability = new CooperativeVillainAbility();
@@ -119,9 +101,6 @@
     function handleCycleTargetAttribute() {
         villain.cooperative!.targetAttribute = villain.cooperative?.targetAttribute === VillainTargetAttributeEnum.Focus ? VillainTargetAttributeEnum.Life : villain.cooperative?.targetAttribute === VillainTargetAttributeEnum.Life ? VillainTargetAttributeEnum.Skill : VillainTargetAttributeEnum.Focus;
     }
-
-    let villainCoopPaletteButton: HTMLElement;
-    let villainCoopTextButton: HTMLElement;
 </script>
 
 <style>

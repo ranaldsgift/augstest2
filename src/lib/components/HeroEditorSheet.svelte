@@ -1,14 +1,10 @@
 <script lang="ts">
     import PositionedContainer from "./PositionedContainer.svelte";
-    import PositionedItemEditor from "./PositionedItemEditor.svelte";
     import { modalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import HeroActionDiceForm from "./ActionDiceForm.svelte";
     import ActionDiceIcon from "./ActionDiceIcon.svelte";
     import { DiceIconsEnum } from "$lib/enums/Enums";
-    import ModalFormEditor from "./ModalFormEditor.svelte";
     import ComicButton from "./ComicButton.svelte";
-    import type { FormField } from "$lib/interfaces/templates/HtmlTemplates";
-    import { writable, type Writable } from "svelte/store";
     import type { Hero } from "$lib/entities/Hero";
     import { HeroAbility } from "$lib/entities/HeroAbility";
     import { ThemeTemplates } from "$lib/interfaces/templates/ThemeTemplates";
@@ -16,10 +12,7 @@
     import KeywordForm from "./KeywordForm.svelte";
     import ImageEditor from "./ImageEditor.svelte";
     import TextEditor from "./TextEditor.svelte";
-    import PositionedTextContainer from "./PositionedTextContainer.svelte";
     import TextViewer from "./TextViewer.svelte";
-    import HeroAttributesForm from "./HeroAttributesForm.svelte";
-    import type { HeroAttributes } from "$lib/entities/HeroAttributes";
 
     export let template = ThemeTemplates.TMNT.heroSheet;
     export let hero: Hero;
@@ -47,24 +40,7 @@
 		modalStore.trigger(d);
     }
 
-    function handleEditAttributes(event: any, focusedAttribute: string) {
-        const c: ModalComponent = { ref: HeroAttributesForm, props: { attributes: hero.attributes, focus: focusedAttribute } };
-        const d: ModalSettings = {
-            type: 'component',
-            component: c,
-            response: (attributes: HeroAttributes) => {
-                if (!attributes)
-                    return
-                
-                hero.attributes = attributes;
-                hero = hero;
-            }
-        };
-        modalStore.trigger(d);
-    }
-
     function handleEditKeywords() {
-
         const c: ModalComponent = { ref: KeywordForm, props: { keywords: hero.keywords } };
         const d: ModalSettings = {
             type: 'component',
@@ -101,49 +77,6 @@
         hero.abilities.splice(index, 1);
         hero = hero;
     }
-
-    function handleEditAbility(index: number) {
-        const abilityName = hero.abilities && hero.abilities.length > index ? hero.abilities[index].name : '';
-        const abilityEffect = hero.abilities && hero.abilities.length > index  ? hero.abilities[index].effect : '';
-
-        const formFields: FormField[] = [
-            {
-                name: 'ability_name',
-                type: 'text',
-                value: abilityName
-            },
-            {
-                name: 'ability_effect',
-                type: 'textarea',
-                value: abilityEffect
-            }
-        ]
-
-        const c: ModalComponent = { ref: ModalFormEditor, props: { fields: JSON.stringify(formFields) } };
-        const d: ModalSettings = {
-            type: 'component',
-            title: 'Edit Hero Ability',
-            component: c,
-            response: (fields: FormField[]) => {
-                if (!fields || !hero.abilities) {
-                    return;
-                }
-
-                const abilityName = fields.find(field => field.name == 'ability_name')?.value;
-                const abilityEffect = fields.find(field => field.name == 'ability_effect')?.value;
-
-                if (!abilityName || !abilityEffect) {
-                    return;
-                }
-
-                hero.abilities[index].name = abilityName;
-                hero.abilities[index].effect = abilityEffect;
-
-                hero = hero;
-            }
-        };
-        modalStore.trigger(d);
-    }    
 
     function handleChangeAttribute(increment: number, attribute: "move" | "attack" | "defend" | "skill" | "focus" | "life" | "awakening" ) {
         switch (attribute) {

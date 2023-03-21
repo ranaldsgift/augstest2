@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { TemplateText } from "$lib/interfaces/templates/HtmlTemplates";
 
-
     export let text: string = '';
     export let classList: string = '';
     export let template: TemplateText;

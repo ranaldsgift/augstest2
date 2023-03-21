@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { TemplateText } from "$lib/interfaces/templates/HtmlTemplates";
 
-
     export let text: string = '';
     export let placeholder: string = '';
     export let spellcheck: boolean = false;

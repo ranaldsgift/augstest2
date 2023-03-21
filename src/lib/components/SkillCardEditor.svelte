@@ -1,7 +1,7 @@
 <script lang="ts">
     import { SkillCard } from "$lib/entities/SkillCard";
     import { SkillCardTemplates, type SkillCardTemplate } from "$lib/interfaces/templates/SkillCardTemplate";
-    import { modalStore, toastStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
+    import { modalStore, type ModalComponent, type ModalSettings } from "@skeletonlabs/skeleton";
     import PositionedContainer from "./PositionedContainer.svelte";
     import { SkillCardIconsEnum } from "$lib/enums/Enums";
     import SkillCardIconForm from "./SkillCardIconForm.svelte";

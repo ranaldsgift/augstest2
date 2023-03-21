@@ -2,7 +2,7 @@
     import { EnumHelper } from "$lib/helpers/EnumHelper";
     import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { VillainTemplates } from "$lib/interfaces/templates/VillainTemplates";
-    import { Accordion, AccordionItem, popup, RadioGroup, RadioItem, SlideToggle, Tab, TabGroup } from "@skeletonlabs/skeleton";
+    import { RadioGroup, RadioItem, SlideToggle, Tab, TabGroup } from "@skeletonlabs/skeleton";
     import { writable, type Writable } from "svelte/store";
     import CompetitiveVillainEditor from "./CompetitiveVillainEditor.svelte";
     import CooperativeVillainEditor from "./CooperativeVillainEditor.svelte";
@@ -20,7 +20,6 @@
     import { VillainCreateStore } from "$lib/stores/PageStores";
     import PigeonPeteSays from "./PigeonPeteSays.svelte";
     import { onMount } from "svelte";
-
 
     export let villain: Villain = new Villain();
     $: villainTheme = villain.theme ?? ThemeTemplatesEnum.TMNT;

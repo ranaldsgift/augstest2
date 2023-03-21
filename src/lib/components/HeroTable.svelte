@@ -1,13 +1,9 @@
 <script lang="ts">
     import type { Hero } from "$lib/entities/Hero";
-    import { DiceIconsEnum } from "$lib/enums/Enums";
-    import { DateHelper } from "$lib/helpers/DateHelper";
-    import { ThemeTemplatesEnum } from "$lib/interfaces/templates/ThemeTemplatesEnum";
     import { Heroes } from "$lib/stores/DataStores";
-    import { createDataTableStore, dataTableHandler, Paginator, ProgressRadial, tableInteraction } from "@skeletonlabs/skeleton";
+    import { createDataTableStore, Paginator, tableInteraction } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
-    import ActionDiceIcon from "./ActionDiceIcon.svelte";
     import HeroEditorSheet from "./HeroEditorSheet.svelte";
     
     export let title: string = 'Heroes';
