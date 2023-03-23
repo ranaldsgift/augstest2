@@ -22,7 +22,10 @@
     }
 </script>
 
-<svelte:head><title>Browse Heroes - augs.tools</title></svelte:head>
+<svelte:head>
+    <title>Browse Heroes - augs.tools</title>
+    <meta name="description" content="Browse a list of Heroes created by the community." />
+</svelte:head>
 
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>

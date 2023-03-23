@@ -189,7 +189,7 @@
 <svelte:window on:resize={updateScales}></svelte:window>
 
 <svelte:head>
-    <title>{villain.name} by {villain.user.userName} - Skill Card - augs.tools</title>
+    <title>{villain.name} by {villain.user.userName} - Villain - augs.tools</title>
     <meta name="description" content={villain.description} />
 </svelte:head>
 

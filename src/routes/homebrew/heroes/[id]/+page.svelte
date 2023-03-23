@@ -238,7 +238,7 @@
 <svelte:window on:resize={updateScales}></svelte:window>
 
 <svelte:head>
-    <title>{`${hero.name} by ${hero.user.userName}`} - augs.tools</title>
+    <title>{`${hero.name} by ${hero.user.userName}`} - Hero - augs.tools</title>
     <meta name="description" content={hero.description} />
 </svelte:head>
 

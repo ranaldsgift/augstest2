@@ -19,7 +19,10 @@
     }
 </script>
 
-<svelte:head><title>Browse Villains - augs.tools</title></svelte:head>
+<svelte:head>
+    <title>Browse Villains - augs.tools</title>
+    <meta name="description" content="Browse a list of Villains created by the community." />
+</svelte:head>
 
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>

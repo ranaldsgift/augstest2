@@ -51,7 +51,10 @@
     }
 </script>
 
-<svelte:head><title>{skillCard.name} by {skillCard.user.userName} - Skill Card - augs.tools</title></svelte:head>
+<svelte:head>
+    <title>{skillCard.name} by {skillCard.user.userName} - Skill Card - augs.tools</title>
+    <meta name="description" content={skillCard.description} />
+</svelte:head>
 
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
