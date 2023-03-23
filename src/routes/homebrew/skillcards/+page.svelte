@@ -19,7 +19,10 @@
     }
 </script>
 
-<svelte:head><title>Browse Skills - augs.tools</title></svelte:head>
+<svelte:head>
+    <title>Browse Skills - augs.tools</title>
+    <meta name="description" content="Browse a list of Skill Cards created by the community." />
+</svelte:head>
 
 <ol class={data.breadcrumbClass}>
 	<li class="crumb"><a href="/">Home</a></li>
