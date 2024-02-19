@@ -21,6 +21,9 @@ import { CompetitiveVillainAttributes } from '$lib/entities/CompetitiveVillainAt
 import { CooperativeVillain } from '$lib/entities/CooperativeVillain';
 import { CooperativeVillainAbility } from '$lib/entities/CooperativeVillainAbility';
 import { CooperativeVillainAttributes } from '$lib/entities/CooperativeVillainAttributes';
+//import { VillainAbilityCardEffect } from '$lib/entities/VillainAbilityCardEffect';
+//import { VillainAbilityCardFigureAction } from '$lib/entities/VillainAbilityCardFigureAction';
+//import { VillainAbilityCardFigureActivation } from '$lib/entities/VillainAbilityCardFigureActivation';
 
 let PRIVATE_SUPABASE_HOST = env.PRIVATE_SUPABASE_HOST;
 let PRIVATE_SUPABASE_PASSWORD = env.PRIVATE_SUPABASE_PASSWORD;
@@ -34,7 +37,7 @@ export const AppDataSource = new DataSource({
     type: "postgres",
     host: PRIVATE_SUPABASE_HOST,
     port: 5432,
-    username: "postgres",
+    username: "postgres.xrbfqjwtfrohmaudahlh",
     password: PRIVATE_SUPABASE_PASSWORD,
     database: "postgres",
     entities: [ 
@@ -56,7 +59,10 @@ export const AppDataSource = new DataSource({
         CompetitiveVillain,
         CooperativeVillain,
         Villain, 
-        VillainAbilityCard, 
+        VillainAbilityCard
+        //VillainAbilityCardEffect,
+        //VillainAbilityCardFigureAction,
+        //VillainAbilityCardFigureActivation,
     ],
     subscribers: [ EntitySubscriber, AuthoredEntitySubscriber ],
     // For development only
