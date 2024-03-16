@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production' && process.env.PRIVATE_SUPABASE_HOST &
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: PRIVATE_SUPABASE_HOST,
-    port: 5432,
+    port: 6543,
     username: "postgres.xrbfqjwtfrohmaudahlh",
     password: PRIVATE_SUPABASE_PASSWORD,
     database: "postgres",
