@@ -5,13 +5,13 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals, params }) => {
     if (isNaN(parseInt(params.id))) {
-        throw error(404, 'You must provide a Villain ID');
+        error(404, 'You must provide a Villain ID');
     }
 
     let id = parseInt(params.id) ?? 0;
 
     if (!id) {
-        throw error(404, 'You must provide a valid Villain ID');
+        error(404, 'You must provide a valid Villain ID');
     }
     
     let villain = null;
@@ -22,11 +22,11 @@ export const load = (async ({ locals, params }) => {
     }
     catch (err) {
         console.log(err);
-        throw error(500, "Internal Server Error");
+        error(500, "Internal Server Error");
     }
 
     if (!villain) {
-        throw error(404, 'Hero not found');
+        error(404, 'Hero not found');
     }
     
     return {

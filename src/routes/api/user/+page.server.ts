@@ -18,7 +18,7 @@ export const actions: Actions = {
         }
 
         if (!locals.supabaseClient) {
-            throw error(500, 'Internal Server Error');
+            error(500, 'Internal Server Error');
         }
         
         try {
@@ -31,15 +31,17 @@ export const actions: Actions = {
         } catch (err) {
             console.error(err);
             let authError = err as AuthError;
-            throw error(500, `Internal Server Error - ${authError.message}`);
+            error(500, `Internal Server Error - ${authError.message}`);
         }
 
-        return { id: locals.session?.user.id };
+        const session = await locals.getSession();
+        return { id: session?.user.id };
     },
 
     logout: async ({ request, url, locals }) => {
-        if (!locals.session || !locals.supabaseClient) {
-            throw redirect(301, '/');
+        const session = await locals.getSession();
+        if (!session || !locals.supabaseClient) {
+            redirect(301, '/');
         }
 
         try {
@@ -48,42 +50,44 @@ export const actions: Actions = {
             return { error: null };
         } catch (err) {
             console.error(err);
-            throw error(500, "Internal Server Error");
+            error(500, "Internal Server Error");
         }
     },
 
     save: async ({ request, locals }) => {
-        if (!locals.session) {
-            throw error(401, "Unauthorized");
+        const session = await locals.getSession();
+        if (!session) {
+            error(401, "Unauthorized");
         }
 
         const formData = await request.formData();
         const user = FormHelper.deserializeFormData<User>(User, formData);
 
-        if (!user || locals.session.user.id !== user.id) {
-            throw error(401, "Unauthorized");
+        if (!user || session.user.id !== user.id) {
+            error(401, "Unauthorized");
         }
 
         try {
-            await user.save({ data: { session: locals.session } });
+            await user.save({ data: { session: session } });
         }
         catch (err) {
             let qfe = err as QueryFailedError;
-            throw error(500, qfe.driverError.severity + ' - ' + qfe.driverError.detail);
+            error(500, qfe.driverError.name + ' - ' + qfe.driverError.cause + ' - ' + qfe.driverError.message);
         }
 
         return { id: user?.id };
     },
 
     favoriteHomebrew: async ({ request, locals, url }) => {
-        if (!locals.session || !locals.user || locals.session.user.id !== locals.user.id) {
-            throw error(401, "Unauthorized");
+        const session = await locals.getSession();
+        if (!session || !locals.user || session.user.id !== locals.user.id) {
+            error(401, "Unauthorized");
         }
 
         const homebrewId = Number(url.searchParams.get('id'));
 
         if (isNaN(homebrewId)) {
-            throw error(400, "Bad Request");
+            error(400, "Bad Request");
         }
         const user = locals.user;
 
@@ -101,7 +105,7 @@ export const actions: Actions = {
         }
         catch (err) {
             console.error(err);
-            throw error(500, "Internal Server Error");
+            error(500, "Internal Server Error");
         }
         
         return { favorite: DataHelper.serialize(favorite) };

@@ -6,7 +6,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals, params }) => {
 
     if (!params.id) {
-        throw error(404, "You must supply an ID for a User");
+        error(404, "You must supply an ID for a User");
     }
 
     let user: User | null;
@@ -19,11 +19,11 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     }
     catch (err) {
         console.log(err);
-        throw error(500, "Internal Server Error");
+        error(500, "Internal Server Error");
     }
 
     if (!user) {
-        throw error(404, "User not found");
+        error(404, "User not found");
     }
 
     return {

@@ -73,7 +73,7 @@
 
         Heroes.invalidateAll();
         SkillCards.invalidateAll();
-        const savedHero = DataHelper.deserialize(Hero, result.data?.hero);
+        const savedHero = DataHelper.deserialize(Hero, result.data?.hero as string);
 
         if (!hero.id && savedHero?.id) {
             await goto(`/homebrew/heroes/${savedHero.id}`);
@@ -310,7 +310,7 @@
         <div class="comic-body flex gap-5 items-center justify-center flex-wrap">
             {#if hero.skillCards}
             {#each hero.skillCards as skillCard, index}
-                <div class="relative" in:slide="{{ delay: 0, duration: 300, easing: quintOut }}">
+                <div class="relative" in:slide|global="{{ delay: 0, duration: 300, easing: quintOut }}">
                     <iconify-icon class="absolute z-10 cursor-pointer mr-1 mt-1 hidden context-button top-0 right-0 p-1" style:font-size="1.2rem" icon="material-symbols:delete" on:click={() => handleRemoveSkillCard(index)} on:keydown={() =>  handleRemoveSkillCard(index)}></iconify-icon>
                     <SkillCardEditor scale={skillCardScale} backgroundColor={hero.sheetBackgroundColor} bind:skillCard={skillCard} heroName={hero.name} theme={hero.theme} template={SkillCardTemplates[hero.theme]}></SkillCardEditor>
                 </div>

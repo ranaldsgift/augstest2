@@ -5,7 +5,6 @@
     import "../app.css";
     import { onMount } from 'svelte'
     import { afterNavigate, invalidate } from '$app/navigation'
-    import { supabaseClient } from '$lib/db'
     import { page } from '$app/stores';
     import { AppShell, AppBar, Modal, Toast, AppRail, AppRailTile, LightSwitch, ProgressRadial, type PopupSettings, popup } from '@skeletonlabs/skeleton';
     import { Drawer } from '@skeletonlabs/skeleton';
@@ -35,18 +34,6 @@
         const page = document.getElementById('page');
         if (page && nav.type === 'link' && nav.from?.url.pathname !== nav.to?.url.pathname) {
             page.scrollTop = 0;
-        }
-    });
-
-    onMount(() => {
-        const {
-            data: { subscription },
-        } = supabaseClient.auth.onAuthStateChange((event, session) => {
-            invalidate('supabase:auth')
-        })
-
-        return () => {
-            subscription.unsubscribe()
         }
     });
     

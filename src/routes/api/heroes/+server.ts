@@ -60,7 +60,7 @@ export const GET: RequestHandler = async (event) => {
     }
     catch (err) {
         console.error(err);
-        throw error(500, "Internal Server Error");
+        error(500, "Internal Server Error");
     }
 
     const response = DataHelper.serialize({

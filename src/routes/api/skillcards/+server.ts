@@ -16,7 +16,7 @@ export const GET: RequestHandler = async (event) => {
     }
     catch (err) {
         console.error(err);
-        throw error(500, "Internal Server Error");
+        error(500, "Internal Server Error");
     }
     const jsonData = DataHelper.serialize(data);
     return new Response(jsonData);

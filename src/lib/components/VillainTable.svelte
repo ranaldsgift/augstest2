@@ -166,7 +166,7 @@
         </div>
         <table class="mt-5 flex flex-wrap gap-5 justify-center">
             {#each $dataTableStore.filtered as row, rowIndex (row.id)}
-            <a in:fade href="/homebrew/villains/{row.id}" class="relative">
+            <a in:fade|global href="/homebrew/villains/{row.id}" class="relative">
                 <div class="villain-table-row {!row.cooperative && row.competitive ? 'flipped' : ''}">
                     {#if row.cooperative && row.competitive}
                     <button on:click|preventDefault={(e) => {
