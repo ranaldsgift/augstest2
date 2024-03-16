@@ -1,5 +1,4 @@
 import type { LayoutServerLoad } from './$types';
-import { getServerSession } from '@supabase/auth-helpers-sveltekit';
 import { instanceToPlain } from 'class-transformer';
 
 export const load: LayoutServerLoad = async (event) => {
@@ -14,7 +13,7 @@ export const load: LayoutServerLoad = async (event) => {
 	const themeCss = await modules[`/src/lib/themes/theme-${theme}.css`]();
 
 	return { 
-		session: await getServerSession(event),
+		session: await event.locals.getSession(),
 		currentTheme: themeCss,
 		user: instanceToPlain(event.locals.user)
 	};

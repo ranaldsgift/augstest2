@@ -8,11 +8,11 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     const id = Number(params.id);
 
     if (isNaN(id)) {
-        throw error(404, 'You must provide a Villain ID');
+        error(404, 'You must provide a Villain ID');
     }
 
     if (id === 0) {
-        throw error(404, 'You must provide a valid Villain ID');
+        error(404, 'You must provide a valid Villain ID');
     }
 
     const loadData = async () => {    
@@ -24,11 +24,12 @@ export const load: PageServerLoad = async ({ locals, params }) => {
         }
         catch (err) {
             console.log(err);
-            throw error(500, "Internal Server Error");
+            error(500, "Internal Server Error");
         }
 
-        if (!villain || (villain.isDeleted && villain.user.id !== locals.session?.user.id)) {
-            throw error(404, 'Villain not found');
+        const session = await locals.getSession();
+        if (!villain || (villain.isDeleted && villain.user.id !== session?.user.id)) {
+            error(404, 'Villain not found');
         }
         
         return Promise.resolve(DataHelper.serialize(villain));
@@ -36,6 +37,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   
     return {
         authUser: locals.user ? DataHelper.serialize(locals.user) : undefined,
-        villainJSON: loadData()
+        villainJSON: await loadData()
     };
 }

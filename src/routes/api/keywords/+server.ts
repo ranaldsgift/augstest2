@@ -10,7 +10,7 @@ export const GET: RequestHandler = async () => {
     }
     catch (err) {
         console.error(err);
-        throw error(500, "Internal Server Error");
+        error(500, "Internal Server Error");
     }
     const keywords = data.map((item: any) => item.keyword);
     const jsonData = DataHelper.serialize({ items: keywords, count: keywords.length });

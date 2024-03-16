@@ -4,15 +4,14 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
-
     const id = Number(params.id);
 
     if (isNaN(id)) {
-        throw error(404, 'You must provide a Hero ID');
+        error(404, 'You must provide a Hero ID');
     }
 
     if (id === 0) {
-        throw error(404, 'You must provide a valid Hero ID');
+        error(404, 'You must provide a valid Hero ID');
     }
 
     const loadData = async () => {    
@@ -26,15 +25,16 @@ export const load: PageServerLoad = async ({ locals, params }) => {
         }
         catch (err) {
             console.log(err);
-            throw error(500, "Internal Server Error");
+            error(500, "Internal Server Error");
         }
 
-        if (!hero || (hero.isDeleted && hero.user.id !== locals.session?.user.id)) {
-            throw error(404, 'Hero not found');
+        const session = await locals.getSession();
+        if (!hero || (hero.isDeleted && hero.user.id !== session?.user.id)) {
+            error(404, 'Hero not found');
         }
 
-        if (hero.isDeleted && locals.session && hero.user.id !== locals.session.user.id) {
-            throw error(404, 'Hero not found');                
+        if (hero.isDeleted && session && hero.user.id !== session.user.id) {
+            error(404, 'Hero not found');                
         }
         
         return Promise.resolve(DataHelper.serialize(hero));
@@ -42,6 +42,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   
     return {
         authUser: locals.user ? DataHelper.serialize(locals.user) : undefined,
-        heroModel: loadData()
+        heroModel: await loadData()
     };
 }

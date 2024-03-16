@@ -147,7 +147,7 @@
         <table class="mt-5 flex flex-wrap gap-5 justify-center">
             {#each $dataTableStore.filtered as row, rowIndex}
             {#key row.id}
-            <a in:fade href="/homebrew/skillcards/{row.id}">
+            <a in:fade|global href="/homebrew/skillcards/{row.id}">
                 <div class="read-only">
                     <SkillCardEditor 
                         skillCard={row} 

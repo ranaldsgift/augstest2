@@ -188,7 +188,7 @@
         <table class="mt-5 flex flex-wrap gap-5 justify-center" use:tableInteraction>
             {#each $dataTableStore.filtered as row, rowIndex}
             {#key row.id}
-            <a in:fade href="/homebrew/heroes/{row.id}" class="relative">
+            <a in:fade|global href="/homebrew/heroes/{row.id}" class="relative">
                 <div class="read-only">
                     <HeroEditorSheet hero={row} scale={0.4}></HeroEditorSheet>
                 </div>
